@@ -33,29 +33,34 @@
 
     <div class="w-[50%] pr-[7vw] flex flex-col">
       <div class="pt-[5vw] flex flex-col">
-        <div class="flex flex-row items-start gap-6 mt-4">
-          <div>
-            <img src="/green-pen.png" alt="" class="w-[2vw]" />
-          </div>
-          <div class="flex flex-col gap-6 w-full pt-[3vw]">
-            <div class="flex items-center gap-2 w-full">
-              <span class="mr-2 w-10 text-right">比例</span>
+        <div class="flex flex-row items-center gap-2">
+          <img src="/green-pen.png" alt="" class="w-[2vw]" />
+          <span class="text-xl font-semibold text-[#3A6B60]">調整參數</span>
+        </div>
+        <div class="flex flex-row items-start gap-5">
+          <div class="flex flex-col gap-5 w-full pt-[3vw]">
+            <span class="underline">融合比例</span>
+            <div class="flex items-center gap-1 w-full pl-[2vw]">
+              <span class="mr-2 w-10 text-right">原圖</span>
               <input
                 type="range"
-                min="1"
-                max="10"
-                v-model="modern"
+                min="0"
+                max="1"
+                step="0.05"
+                v-model.number="alpha"
                 class="flex-1 accent-[#FFFFFF] h-2 rounded-lg"
               />
-              <span class="ml-2 w-10 text-left">書法</span>
+              <span class="ml-2 w-10 text-left">調整</span>
             </div>
+            <span class="underline">粗細調整</span>
             <div class="flex items-center gap-2 w-full">
               <span class="mr-2 w-10 text-right">細</span>
               <input
                 type="range"
                 min="-1.5"
                 max="1.5"
-                v-model="thickness"
+                step="0.05"
+                v-model.number="thickness"
                 class="flex-1 accent-[#FFFFFF] h-2 rounded-lg"
               />
               <span class="ml-2 w-10 text-left">粗</span>
@@ -100,10 +105,6 @@ import { ref } from "vue";
 const API_BASE_URL = "https://typersonal.dy6.click/8000";
 const imageUrl = ref("");
 const previewImage = ref("");
-// const thickness = ref(5);
-// const modern = ref(5);
-// const cursive = ref(5);
-
 const character = ref("體");
 const enableBlend = ref(true);
 const alpha = ref(0.5);
