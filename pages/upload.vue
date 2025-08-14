@@ -59,7 +59,7 @@ const router = useRouter();
 // ✅ 改為你的正式 Cloudflare 代理域名，前後端都走 HTTPS 避免混合內容問題
 const API_BASE_URL = 'https://typersonal.dy6.click/8000'
 
-const character = ref('體')
+const character = ref('字')
 const samplingStep = ref(15)
 const referenceImage = ref(null)
 const imageUrl = ref('')
