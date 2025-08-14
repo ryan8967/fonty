@@ -42,9 +42,9 @@
             <div class="absolute -inset-4 bg-gradient-to-r from-[#3A6B60]/5 via-transparent to-[#5EA897]/5 rounded-3xl"></div>
             
             <!-- 字 -->
-            <div class="char-container relative group">
+            <div class="char-container relative group select-none">
               <div class="absolute -inset-2 bg-gradient-to-br from-orange-400/20 to-amber-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-black text-slate-800 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-3 hover:text-orange-600" 
+              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-black text-slate-800 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-3 hover:text-orange-600 select-none" 
                    style="animation: float1 4s ease-in-out infinite;">
                 字
               </div>
@@ -53,9 +53,9 @@
             </div>
             
             <!-- 訂 -->
-            <div class="char-container relative group">
+            <div class="char-container relative group select-none">
               <div class="absolute -inset-2 bg-gradient-to-br from-[#3A6B60]/20 to-[#5EA897]/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-medium text-slate-600 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:-rotate-2 hover:text-[#3A6B60]" 
+              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-medium text-slate-600 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:-rotate-2 hover:text-[#3A6B60] select-none" 
                    style="animation: float2 4s ease-in-out infinite 0.5s;">
                 訂
               </div>
@@ -64,9 +64,9 @@
             </div>
             
             <!-- 藝 -->
-            <div class="char-container relative group">
+            <div class="char-container relative group select-none">
               <div class="absolute -inset-2 bg-gradient-to-br from-amber-400/20 to-yellow-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-light text-slate-400 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-1 hover:text-yellow-600" 
+              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-light text-slate-400 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-1 hover:text-yellow-600 select-none" 
                    style="animation: float3 4s ease-in-out infinite 1s;">
                 藝
               </div>

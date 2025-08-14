@@ -150,9 +150,9 @@
                   :key="i"
                   @click="selectExample(i)"
                   :class="[
-                    'relative cursor-pointer rounded-xl border-2 p-3 md:p-4 transition-all duration-200 hover:scale-105',
+                    'relative cursor-pointer rounded-xl border-2 p-3 md:p-4 transition-all duration-200 hover:scale-105 bg-white',
                     selectedExample === i
-                      ? 'border-orange-500 bg-orange-50 shadow-lg'
+                      ? 'border-orange-500 shadow-lg ring-2 ring-orange-200'
                       : 'border-gray-200 hover:border-orange-300 hover:shadow-md'
                   ]"
                 >

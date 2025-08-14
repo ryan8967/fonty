@@ -5,17 +5,14 @@
       <div class="flex h-14 md:h-16 lg:h-20 items-center justify-between px-3 md:px-6 lg:px-12 transition-all duration-700">
         <!-- Left Side: Enhanced Logo -->
         <NuxtLink to="/" class="group">
-          <div class="flex items-center gap-1.5 md:gap-2 lg:gap-3 transition-all duration-300 hover:scale-105">
-            <!-- Animated Logo Icon -->
-            <div class="relative">
-              <div class="absolute inset-0 bg-gradient-to-r from-[#3A6B60]/10 to-[#5EA897]/10 rounded-xl blur-sm opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-              <div class="relative bg-white/50 backdrop-blur-sm p-1 md:p-1.5 lg:p-2 rounded-lg md:rounded-xl border border-white/30 shadow-sm">
-                <img src="/typersonal2.png" alt="Typersonal Logo" class="h-5 w-5 md:h-6 md:w-6 lg:h-8 lg:w-8 object-contain" />
-              </div>
+          <div class="flex items-center gap-1.5 sm:gap-1.5 md:gap-2 lg:gap-3 transition-all duration-300 hover:scale-105">
+            <!-- Clean Logo Icon -->
+            <div class="relative h-full flex items-center">
+              <img src="/typersonal2.png" alt="Typersonal Logo" class="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-110 max-h-10 sm:max-h-8 md:max-h-10 lg:max-h-12" />
             </div>
             
-            <!-- Enhanced Brand Name -->
-            <div class="logo-text">
+            <!-- Enhanced Brand Name - Hidden on mobile -->
+            <div class="logo-text hidden sm:block">
               <h1 class="text-base md:text-xl lg:text-2xl xl:text-3xl font-black tracking-tight">
                 <span class="text-[#E29930] group-hover:text-[#d48826] transition-colors duration-300">Type</span>
                 <span class="bg-gradient-to-r from-[#3A6B60] to-[#5EA897] bg-clip-text text-transparent">rsonal</span>
@@ -321,6 +318,18 @@ onUnmounted(() => {
 }
 
 /* Responsive Design */
+@media (max-width: 640px) {
+  /* 手機版只顯示 logo，確保有足夠空間給帳戶資訊 */
+  .logo-text {
+    display: none;
+  }
+  
+  /* 手機版 logo 稍微大一點來補償文字的消失 */
+  .logo-text + * {
+    margin-left: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .logo-text h1 {
     font-size: 1.5rem;
