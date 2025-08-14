@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
 
 // Firebase 配置 - 直接寫在代碼中以便快速協作
 const firebaseConfig = {
@@ -18,6 +19,9 @@ const app = initializeApp(firebaseConfig)
 // 初始化 Authentication
 const auth = getAuth(app)
 
+// 初始化 Firestore
+const db = getFirestore(app)
+
 // Google 登入提供者
 const googleProvider = new GoogleAuthProvider()
 googleProvider.addScope('email')
@@ -27,7 +31,7 @@ googleProvider.setCustomParameters({
   prompt: 'select_account'
 })
 
-export { auth, googleProvider }
+export { auth, googleProvider, db }
 
 // Nuxt plugin 預設 export
 export default defineNuxtPlugin(() => {

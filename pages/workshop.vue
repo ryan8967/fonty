@@ -276,7 +276,7 @@
         </div>
 
         <!-- 調整介面 -->
-        <div class="max-w-7xl mx-auto px-8 pb-20">
+        <div class="max-w-7xl mx-auto px-8 pb-32">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Left Column: Generated Result & Fine Adjustments -->
             <div class="space-y-6">
@@ -428,19 +428,14 @@
                     </svg>
                   </div>
                   <div>
-                    <h3 class="text-lg font-semibold">滿意目前效果？</h3>
-                    <p class="text-sm text-white text-opacity-90">直接使用此字型生成完整字體包</p>
+                    <h3 class="text-lg font-semibold">想嘗試更多風格？</h3>
+                    <p class="text-sm text-white text-opacity-90">選擇下方的風格選項來個性化你的字型</p>
                   </div>
                 </div>
                 
-                <button
-                  class="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 backdrop-blur-sm border border-white border-opacity-30"
-                >
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                  </svg>
-                  直接生成字型
-                </button>
+                <div class="text-center">
+                  <p class="text-sm text-white text-opacity-75">滿意目前效果的話，可以直接點擊下方的生成按鈕 ↓</p>
+                </div>
               </div>
 
               <!-- 或者分隔線 -->
@@ -517,20 +512,172 @@
             </div>
           </div>
         </div>
+        
+        <!-- Fixed Final Generate Button at bottom -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-50 px-4 py-4">
+          <div class="max-w-4xl mx-auto">
+            <div class="bg-gradient-to-r from-[#3A6B60] to-[#5EA897] rounded-2xl p-4 md:p-6 text-white">
+              <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="text-center md:text-left">
+                  <h3 class="text-lg md:text-xl font-bold mb-2">🎉 滿意目前的字型效果？</h3>
+                  <p class="text-sm md:text-base text-white text-opacity-90">
+                    一鍵生成完整字型包，包含常用漢字、標點符號等完整字符集
+                  </p>
+                </div>
+                
+                <button
+                  @click="generateFinalFont"
+                  :disabled="finalGenerating || finalGenerated"
+                  :class="[
+                    'inline-flex items-center px-6 py-3 md:px-8 md:py-4 font-bold text-base md:text-lg rounded-xl transition-all duration-300 shadow-lg min-w-[180px] md:min-w-[200px] justify-center',
+                    finalGenerating || finalGenerated
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-white text-[#3A6B60] hover:bg-gray-50 hover:shadow-xl hover:scale-105'
+                  ]"
+                >
+                  <div v-if="finalGenerating" class="flex items-center">
+                    <div class="animate-spin rounded-full h-4 w-4 md:h-5 md:w-5 border-b-2 border-[#3A6B60] mr-3"></div>
+                    生成完整字型中...
+                  </div>
+                  <div v-else-if="finalGenerated" class="flex items-center">
+                    <svg class="w-4 h-4 md:w-5 md:h-5 mr-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-green-600">生成完成！下載功能即將開放</span>
+                  </div>
+                  <div v-else class="flex items-center">
+                    <svg class="w-4 h-4 md:w-5 md:h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                    ✨ 立即生成完整字型
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Survey Modal -->
+    <div 
+      v-if="showSurveyModal" 
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] px-4"
+      @click.self="closeSurveyModal"
+    >
+      <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 transform transition-all duration-300 scale-100">
+        <div class="text-center mb-8">
+          <!-- 調查問卷圖標 -->
+          <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          
+          <h3 class="text-2xl font-bold text-slate-800 mb-4">💭 快速調查問卷</h3>
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+            <p class="text-sm text-blue-800 font-medium mb-2">📋 幫助我們了解用戶需求</p>
+            <p class="text-xs text-blue-600">本調查純粹用於產品開發研究，不涉及任何購買行為</p>
+          </div>
+          <p class="text-slate-600 text-lg leading-relaxed mb-4">
+            感謝您體驗我們的字型生成技術！
+          </p>
+          <p class="text-slate-600 text-base leading-relaxed">
+            我們正在研究推出<span class="font-semibold text-[#3A6B60]">完整版字型包</span>的可行性
+          </p>
+          <p class="text-slate-600 text-base leading-relaxed mt-2">
+            包含<span class="font-semibold text-[#E29930]">3000+ 常用漢字</span>，預計定價 <span class="text-lg font-bold text-[#E29930]">NT$99</span>
+          </p>
+          <p class="text-sm text-gray-500 mt-3 italic">
+            ❓ 想了解您對這樣的產品是否有興趣
+          </p>
+        </div>
+        
+        <div class="space-y-4">
+          <!-- 有興趣選項 - 調查問卷風格 -->
+          <button
+            @click="handleSurveyResponse(true)"
+            :disabled="isSubmitting"
+            :class="[
+              'w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-green-600 hover:to-emerald-700 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 group',
+              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+            ]"
+          >
+            <div v-if="isSubmitting" class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            <svg v-else class="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <div class="text-left">
+              <div class="text-lg">✅ 很有興趣！</div>
+              <div class="text-sm text-white text-opacity-90">這個價位可以接受</div>
+            </div>
+          </button>
+          
+          <!-- 普通興趣選項 -->
+          <button
+            @click="handleSurveyResponse('maybe')"
+            :disabled="isSubmitting"
+            :class="[
+              'w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium py-3 px-6 rounded-xl hover:from-yellow-500 hover:to-orange-600 hover:shadow-lg hover:scale-[1.01] transition-all duration-200 flex items-center justify-center gap-2',
+              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+            ]"
+          >
+            <div v-if="isSubmitting" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            <svg v-else class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+              <div class="text-base">🤔 有點興趣，但需要考慮</div>
+            </div>
+          </button>
+          
+          <!-- 沒興趣選項 - 設計得較小但仍然友好 -->
+          <button
+            @click="handleSurveyResponse(false)"
+            :disabled="isSubmitting"
+            :class="[
+              'w-full bg-gray-100 hover:bg-gray-200 text-slate-600 font-medium py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2',
+              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+            ]"
+          >
+            <div v-if="isSubmitting" class="animate-spin rounded-full h-4 w-4 border-b-2 border-slate-600"></div>
+            <svg v-else class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+            </svg>
+            完全沒興趣
+          </button>
+        </div>
+        
+        <!-- 小字提示 -->
+        <div class="mt-6 space-y-2">
+          <p class="text-xs text-gray-400 text-center">
+            📝 此為匿名市場調查，僅用於了解用戶需求，不會有任何後續聯繫或付費要求
+          </p>
+          <div v-if="userState.isAuthenticated" class="flex items-center justify-center gap-2 text-xs text-blue-600 bg-blue-50 px-3 py-2 rounded-full">
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+            </svg>
+            每個帳號僅能參與一次調查，已與您的帳號綁定
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { navigateTo } from 'nuxt/app'
 import { userState } from '~/composables/useAuth.js'
+import { useSurvey } from '~/composables/useSurvey.js'
 
 // 暫時移除 middleware，先讓頁面正常運行
 // definePageMeta({
 //   middleware: 'auth'
 // })
+
+// Initialize survey composable
+const { hasVoted, isSubmitting, isChecking, checkUserHasVoted, submitSurveyResponse } = useSurvey()
 
 // State Management - 第一階段（上傳）
 const file = ref(null)
@@ -545,6 +692,12 @@ const alpha = ref(0.5)
 const thickness = ref(0)
 const blendedImage = ref('')
 const blendLoading = ref(false)
+
+// State Management - 第三階段（生成與問卷）
+const finalGenerating = ref(false)
+const finalGenerated = ref(false)
+const showSurveyModal = ref(false)
+const surveyCompleted = ref(false)
 
 // 風格選項
 const styleOptions = ['書法風', '簡約現代', '潑墨風', '潮流街頭', '可愛手繪']
@@ -700,6 +853,12 @@ const resetToUpload = () => {
   previewUrl.value = ''
   selectedExample.value = null
   
+  // 重置第三階段狀態
+  finalGenerating.value = false
+  finalGenerated.value = false
+  showSurveyModal.value = false
+  surveyCompleted.value = false
+  
   // 清空文件輸入
   const fileInput = document.getElementById('file-upload')
   if (fileInput) {
@@ -758,6 +917,114 @@ const blend = async () => {
 watch(thickness, () => {
   if (styleOption.value && generatedImage.value) {
     blend()
+  }
+})
+
+// Methods - 第三階段：最終生成與問卷
+const generateFinalFont = async () => {
+  if (finalGenerating.value || finalGenerated.value) return
+
+  finalGenerating.value = true
+  
+  try {
+    // 模擬完整字型生成過程（實際上會調用不同的 API）
+    await new Promise(resolve => setTimeout(resolve, 3000)) // 3秒模擬生成時間
+    
+    finalGenerated.value = true
+    
+    // 等待一段時間後檢查用戶投票狀態並顯示問卷
+    setTimeout(async () => {
+      if (!surveyCompleted.value && userState.isAuthenticated) {
+        // 檢查用戶是否已經投過票
+        const userHasVoted = await checkUserHasVoted()
+        
+        if (!userHasVoted) {
+          showSurveyModal.value = true
+        } else {
+          // 用戶已投票，顯示感謝訊息
+          setTimeout(() => {
+            alert('🎉 感謝您之前參與我們的調查問卷！您的意見對我們很重要！')
+          }, 500)
+        }
+      }
+    }, 2000)
+    
+  } catch (error) {
+    console.error('Final font generation failed:', error)
+    alert('字型生成失敗，請稍後再試：' + error.message)
+  } finally {
+    finalGenerating.value = false
+  }
+}
+
+const handleSurveyResponse = async (response) => {
+  if (isSubmitting.value) return
+
+  try {
+    // 轉換回應為標準格式
+    let responseType = ''
+    if (response === true) {
+      responseType = 'very_interested'
+    } else if (response === 'maybe') {
+      responseType = 'maybe_interested' 
+    } else {
+      responseType = 'not_interested'
+    }
+
+    // 提交到 Firebase
+    await submitSurveyResponse(responseType)
+    
+    surveyCompleted.value = true
+    showSurveyModal.value = false
+    
+    // 顯示感謝訊息
+    let message = ''
+    if (response === true) {
+      message = '🎉 謝謝您的回饋！您的意見對我們很重要，我們會持續改進產品品質！'
+    } else if (response === 'maybe') {
+      message = '🤔 謝謝您的誠實回饋！我們會根據用戶意見調整產品規劃！'
+    } else {
+      message = '😊 謝謝您參與調查！每個用戶的想法都幫助我們了解市場需求！'
+    }
+    
+    setTimeout(() => {
+      alert(message)
+    }, 300)
+
+  } catch (error) {
+    console.error('提交問卷失敗:', error)
+    
+    if (error.message.includes('已經投過票')) {
+      alert('⚠️ 您已經參與過這個調查了，感謝您的支持！')
+    } else if (error.message.includes('未登入')) {
+      alert('⚠️ 請先登入後再參與調查')
+    } else {
+      alert('❌ 提交失敗，請稍後再試')
+    }
+    
+    // 即使失敗也關閉模態框避免重複嘗試
+    showSurveyModal.value = false
+  }
+}
+
+const closeSurveyModal = () => {
+  // 如果用戶關閉彈窗而沒有選擇，也標記為完成以避免重複顯示
+  surveyCompleted.value = true
+  showSurveyModal.value = false
+}
+
+// 組件掛載時檢查用戶投票狀態
+onMounted(async () => {
+  // 如果用戶已登入，檢查是否已投票
+  if (userState.isAuthenticated && userState.user?.uid) {
+    await checkUserHasVoted()
+    
+    // 開發調試：在 console 顯示投票狀態
+    console.log('📊 用戶投票狀態:', {
+      hasVoted: hasVoted.value,
+      userUID: userState.user.uid,
+      userEmail: userState.user.email
+    })
   }
 })
 
