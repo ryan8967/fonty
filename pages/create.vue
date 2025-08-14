@@ -73,6 +73,95 @@
             </div>
           </div>
 
+          <!-- 精細調整區域 - 移到預覽下方 -->
+          <div v-if="styleOption.length > 0" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-8 h-8 bg-[#5EA897] bg-opacity-25 rounded-lg flex items-center justify-center">
+                <svg class="w-4 h-4 text-[#3A6B60]" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-[#3A6B60]">精細調整</h3>
+                <p class="text-sm text-gray-600">微調字型的視覺效果</p>
+              </div>
+            </div>
+
+            <div class="space-y-8">
+              <!-- 筆觸粗細 -->
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 bg-[#5EA897] rounded-full"></div>
+                    <span class="font-medium text-[#3A6B60]">筆觸粗細</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <span class="text-gray-600">即時預覽</span>
+                    <div class="w-2 h-2 bg-[#5EA897] rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+                
+                <div class="space-y-4">
+                  <div class="flex items-center gap-4">
+                    <span class="text-sm text-gray-500 w-8 text-center">細</span>
+                    <div class="flex-1 relative">
+                      <input
+                        type="range"
+                        min="-1.5"
+                        max="1.5"
+                        step="0.05"
+                        v-model.number="thickness"
+                        class="w-full range-slider-teal"
+                        :class="{ 'animate-pulse': isThicknessChanging }"
+                      />
+                    </div>
+                    <span class="text-sm text-gray-500 w-8 text-center">粗</span>
+                  </div>
+                  <div class="text-center">
+                    <span class="inline-block bg-[#5EA897] bg-opacity-20 text-[#3A6B60] text-sm px-3 py-1 rounded-full font-medium">
+                      {{ thickness.toFixed(2) }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 風格融合比例 -->
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 bg-[#E29930] rounded-full"></div>
+                    <span class="font-medium text-[#3A6B60]">風格融合比例</span>
+                  </div>
+                  <span class="text-xs text-[#E29930] bg-[#E29930] bg-opacity-20 px-2 py-1 rounded-full">
+                    原圖 ← → {{ styleOption[0] || '風格' }}
+                  </span>
+                </div>
+                
+                <div class="space-y-4">
+                  <div class="flex items-center gap-4">
+                    <span class="text-sm text-gray-500 w-12 text-center">原圖</span>
+                    <div class="flex-1 relative">
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.05"
+                        v-model.number="alpha"
+                        class="w-full range-slider-orange"
+                      />
+                    </div>
+                    <span class="text-sm text-gray-500 w-12 text-center">風格</span>
+                  </div>
+                  <div class="text-center">
+                    <span class="inline-block bg-[#E29930] bg-opacity-20 text-[#E29930] text-sm px-3 py-1 rounded-full font-medium">
+                      {{ Math.round(alpha * 100) }}% 風格強度
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- 預覽文字輸入 -->
           <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <div class="flex items-center gap-3 mb-4">
@@ -190,92 +279,27 @@
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- 參數調整 -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-              <div class="flex items-center gap-3 mb-6">
-                <div class="w-8 h-8 bg-[#5EA897] bg-opacity-25 rounded-lg flex items-center justify-center">
-                  <svg class="w-4 h-4 text-[#3A6B60]" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"/>
+              <!-- 選擇風格後的功能區 -->
+              <div v-if="styleOption.length > 0" class="mt-4 space-y-3">
+                <!-- 回到原始字型按鈕 -->
+                <button
+                  @click="resetToOriginal"
+                  class="w-full bg-gray-100 hover:bg-gray-200 text-[#3A6B60] font-medium py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 border border-gray-300 hover:border-gray-400"
+                >
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"/>
                   </svg>
-                </div>
-                <div>
-                  <h3 class="font-semibold text-[#3A6B60]">精細調整</h3>
-                  <p class="text-sm text-gray-600">微調字型的視覺效果</p>
-                </div>
-              </div>
+                  回到原始字型
+                </button>
 
-              <div class="space-y-8">
-                <!-- 筆觸粗細 -->
-                <div>
-                  <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center gap-2">
-                      <div class="w-3 h-3 bg-[#5EA897] rounded-full"></div>
-                      <span class="font-medium text-[#3A6B60]">筆觸粗細</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-sm">
-                      <span class="text-gray-600">即時預覽</span>
-                      <div class="w-2 h-2 bg-[#5EA897] rounded-full animate-pulse"></div>
-                    </div>
-                  </div>
-                  
-                  <div class="space-y-4">
-                    <div class="flex items-center gap-4">
-                      <span class="text-sm text-gray-500 w-8 text-center">細</span>
-                      <div class="flex-1 relative">
-                        <input
-                          type="range"
-                          min="-1.5"
-                          max="1.5"
-                          step="0.05"
-                          v-model.number="thickness"
-                          class="w-full range-slider-teal"
-                          :class="{ 'animate-pulse': isThicknessChanging }"
-                        />
-                      </div>
-                      <span class="text-sm text-gray-500 w-8 text-center">粗</span>
-                    </div>
-                    <div class="text-center">
-                      <span class="inline-block bg-[#5EA897] bg-opacity-20 text-[#3A6B60] text-sm px-3 py-1 rounded-full font-medium">
-                        {{ thickness.toFixed(2) }}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- 風格融合比例 -->
-                <div>
-                  <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center gap-2">
-                      <div class="w-3 h-3 bg-[#E29930] rounded-full"></div>
-                      <span class="font-medium text-[#3A6B60]">風格融合比例</span>
-                    </div>
-                    <span class="text-xs text-[#E29930] bg-[#E29930] bg-opacity-20 px-2 py-1 rounded-full">
-                      原圖 ← → {{ styleOption[0] || '風格' }}
-                    </span>
-                  </div>
-                  
-                  <div class="space-y-4">
-                    <div class="flex items-center gap-4">
-                      <span class="text-sm text-gray-500 w-12 text-center">原圖</span>
-                      <div class="flex-1 relative">
-                        <input
-                          type="range"
-                          min="0"
-                          max="1"
-                          step="0.05"
-                          v-model.number="alpha"
-                          class="w-full range-slider-orange"
-                        />
-                      </div>
-                      <span class="text-sm text-gray-500 w-12 text-center">風格</span>
-                    </div>
-                    <div class="text-center">
-                      <span class="inline-block bg-[#E29930] bg-opacity-20 text-[#E29930] text-sm px-3 py-1 rounded-full font-medium">
-                        {{ Math.round(alpha * 100) }}% 風格強度
-                      </span>
-                    </div>
+                <!-- 提示訊息 -->
+                <div class="p-3 bg-[#5EA897] bg-opacity-10 rounded-lg border border-[#5EA897] border-opacity-30">
+                  <div class="flex items-center gap-2 text-sm text-[#3A6B60]">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                    </svg>
+                    <span>✨ 精細調整工具已在預覽區域下方顯示</span>
                   </div>
                 </div>
               </div>
@@ -354,6 +378,21 @@ watch(thickness, async () => {
   }
 });
 
+// 監聽風格融合比例調整，即時預覽
+watch(alpha, async () => {
+  if (imageUrl.value && styleOption.value.length > 0) {
+    hasUserAdjusted.value = true;
+    
+    // 清除之前的計時器
+    clearTimeout(debounceTimeout);
+    
+    // 設置新的計時器，300ms 後執行
+    debounceTimeout = setTimeout(async () => {
+      await blend();
+    }, 300);
+  }
+});
+
 // 監聽文字變化，觸發預覽更新
 watch(character, async () => {
   if (imageUrl.value && character.value.trim()) {
@@ -400,6 +439,20 @@ function proceedWithOriginal() {
   // 暫時先跳轉到相同頁面，實際應用中可能跳轉到結果頁面
   alert('將使用原始字型生成完整字體包！');
   // $router.push('/result'); // 實際的跳轉邏輯
+}
+
+// 回到原始字型的函數
+function resetToOriginal() {
+  // 清除所有選擇和調整
+  styleOption.value = [];
+  thickness.value = 0;
+  alpha.value = 0.5;
+  hasUserAdjusted.value = false;
+  
+  // 重新載入原始預覽
+  if (imageUrl.value && character.value.trim()) {
+    generateOriginalPreview();
+  }
 }
 
 // 原始字型預覽函數（不做任何風格調整）
