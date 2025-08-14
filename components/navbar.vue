@@ -2,21 +2,21 @@
   <div class="fixed top-0 left-0 right-0 z-40">
     <!-- Glassmorphism Navbar -->
     <nav class="backdrop-blur-md bg-white/80 border-b border-white/20 shadow-lg transition-all duration-300" :class="{ 'nav-scrolled': isScrolled, 'shrinked-nav': isSideMenuOpen }">
-      <div class="flex h-20 items-center justify-between px-6 md:px-12 transition-all duration-700">
+      <div class="flex h-16 md:h-20 items-center justify-between px-4 md:px-6 lg:px-12 transition-all duration-700">
         <!-- Left Side: Enhanced Logo -->
         <NuxtLink to="/" class="group">
-          <div class="flex items-center gap-3 transition-all duration-300 hover:scale-105">
+          <div class="flex items-center gap-2 md:gap-3 transition-all duration-300 hover:scale-105">
             <!-- Animated Logo Icon -->
             <div class="relative">
               <div class="absolute inset-0 bg-gradient-to-r from-[#3A6B60]/10 to-[#5EA897]/10 rounded-xl blur-sm opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-              <div class="relative bg-white/50 backdrop-blur-sm p-2 rounded-xl border border-white/30 shadow-sm">
-                <img src="/typersonal2.png" alt="Typersonal Logo" class="h-8 w-8 object-contain" />
+              <div class="relative bg-white/50 backdrop-blur-sm p-1.5 md:p-2 rounded-xl border border-white/30 shadow-sm">
+                <img src="/typersonal2.png" alt="Typersonal Logo" class="h-6 w-6 md:h-8 md:w-8 object-contain" />
               </div>
             </div>
             
             <!-- Enhanced Brand Name -->
             <div class="logo-text">
-              <h1 class="text-2xl md:text-3xl font-black tracking-tight">
+              <h1 class="text-xl md:text-2xl lg:text-3xl font-black tracking-tight">
                 <span class="text-[#E29930] group-hover:text-[#d48826] transition-colors duration-300">Type</span>
                 <span class="bg-gradient-to-r from-[#3A6B60] to-[#5EA897] bg-clip-text text-transparent">rsonal</span>
               </h1>

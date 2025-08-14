@@ -28,7 +28,7 @@
             AI 驅動的個性化字型設計
           </p> -->
           
-          <p class="text-3xl md:text-4xl lg:text-5xl text-slate-700 max-w-4xl mx-auto leading-relaxed mb-8 font-medium">
+          <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-slate-700 max-w-4xl mx-auto leading-relaxed mb-6 md:mb-8 font-medium px-4">
             {{ displayText }}<span class="animate-pulse text-orange-500">|</span>
           </p>
         </div>
@@ -36,7 +36,7 @@
         <!-- Typography Showcase -->
         <div class="mb-16">
           <!-- 增強版字訂藝動畫 -->
-          <div class="relative flex justify-center items-center space-x-8 md:space-x-12 mb-12">
+          <div class="relative flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-12 mb-8 md:mb-12">
             <!-- 背景裝飾 -->
             <div class="absolute inset-0 bg-gradient-to-r from-transparent via-orange-50/30 to-transparent blur-sm"></div>
             <div class="absolute -inset-4 bg-gradient-to-r from-[#3A6B60]/5 via-transparent to-[#5EA897]/5 rounded-3xl"></div>
@@ -44,34 +44,34 @@
             <!-- 字 -->
             <div class="char-container relative group">
               <div class="absolute -inset-2 bg-gradient-to-br from-orange-400/20 to-amber-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-              <div class="relative text-6xl md:text-9xl font-black text-slate-800 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-3 hover:text-orange-600" 
+              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-black text-slate-800 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-3 hover:text-orange-600" 
                    style="animation: float1 4s ease-in-out infinite;">
                 字
               </div>
               <!-- 裝飾元素 -->
-              <div class="absolute -top-2 -right-2 w-3 h-3 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full opacity-60 animate-ping"></div>
+              <div class="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-2 h-2 md:w-3 md:h-3 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full opacity-60 animate-ping"></div>
             </div>
             
             <!-- 訂 -->
             <div class="char-container relative group">
               <div class="absolute -inset-2 bg-gradient-to-br from-[#3A6B60]/20 to-[#5EA897]/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-              <div class="relative text-6xl md:text-9xl font-medium text-slate-600 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:-rotate-2 hover:text-[#3A6B60]" 
+              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-medium text-slate-600 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:-rotate-2 hover:text-[#3A6B60]" 
                    style="animation: float2 4s ease-in-out infinite 0.5s;">
                 訂
               </div>
               <!-- 裝飾元素 -->
-              <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-gradient-to-br from-[#3A6B60] to-[#5EA897] rounded-full opacity-70 animate-pulse"></div>
+              <div class="absolute -bottom-0.5 -left-0.5 md:-bottom-1 md:-left-1 w-1.5 h-1.5 md:w-2 md:h-2 bg-gradient-to-br from-[#3A6B60] to-[#5EA897] rounded-full opacity-70 animate-pulse"></div>
             </div>
             
             <!-- 藝 -->
             <div class="char-container relative group">
               <div class="absolute -inset-2 bg-gradient-to-br from-amber-400/20 to-yellow-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-              <div class="relative text-6xl md:text-9xl font-light text-slate-400 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-1 hover:text-yellow-600" 
+              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-light text-slate-400 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-1 hover:text-yellow-600" 
                    style="animation: float3 4s ease-in-out infinite 1s;">
                 藝
               </div>
               <!-- 裝飾元素 -->
-              <div class="absolute -top-1 left-1/2 w-1 h-4 bg-gradient-to-t from-transparent to-yellow-500 rounded-full opacity-50 animate-bounce"></div>
+              <div class="absolute -top-0.5 left-1/2 md:-top-1 w-0.5 h-2 md:w-1 md:h-4 bg-gradient-to-t from-transparent to-yellow-500 rounded-full opacity-50 animate-bounce"></div>
             </div>
             
           </div>
@@ -90,23 +90,23 @@
         </div>
 
         <!-- CTA Section -->
-        <div class="mb-20">
-          <div v-if="!user && !isLoading" class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
+        <div class="mb-16 md:mb-20">
+          <div v-if="!user && !isLoading" class="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 mb-8 px-4">
             <NuxtLink 
               to="/upload" 
-              class="group bg-gradient-to-r from-orange-500 to-amber-500 text-white px-10 py-4 rounded-full font-bold text-xl shadow-2xl hover:shadow-orange-500/25 hover:scale-105 transition-all duration-300"
+              class="group w-full sm:w-auto bg-gradient-to-r from-orange-500 to-amber-500 text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg md:text-xl shadow-2xl hover:shadow-orange-500/25 hover:scale-105 transition-all duration-300"
             >
-              <span class="flex items-center space-x-3">
-                <svg class="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+              <span class="flex items-center justify-center space-x-3">
+                <svg class="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
                 </svg>
                 <span>開始創作</span>
               </span>
             </NuxtLink>
             
-            <button class="group bg-gradient-to-r from-[#3A6B60] to-[#5EA897] text-white px-10 py-4 rounded-full font-bold text-xl shadow-2xl hover:shadow-[#3A6B60]/25 hover:scale-105 transition-all duration-300">
-              <span class="flex items-center space-x-3">
-                <svg class="w-6 h-6 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+            <button class="group w-full sm:w-auto bg-gradient-to-r from-[#3A6B60] to-[#5EA897] text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg md:text-xl shadow-2xl hover:shadow-[#3A6B60]/25 hover:scale-105 transition-all duration-300">
+              <span class="flex items-center justify-center space-x-3">
+                <svg class="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
                 </svg>
                 <span>觀看演示</span>
@@ -173,18 +173,18 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-32 bg-white">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center mb-20">
-          <h2 class="text-5xl md:text-6xl font-black text-slate-800 mb-8">
+    <section id="features" class="py-20 md:py-32 bg-white">
+      <div class="max-w-7xl mx-auto px-4 md:px-6">
+        <div class="text-center mb-16 md:mb-20">
+          <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-slate-800 mb-6 md:mb-8">
             為什麼選擇 Typersonal
           </h2>
-          <p class="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+          <p class="text-lg md:text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed px-4">
             結合最先進的 AI 技術與直觀的設計工具，讓字型創作變得簡單而強大
           </p>
         </div>
         
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           <div class="group bg-gradient-to-br from-white to-orange-50 rounded-3xl p-10 border border-slate-100 hover:border-orange-200 hover:shadow-2xl transition-all duration-500">
             <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-amber-500 rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
               <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -678,15 +678,43 @@ html {
 /* 響應式字體 */
 @media (max-width: 768px) {
   .text-9xl {
-    font-size: 4rem;
+    font-size: 3rem;
+    line-height: 1;
   }
   
   .text-8xl {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    line-height: 1;
   }
   
   .text-7xl {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+}
+
+/* 手機端優化 */
+@media (max-width: 640px) {
+  .char-container {
+    margin: 0 0.25rem;
+  }
+  
+  .char-container .relative {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 觸控優化 */
+  .nav-link,
+  .group {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* 平板優化 */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .char-container .relative {
+    font-size: 5rem;
   }
 }
 </style>
