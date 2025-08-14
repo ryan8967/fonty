@@ -5,6 +5,9 @@ export default defineNuxtConfig({
   css: ['@/assets/css/main.css'],
   modules: ['@nuxtjs/tailwindcss'],
   
+  // SSR 設定優化
+  ssr: true,
+  
   // PWA 和移動端優化
   app: {
     head: {
@@ -21,8 +24,8 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=no' }
       ],
       link: [
-        { rel: 'manifest', href: '/manifest.json' },
-        { rel: 'apple-touch-icon', href: '/typersonal3.png' }
+        { rel: 'apple-touch-icon', href: '/typersonal3.png', sizes: '180x180' },
+        { rel: 'icon', type: 'image/png', href: '/typersonal3.png' }
       ]
     }
   },
@@ -33,14 +36,22 @@ export default defineNuxtConfig({
     minify: true
   },
 
-  // 性能優化
+  // 性能優化 - 修復實驗性功能問題
   experimental: {
-    payloadExtraction: false
+    payloadExtraction: false,
+    asyncContext: false
   },
   
   // 組件自動導入
   components: {
     global: true,
     dirs: ['~/components']
+  },
+
+  // 運行時配置
+  runtimeConfig: {
+    public: {
+      cookieSecure: process.env.NODE_ENV === 'production'
+    }
   }
 })

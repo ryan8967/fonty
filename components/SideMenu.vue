@@ -112,7 +112,7 @@ const mainNavItems = ref([
 ])
 
 const toolNavItems = ref([
-  { name: '上傳字型', path: '/upload', icon: UploadIcon },
+  { name: '字型工坊', path: '/workshop', icon: UploadIcon },
   { name: '測試頁面', path: '/test', icon: TestIcon }
 ])
 </script>

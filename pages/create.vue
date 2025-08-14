@@ -337,7 +337,7 @@ import { ref, watch } from "vue";
 const API_BASE_URL = "https://typersonal.dy6.click/8000";
 const imageUrl = ref("");
 const previewImage = ref("");
-const character = ref("字");
+const character = ref("字"); // 預設值
 const enableBlend = ref(true);
 const alpha = ref(0.5);
 const thickness = ref(0);
@@ -350,7 +350,16 @@ const hasUserAdjusted = ref(false); // 追蹤用戶是否已經進行調整
 
 onMounted(() => {
   const img = localStorage.getItem("fonty_api_image");
+  const savedCharacter = localStorage.getItem("fonty_character");
+  
   imageUrl.value = img || "";
+  
+  // 如果有儲存的字元，就使用儲存的字元
+  if (savedCharacter) {
+    character.value = savedCharacter;
+    console.log('從 localStorage 載入字元:', savedCharacter);
+  }
+  
   // 自動載入原始字型預覽
   if (img && character.value.trim()) {
     generateOriginalPreview();

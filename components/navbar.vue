@@ -2,21 +2,21 @@
   <div class="fixed top-0 left-0 right-0 z-40">
     <!-- Glassmorphism Navbar -->
     <nav class="backdrop-blur-md bg-white/80 border-b border-white/20 shadow-lg transition-all duration-300" :class="{ 'nav-scrolled': isScrolled, 'shrinked-nav': isSideMenuOpen }">
-      <div class="flex h-16 md:h-20 items-center justify-between px-4 md:px-6 lg:px-12 transition-all duration-700">
+      <div class="flex h-14 md:h-16 lg:h-20 items-center justify-between px-3 md:px-6 lg:px-12 transition-all duration-700">
         <!-- Left Side: Enhanced Logo -->
         <NuxtLink to="/" class="group">
-          <div class="flex items-center gap-2 md:gap-3 transition-all duration-300 hover:scale-105">
+          <div class="flex items-center gap-1.5 md:gap-2 lg:gap-3 transition-all duration-300 hover:scale-105">
             <!-- Animated Logo Icon -->
             <div class="relative">
               <div class="absolute inset-0 bg-gradient-to-r from-[#3A6B60]/10 to-[#5EA897]/10 rounded-xl blur-sm opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-              <div class="relative bg-white/50 backdrop-blur-sm p-1.5 md:p-2 rounded-xl border border-white/30 shadow-sm">
-                <img src="/typersonal2.png" alt="Typersonal Logo" class="h-6 w-6 md:h-8 md:w-8 object-contain" />
+              <div class="relative bg-white/50 backdrop-blur-sm p-1 md:p-1.5 lg:p-2 rounded-lg md:rounded-xl border border-white/30 shadow-sm">
+                <img src="/typersonal2.png" alt="Typersonal Logo" class="h-5 w-5 md:h-6 md:w-6 lg:h-8 lg:w-8 object-contain" />
               </div>
             </div>
             
             <!-- Enhanced Brand Name -->
             <div class="logo-text">
-              <h1 class="text-xl md:text-2xl lg:text-3xl font-black tracking-tight">
+              <h1 class="text-base md:text-xl lg:text-2xl xl:text-3xl font-black tracking-tight">
                 <span class="text-[#E29930] group-hover:text-[#d48826] transition-colors duration-300">Type</span>
                 <span class="bg-gradient-to-r from-[#3A6B60] to-[#5EA897] bg-clip-text text-transparent">rsonal</span>
               </h1>
@@ -35,16 +35,16 @@
         </div>
 
         <!-- Right Side: Enhanced Auth and Menu -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 md:gap-4">
           <!-- Enhanced Auth Component -->
-          <div class="auth-wrapper">
+          <div class="auth-wrapper scale-90 md:scale-100">
             <AuthComponent />
           </div>
           
           <!-- Enhanced Menu Button -->
           <button
             @click="toggleMenu"
-            class="menu-button relative p-3 rounded-full transition-all duration-300 hover:bg-white/20 group"
+            class="menu-button relative p-2 md:p-3 rounded-full transition-all duration-300 hover:bg-white/20 group"
             :class="{ 'menu-active': isSideMenuOpen }"
           >
             <div class="menu-icon">
@@ -75,7 +75,7 @@
   </div>
   
   <!-- Spacer for Fixed Navbar -->
-  <div class="h-20"></div>
+  <div class="h-14 md:h-16 lg:h-20"></div>
   <slot />
 </template>
 
@@ -89,9 +89,9 @@ const isScrolled = ref(false);
 // Navigation Links
 const navLinks = ref([
   { name: '首頁', path: '/' },
-  { name: '創作', path: '/create' },
+  // { name: '創作', path: '/create' },
   { name: '市集', path: '/market' },
-  { name: '上傳', path: '/upload' }
+  { name: '字型工坊', path: '/workshop' }
 ]);
 
 const toggleMenu = () => {
@@ -163,14 +163,21 @@ onUnmounted(() => {
 
 /* Enhanced Menu Button */
 .menu-button {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, rgba(58, 107, 96, 0.1), rgba(94, 168, 151, 0.1));
   border: 1px solid rgba(58, 107, 96, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 768px) {
+  .menu-button {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 .menu-button:hover {
@@ -181,12 +188,19 @@ onUnmounted(() => {
 
 /* Animated Menu Icon */
 .menu-icon {
-  width: 20px;
-  height: 14px;
+  width: 16px;
+  height: 12px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .menu-icon {
+    width: 20px;
+    height: 14px;
+  }
 }
 
 .menu-line {

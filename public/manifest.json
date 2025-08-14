@@ -29,7 +29,7 @@
       "name": "開始創作",
       "short_name": "創作",
       "description": "快速開始字型創作",
-      "url": "/upload",
+      "url": "/workshop",
       "icons": [
         {
           "src": "/green-pen.png",
