@@ -22,6 +22,10 @@ const auth = getAuth(app)
 const googleProvider = new GoogleAuthProvider()
 googleProvider.addScope('email')
 googleProvider.addScope('profile')
+// 確保登出時清除所有狀態
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+})
 
 export { auth, googleProvider }
 

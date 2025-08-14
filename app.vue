@@ -1,7 +1,8 @@
 <template>
   <div class="bg-[#F8F3EA] min-h-screen">
-    <navbar />
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 

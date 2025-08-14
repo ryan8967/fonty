@@ -90,8 +90,13 @@ const handleGoogleLogin = async () => {
 const handleLogout = async () => {
   isLoggingOut.value = true
   try {
-    const { signOut } = await import('~/composables/useAuth.js')
-    await signOut()
+    console.log('嘗試登出...')
+    // 直接調用 userState 的方法來避免導入問題
+    await userState.signOutUser()
+    console.log('登出完成')
+  } catch (error) {
+    console.error('登出錯誤:', error)
+    alert('登出失敗，請稍後再試')
   } finally {
     isLoggingOut.value = false
   }

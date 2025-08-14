@@ -1,5 +1,5 @@
 import { reactive, computed } from 'vue'
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
+import { signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth'
 import { auth, googleProvider } from '~/plugins/firebase.js'
 
 // 全域用戶狀態
@@ -30,7 +30,8 @@ export const userState = reactive({
   // 登出
   async signOutUser() {
     try {
-      await signOut(auth)
+      console.log('開始登出流程...')
+      await firebaseSignOut(auth)
       this.user = null
       this.isAuthenticated = false
       console.log('登出成功')
@@ -70,6 +71,10 @@ export default function useAuth() {
     signOutUser: userState.signOutUser
   }
 }
+
+// 導出個別函數供組件使用
+export const signIn = userState.signInWithGoogle.bind(userState)
+export const signOut = userState.signOutUser.bind(userState)
 
 // 在應用程式啟動時初始化
 if (process.client) {
