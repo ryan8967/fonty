@@ -1,95 +1,47 @@
 <template>
-  <div class="text-center pt-[7vh] font-semibold text-xl">
-    <p>Login or Sign Up</p>
-  </div>
-  <div class="login-page">
-    <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" required />
+  <div class="min-h-screen bg-[#F8F3EA] flex items-center justify-center px-4">
+    <div class="max-w-md w-full">
+      <!-- 標題 -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-[#3A6B60] mb-2">登入 Typersonal</h1>
+        <p class="text-gray-600">使用 Google 帳號快速登入</p>
       </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required />
+
+      <!-- 登入卡片 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+        <!-- Google 登入 -->
+        <div class="text-center">
+          <AuthComponent />
+        </div>
       </div>
-      <button type="submit">Login</button>
-      <p>
-        Don't have an account?
-        <a href="/signup" class="text-[#800080]">Sign Up</a>
-      </p>
-    </form>
+
+      <!-- 返回首頁 -->
+      <div class="text-center mt-6">
+        <NuxtLink 
+          to="/" 
+          class="text-[#3A6B60] hover:text-[#5EA897] font-medium flex items-center justify-center gap-2"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+          </svg>
+          返回首頁
+        </NuxtLink>
+      </div>
+    </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      email: "",
-      password: "",
-    };
-  },
-  methods: {
-    handleSubmit() {
-      // Handle login logic here
-      console.log("Email:", this.email);
-      console.log("Password:", this.password);
-      alert("Login submitted!");
-    },
-  },
-};
+<script setup>
+// 檢查用戶是否已登入，如果是則重導向到首頁
+const { user } = useAuth()
+
+watch(user, (newUser) => {
+  if (newUser) {
+    navigateTo('/')
+  }
+}, { immediate: true })
 </script>
 
 <style scoped>
-.login-page {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ccc; /* Ensure the border is always visible */
-  border-radius: 4px; /* Optional: Add rounded corners */
-}
-
-input:focus {
-  outline: none;
-  border-color: #007bff; /* Highlight border on focus */
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5); /* Optional: Add a glow effect */
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-p {
-  text-align: center;
-  margin-top: 15px;
-}
+/* 頁面樣式已經在 template 中使用 Tailwind CSS 處理 */
 </style>

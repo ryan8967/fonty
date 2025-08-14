@@ -36,6 +36,11 @@
 </template>
 
 <script setup>
+// 添加認證中介軟體
+definePageMeta({
+  middleware: 'auth'
+})
+
 import { ref, computed } from "vue";
 import productCard from "./productCard.vue";
 

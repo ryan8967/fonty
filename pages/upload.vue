@@ -53,6 +53,11 @@
 </template>
 
 <script setup>
+// 添加認證中介軟體
+definePageMeta({
+  middleware: 'auth'
+})
+
 import { ref } from "vue";
 import { useRouter } from "vue-router"
 const router = useRouter();

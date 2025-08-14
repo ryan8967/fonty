@@ -327,6 +327,11 @@
 </template>
 
 <script setup>
+// 添加認證中介軟體
+definePageMeta({
+  middleware: 'auth'
+})
+
 import { ref, watch } from "vue";
 
 const API_BASE_URL = "https://typersonal.dy6.click/8000";

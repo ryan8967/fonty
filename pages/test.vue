@@ -86,6 +86,11 @@
 </template>
 
 <script setup>
+// 添加認證中介軟體
+definePageMeta({
+  middleware: 'auth'
+})
+
 import { ref, watch } from 'vue'
 
 // ✅ 改為你的正式 Cloudflare 代理域名，前後端都走 HTTPS 避免混合內容問題
