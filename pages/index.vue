@@ -8,6 +8,7 @@
       <div class="absolute inset-0">
         <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-orange-100 to-amber-100 rounded-full blur-3xl opacity-40"></div>
         <div class="absolute bottom-20 right-1/4 w-80 h-80 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-full blur-3xl opacity-30"></div>
+        <div class="absolute top-40 right-1/3 w-72 h-72 bg-gradient-to-br from-[#3A6B60]/10 to-[#5EA897]/10 rounded-full blur-3xl opacity-25"></div>
       </div>
       
       <div class="relative max-w-6xl mx-auto px-6 text-center">
@@ -34,10 +35,57 @@
 
         <!-- Typography Showcase -->
         <div class="mb-16">
-          <div class="flex justify-center items-center space-x-12 mb-12">
-            <div class="text-9xl font-black text-slate-800 hover:scale-110 transition-all duration-500 cursor-pointer hover:text-orange-600">字</div>
-            <div class="text-9xl font-medium text-slate-600 hover:scale-110 transition-all duration-500 cursor-pointer hover:text-amber-600">訂</div>
-            <div class="text-9xl font-light text-slate-400 hover:scale-110 transition-all duration-500 cursor-pointer hover:text-yellow-600">藝</div>
+          <!-- 增強版字訂藝動畫 -->
+          <div class="relative flex justify-center items-center space-x-8 md:space-x-12 mb-12">
+            <!-- 背景裝飾 -->
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-orange-50/30 to-transparent blur-sm"></div>
+            <div class="absolute -inset-4 bg-gradient-to-r from-[#3A6B60]/5 via-transparent to-[#5EA897]/5 rounded-3xl"></div>
+            
+            <!-- 字 -->
+            <div class="char-container relative group">
+              <div class="absolute -inset-2 bg-gradient-to-br from-orange-400/20 to-amber-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+              <div class="relative text-6xl md:text-9xl font-black text-slate-800 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-3 hover:text-orange-600" 
+                   style="animation: float1 4s ease-in-out infinite;">
+                字
+              </div>
+              <!-- 裝飾元素 -->
+              <div class="absolute -top-2 -right-2 w-3 h-3 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full opacity-60 animate-ping"></div>
+            </div>
+            
+            <!-- 訂 -->
+            <div class="char-container relative group">
+              <div class="absolute -inset-2 bg-gradient-to-br from-[#3A6B60]/20 to-[#5EA897]/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+              <div class="relative text-6xl md:text-9xl font-medium text-slate-600 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:-rotate-2 hover:text-[#3A6B60]" 
+                   style="animation: float2 4s ease-in-out infinite 0.5s;">
+                訂
+              </div>
+              <!-- 裝飾元素 -->
+              <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-gradient-to-br from-[#3A6B60] to-[#5EA897] rounded-full opacity-70 animate-pulse"></div>
+            </div>
+            
+            <!-- 藝 -->
+            <div class="char-container relative group">
+              <div class="absolute -inset-2 bg-gradient-to-br from-amber-400/20 to-yellow-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+              <div class="relative text-6xl md:text-9xl font-light text-slate-400 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-1 hover:text-yellow-600" 
+                   style="animation: float3 4s ease-in-out infinite 1s;">
+                藝
+              </div>
+              <!-- 裝飾元素 -->
+              <div class="absolute -top-1 left-1/2 w-1 h-4 bg-gradient-to-t from-transparent to-yellow-500 rounded-full opacity-50 animate-bounce"></div>
+            </div>
+            
+          </div>
+          
+          <!-- 底部描述文字 -->
+          <div class="text-center">
+            <p class="text-lg text-slate-600 mb-2">創意 × 技術 × 藝術</p>
+            <div class="flex justify-center items-center space-x-2 text-sm text-slate-500">
+              <span class="px-3 py-1 bg-gradient-to-r from-orange-100 to-amber-100 rounded-full">字型設計</span>
+              <span class="w-1 h-1 bg-[#3A6B60] rounded-full"></span>
+              <span class="px-3 py-1 bg-gradient-to-r from-[#3A6B60]/10 to-[#5EA897]/10 rounded-full">AI 生成</span>
+              <span class="w-1 h-1 bg-orange-400 rounded-full"></span>
+              <span class="px-3 py-1 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-full">個性化</span>
+            </div>
           </div>
         </div>
 
@@ -45,7 +93,7 @@
         <div class="mb-20">
           <div v-if="!user && !isLoading" class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
             <NuxtLink 
-              to="/login" 
+              to="/upload" 
               class="group bg-gradient-to-r from-orange-500 to-amber-500 text-white px-10 py-4 rounded-full font-bold text-xl shadow-2xl hover:shadow-orange-500/25 hover:scale-105 transition-all duration-300"
             >
               <span class="flex items-center space-x-3">
@@ -56,7 +104,7 @@
               </span>
             </NuxtLink>
             
-            <button class="group bg-white text-slate-700 px-10 py-4 rounded-full font-bold text-xl border-2 border-orange-200 hover:border-orange-300 hover:shadow-xl transition-all duration-300">
+            <button class="group bg-gradient-to-r from-[#3A6B60] to-[#5EA897] text-white px-10 py-4 rounded-full font-bold text-xl shadow-2xl hover:shadow-[#3A6B60]/25 hover:scale-105 transition-all duration-300">
               <span class="flex items-center space-x-3">
                 <svg class="w-6 h-6 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
@@ -150,8 +198,8 @@
             </div>
           </div>
 
-          <div class="group bg-gradient-to-br from-white to-orange-50 rounded-3xl p-10 border border-slate-100 hover:border-amber-200 hover:shadow-2xl transition-all duration-500">
-            <div class="w-20 h-20 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+          <div class="group bg-gradient-to-br from-white to-[#3A6B60]/5 rounded-3xl p-10 border border-slate-100 hover:border-[#3A6B60]/30 hover:shadow-2xl hover:shadow-[#3A6B60]/10 transition-all duration-500">
+            <div class="w-20 h-20 bg-gradient-to-br from-[#3A6B60] to-[#5EA897] rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
               <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
                 <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
@@ -160,12 +208,12 @@
             <h3 class="text-2xl font-bold text-slate-800 mb-6">即時預覽</h3>
             <p class="text-slate-600 leading-relaxed mb-6">所見即所得的設計體驗，每一個調整都能即時看到效果，大幅提升創作效率。</p>
             <div class="w-full bg-slate-100 rounded-full h-2">
-              <div class="h-2 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full w-[92%] transition-all duration-1000"></div>
+              <div class="h-2 bg-gradient-to-r from-[#3A6B60] to-[#5EA897] rounded-full w-[92%] transition-all duration-1000"></div>
             </div>
           </div>
 
-          <div class="group bg-gradient-to-br from-white to-orange-50 rounded-3xl p-10 border border-slate-100 hover:border-orange-200 hover:shadow-2xl transition-all duration-500">
-            <div class="w-20 h-20 bg-gradient-to-br from-orange-600 to-red-500 rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+          <div class="group bg-gradient-to-br from-white to-amber-50 rounded-3xl p-10 border border-slate-100 hover:border-amber-200 hover:shadow-2xl transition-all duration-500">
+            <div class="w-20 h-20 bg-gradient-to-br from-amber-500 to-orange-500 rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
               <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"/>
               </svg>
@@ -173,7 +221,7 @@
             <h3 class="text-2xl font-bold text-slate-800 mb-6">一鍵分享</h3>
             <p class="text-slate-600 leading-relaxed mb-6">完成創作後可一鍵分享到社群平台，或直接下載高品質字型檔案供商業使用。</p>
             <div class="w-full bg-slate-100 rounded-full h-2">
-              <div class="h-2 bg-gradient-to-r from-orange-600 to-red-500 rounded-full w-[88%] transition-all duration-1000"></div>
+              <div class="h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full w-[88%] transition-all duration-1000"></div>
             </div>
           </div>
         </div>
@@ -283,7 +331,7 @@
         
         <div v-if="!user" class="mb-16">
           <NuxtLink 
-            to="/login" 
+            to="/upload" 
             class="inline-block bg-gradient-to-r from-orange-500 to-amber-500 text-white px-16 py-5 rounded-full font-black text-2xl shadow-2xl hover:shadow-orange-500/25 hover:scale-105 transition-all duration-300"
           >
             免費開始創作
@@ -442,7 +490,7 @@ const texts = [
   "創造獨特字型風格",
   "AI 智慧字型生成", 
   "個性化字體設計",
-  "專業級字型工具"
+  "字型個人化工具"
 ]
 const displayText = ref("")
 const currentTextIndex = ref(0)
@@ -561,6 +609,70 @@ html {
 /* 動畫優化 */
 * {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 浮動動畫 */
+@keyframes float1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-15px) rotate(-2deg);
+  }
+}
+
+@keyframes float2 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-15px) rotate(-3deg);
+  }
+  66% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes float3 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  20% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  40% {
+    transform: translateY(-12px) rotate(-1deg);
+  }
+  60% {
+    transform: translateY(-6px) rotate(2deg);
+  }
+  80% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(234, 88, 12, 0.3), 0 0 40px rgba(234, 88, 12, 0.1);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(234, 88, 12, 0.5), 0 0 60px rgba(234, 88, 12, 0.2);
+  }
+}
+
+@keyframes tealGlow {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(58, 107, 96, 0.3), 0 0 40px rgba(58, 107, 96, 0.1);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(58, 107, 96, 0.5), 0 0 60px rgba(58, 107, 96, 0.2);
+  }
 }
 
 /* 響應式字體 */

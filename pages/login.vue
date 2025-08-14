@@ -32,12 +32,12 @@
 </template>
 
 <script setup>
-// 檢查用戶是否已登入，如果是則重導向到首頁
+// 檢查用戶是否已登入，如果是則重導向到 upload 頁面
 const { user } = useAuth()
 
 watch(user, (newUser) => {
   if (newUser) {
-    navigateTo('/')
+    navigateTo('/upload')
   }
 }, { immediate: true })
 </script>
