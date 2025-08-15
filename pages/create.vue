@@ -357,7 +357,6 @@ onMounted(() => {
   // 如果有儲存的字元，就使用儲存的字元
   if (savedCharacter) {
     character.value = savedCharacter;
-    console.log('從 localStorage 載入字元:', savedCharacter);
   }
   
   // 自動載入原始字型預覽
@@ -428,8 +427,6 @@ watch(character, async () => {
 
 function toggleTag(option) {
   hasUserAdjusted.value = true;
-  
-  console.log("切換標籤:", option);
   
   if (styleOption.value.includes(option)) {
     // 移除選中的標籤

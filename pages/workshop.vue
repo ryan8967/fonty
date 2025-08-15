@@ -742,8 +742,6 @@ const clearPreview = () => {
 }
 
 const selectExample = (index) => {
-  console.log('selectExample 被調用，index:', index)
-  
   // Clear uploaded file when selecting example
   file.value = null
   previewUrl.value = ''
@@ -756,7 +754,6 @@ const selectExample = (index) => {
   
   // Set selected example
   selectedExample.value = index
-  console.log('selectedExample.value 設置為:', selectedExample.value)
 }
 
 const getActionDescription = () => {
@@ -794,8 +791,6 @@ const getActionDescription = () => {
     
     if (selectedExample.value) {
       // Handle example selection
-      console.log('使用範例字型:', selectedExample.value)
-      
       const exampleImageUrl = `/ex${selectedExample.value}.png`
       const response = await fetch(exampleImageUrl)
       if (!response.ok) throw new Error('無法載入範例圖片')
@@ -806,7 +801,6 @@ const getActionDescription = () => {
       
     } else if (file.value) {
       // Handle file upload
-      console.log('使用上傳的圖片:', file.value.name)
       formData.append('reference_image', file.value)
     }
     
@@ -821,7 +815,6 @@ const getActionDescription = () => {
     }
     
     const result = await apiResponse.json()
-    console.log('Generate successful:', result)
     
     // 確保 result.image 存在
     if (!result.image) {
@@ -830,7 +823,6 @@ const getActionDescription = () => {
     
     // 設定生成的圖片 (進入第二階段)
     generatedImage.value = result.image
-    console.log('進入第二階段，圖片:', result.image)
     
     // 同時儲存到 localStorage (為了相容性)
     localStorage.setItem('fonty_api_image', result.image)
@@ -903,7 +895,6 @@ const blend = async () => {
     
     const result = await response.json()
     blendedImage.value = result.image
-    console.log('Blend successful:', result)
     
   } catch (error) {
     console.error('Blend failed:', error)

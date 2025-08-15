@@ -18,16 +18,6 @@
             <img src="/typersonal3.png" alt="Typersonal Logo" class="w-16 h-16 md:w-32 md:h-32 mx-auto object-contain">
           </div>
           
-          <!-- <h1 class="text-7xl md:text-8xl font-black mb-8 tracking-tight">
-            <span class="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
-              字訂藝
-            </span>
-          </h1>
-           -->
-          <!-- <p class="text-2xl md:text-3xl text-slate-700 mb-6 font-semibold">
-            AI 驅動的個性化字型設計
-          </p> -->
-          
           <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-slate-700 max-w-4xl mx-auto leading-relaxed mb-6 md:mb-8 font-medium px-4">
             {{ displayText }}<span class="animate-pulse text-orange-500">|</span>
           </p>
@@ -663,15 +653,6 @@ html {
   }
   50% {
     text-shadow: 0 0 30px rgba(234, 88, 12, 0.5), 0 0 60px rgba(234, 88, 12, 0.2);
-  }
-}
-
-@keyframes tealGlow {
-  0%, 100% {
-    text-shadow: 0 0 20px rgba(58, 107, 96, 0.3), 0 0 40px rgba(58, 107, 96, 0.1);
-  }
-  50% {
-    text-shadow: 0 0 30px rgba(58, 107, 96, 0.5), 0 0 60px rgba(58, 107, 96, 0.2);
   }
 }
 
