@@ -218,218 +218,129 @@
       </div>
     </section>
 
-    <!-- Interactive Demo Section -->
-    <section id="demo" class="py-32 bg-gradient-to-br from-orange-50 via-white to-amber-50 relative overflow-hidden">
-      <!-- 背景裝飾 -->
-      <div class="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-orange-200/30 to-amber-200/30 rounded-full blur-3xl animate-float-slow"></div>
-      <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-r from-[#3A6B60]/20 to-[#5EA897]/20 rounded-full blur-3xl animate-float-slow"></div>
-      
-      <div class="max-w-7xl mx-auto px-6 relative z-10">
-        <!-- Header -->
-        <div class="text-center mb-20">
-          <div class="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border border-orange-200/50 mb-8">
-            <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
-            <span class="text-orange-600 font-semibold text-sm uppercase tracking-wide">Live Preview</span>
-          </div>
-          <h2 class="text-5xl md:text-6xl font-black text-slate-800 mb-8 bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
-            即時字型魔法預覽
-          </h2>
-          <p class="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-            自動展示豐富的繁體中文字型和手寫體效果，包含即時調整功能
-          </p>
+<!-- Interactive Demo Section -->
+<section id="demo" class="py-32 bg-gradient-to-br from-orange-50 via-white to-amber-50 relative overflow-hidden">
+  <!-- 柔和背景光暈（更少、更淡） -->
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute -top-10 left-1/3 w-[28rem] h-[28rem] rounded-full bg-gradient-to-br from-orange-100/50 to-amber-100/30 blur-3xl"></div>
+    <div class="absolute -bottom-10 right-1/3 w-[22rem] h-[22rem] rounded-full bg-gradient-to-br from-[#3A6B60]/10 to-[#5EA897]/10 blur-3xl"></div>
+  </div>
+
+  <div class="relative max-w-6xl mx-auto px-6">
+    <!-- Header（極簡） -->
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900">
+        即時字型預覽
+      </h2>
+      <p class="mt-4 text-slate-500 text-base md:text-lg">
+        自動輪播字型與品牌色，靜靜展示質感
+      </p>
+    </div>
+
+    <!-- Minimal Preview Card -->
+    <div class="bg-white/80 backdrop-blur-xl border border-slate-100 rounded-[28px] shadow-[0_10px_40px_-10px_rgba(2,6,23,0.08)] overflow-hidden">
+      <!-- 細框頂欄 -->
+      <div class="flex items-center justify-between px-6 md:px-8 py-4 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-sm text-slate-500">Live</span>
         </div>
-        
-        <!-- Automated Demo Interface -->
-        <div class="bg-white rounded-4xl shadow-2xl border border-slate-100/50 backdrop-blur-xl overflow-hidden">
-          <!-- Top Control Bar -->
-          <div class="bg-gradient-to-r from-orange-500/5 to-amber-500/5 border-b border-slate-100 px-8 py-6">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-4">
-                <div class="flex gap-2">
-                  <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                  <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                  <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                </div>
-                <span class="text-slate-600 font-medium">AI 字型工坊演示</span>
-              </div>
-              <div class="flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-full">
-                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span class="text-slate-600 text-sm font-medium">自動演示中</span>
-              </div>
+        <span class="text-sm text-slate-400">Auto Preview</span>
+      </div>
+
+      <!-- 大字區（主角） -->
+      <div class="relative p-10 md:p-16 isolate">
+        <!-- 文字/字型切換過場（更順） -->
+        <Transition name="fade-scale" mode="out-in">
+          <div
+            :key="currentFontIndex + '-' + currentAutoTextIndex"
+            class="relative z-10 font-preview select-none text-center leading-[1.05] tracking-tight transition-all duration-1000"
+            :style="autoFontStyle"
+          >
+            <div class="text-[9vw] md:text-[7vw] lg:text-[6vw]">
+              {{ autoDisplayText }}
             </div>
           </div>
+        </Transition>
 
-          <div class="p-8 md:p-12">
-            <!-- Auto Preview Area -->
-            <div class="bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-3xl p-12 mb-12 border border-slate-200/50">
-              <div class="text-center mb-8">
-                <!-- 自動切換的字型預覽 -->
-                <div class="relative">
-                  <div 
-                    class="text-6xl md:text-8xl mb-6 transition-all duration-1000 select-none font-preview"
-                    :style="autoFontStyle"
-                  >
-                    {{ autoDisplayText }}
-                  </div>
-                  
-                  <!-- 漸變覆蓋層效果 -->
-                  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer pointer-events-none"></div>
-                </div>
+        <!-- shimmer 放最底層，避免遮到任何互動元素 -->
+        <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div>
 
-                <!-- 自動顯示字型資訊 -->
-                <div class="flex flex-wrap items-center justify-center gap-3 text-slate-500 opacity-75">
-                  <div class="w-1 h-1 bg-slate-400 rounded-full animate-pulse"></div>
-                  <span class="text-sm">{{ currentAutoFont.name }}</span>
-                  <div class="w-1 h-1 bg-slate-400 rounded-full animate-pulse"></div>
-                  <span class="text-sm">{{ currentAutoFont.description }}</span>
-                  <div v-if="currentAutoFont.isHandwriting" class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">
-                    手寫體
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Animated Feature Showcase -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-              <!-- Real-time Weight Adjustment -->
-              <div class="bg-white rounded-2xl p-8 border border-slate-200/50 shadow-sm">
-                <div class="flex items-center gap-3 mb-6">
-                  <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold text-slate-800">即時粗細調整</h4>
-                    <p class="text-sm text-slate-500">AI 智慧字重控制</p>
-                  </div>
-                </div>
-
-                <!-- 動態滑桿演示 -->
-                <div class="relative mb-6">
-                  <div class="w-full h-3 bg-gradient-to-r from-slate-200 via-orange-300 to-orange-500 rounded-full">
-                    <div 
-                      class="absolute top-0 w-6 h-6 bg-white border-2 border-orange-500 rounded-full shadow-lg transition-all duration-1000 transform -translate-y-1.5"
-                      :style="{ left: `${(autoFontWeight - 100) / 8}%` }"
-                    ></div>
-                  </div>
-                  <div class="text-center mt-3">
-                    <span class="text-sm font-medium text-orange-600">{{ autoFontWeight }} 字重</span>
-                  </div>
-                </div>
-
-                <div class="text-center">
-                  <div 
-                    class="text-3xl font-bold transition-all duration-1000"
-                    :style="{ fontWeight: autoFontWeight, color: '#E29930' }"
-                  >
-                    字型
-                  </div>
-                </div>
-              </div>
-
-              <!-- Font Family Showcase -->
-              <div class="bg-white rounded-2xl p-8 border border-slate-200/50 shadow-sm">
-                <div class="flex items-center gap-3 mb-6">
-                  <div class="w-10 h-10 bg-gradient-to-br from-teal-600 to-emerald-600 rounded-xl flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold text-slate-800">手寫字型庫</h4>
-                    <p class="text-sm text-slate-500">6 種獨特風格</p>
-                  </div>
-                </div>
-
-                <div class="space-y-4">
-                  <div 
-                    v-for="(font, index) in previewFonts" 
-                    :key="index"
-                    class="flex items-center justify-between p-3 rounded-lg border transition-all duration-500"
-                    :class="index === currentFontIndex ? 'bg-orange-50 border-orange-200 transform scale-105' : 'bg-slate-50 border-slate-200'"
-                  >
-                    <div>
-                      <div class="font-medium text-sm text-slate-800">{{ font.name }}</div>
-                      <div class="text-xs text-slate-500">{{ font.category }}</div>
-                    </div>
-                    <div v-if="font.isHandwriting" class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">
-                      手寫
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Color & Effects -->
-              <div class="bg-white rounded-2xl p-8 border border-slate-200/50 shadow-sm">
-                <div class="flex items-center gap-3 mb-6">
-                  <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4z" clip-rule="evenodd"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold text-slate-800">品牌色彩系統</h4>
-                    <p class="text-sm text-slate-500">和諧視覺體驗</p>
-                  </div>
-                </div>
-
-                <!-- 動態顏色展示 -->
-                <div class="flex justify-center gap-2 mb-6">
-                  <div 
-                    v-for="(color, index) in demoColors" 
-                    :key="index"
-                    class="w-8 h-8 rounded-full transition-all duration-500 border-2"
-                    :class="index === currentColorIndex ? 'scale-125 border-slate-400' : 'scale-100 border-slate-200'"
-                    :style="{ backgroundColor: color }"
-                  ></div>
-                </div>
-
-                <div class="text-center">
-                  <div 
-                    class="text-3xl font-bold transition-all duration-1000"
-                    :style="{ 
-                      color: demoColors[currentColorIndex],
-                      textShadow: autoShadowIntensity > 30 ? `0 4px 12px ${demoColors[currentColorIndex]}30` : 'none'
-                    }"
-                  >
-                    顏色
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Call to Action -->
-            <div class="text-center">
-              <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-3xl p-12 border border-orange-200/50 mb-8">
-                <h3 class="text-3xl font-bold text-slate-800 mb-4">體驗完整功能</h3>
-                <p class="text-slate-600 mb-8 text-lg">進入專業工坊，享受完整的字型調整和預覽體驗</p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <NuxtLink 
-                    to="/font-preview" 
-                    class="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-10 py-5 rounded-full font-bold text-xl hover:shadow-xl hover:scale-105 transition-all duration-300"
-                  >
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
-                    </svg>
-                    進入字型工坊
-                  </NuxtLink>
-                  <NuxtLink 
-                    to="/workshop" 
-                    class="inline-flex items-center gap-3 bg-white text-slate-600 px-10 py-5 rounded-full font-bold text-xl border-2 border-slate-200 hover:border-orange-300 hover:shadow-lg transition-all duration-300"
-                  >
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
-                    </svg>
-                    開始創作
-                  </NuxtLink>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- 次資訊（單行膠囊） -->
+        <div class="relative z-10 mt-6 flex items-center justify-center gap-3">
+          <span class="px-3 py-1 rounded-full border border-slate-200 text-xs text-slate-600 bg-white/70">
+            {{ currentAutoFont.name }}
+          </span>
+          <span
+            v-if="currentAutoFont.isHandwriting"
+            class="px-2.5 py-1 rounded-full text-[11px] bg-orange-50 text-orange-600 border border-orange-200"
+          >
+            手寫
+          </span>
         </div>
       </div>
-    </section>
+
+      <!-- 底部輕量控制顯示 -->
+      <div class="px-8 pb-10">
+        <!-- 品牌色點（帶微縮放過場） -->
+        <div class="flex items-center justify-center gap-3 mb-6">
+          <span
+            v-for="(color, index) in demoColors"
+            :key="index"
+            class="w-7 h-7 rounded-full border transition-all duration-300 will-change-transform"
+            :class="index === currentColorIndex ? 'scale-110 border-slate-400' : 'scale-100 border-slate-200'"
+            :style="{ backgroundColor: color }"
+          ></span>
+        </div>
+
+        <!-- 字重細條（修正圓點被裁、層級正確） -->
+<!-- 字重細條（平滑補間 + 層級正確） -->
+<div class="mx-auto max-w-2xl pt-3 pb-2">
+  <div class="relative h-1.5 w-full rounded-full bg-slate-200 overflow-visible">
+    <!-- 背景漸變進度條（會隨權重平滑伸縮） -->
+    <div
+      class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-orange-300 to-orange-500/80 transition-all duration-700 ease-out will-change-[width]"
+      :style="{ width: `${(animatedFontWeight - 100) / 8}%` }"
+    ></div>
+
+    <!-- 透明擴大點擊層（預留互動） -->
+    <div class="absolute inset-x-0 -top-2 -bottom-2"></div>
+
+    <!-- 指示圓點（綁 animatedFontWeight，使用 left 動畫） -->
+    <div
+      class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-4 h-4 rounded-full bg-white border border-orange-500 shadow-sm transition-[left] duration-700 ease-out"
+      :style="{ left: `${(animatedFontWeight - 100) / 8}%` }"
+    ></div>
+  </div>
+  <div class="mt-2 text-center text-xs text-slate-400">
+    Weight {{ animatedFontWeight }}
+  </div>
+</div>
+
+      </div>
+    </div>
+
+    <!-- CTA（單主鍵 + 次要連結，留白大） -->
+    <div class="text-center mt-16">
+      <NuxtLink
+        to="/font-preview"
+        class="inline-flex items-center gap-2 px-8 py-4 rounded-full text-white font-semibold bg-slate-900 hover:opacity-90 transition"
+      >
+        進入字型預覽
+        <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h9.586l-3.293-3.293a1 1 0 111.414-1.414l5.001 5a1 1 0 010 1.414l-5 5.001a1 1 0 11-1.414-1.414L13.586 11H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+        </svg>
+      </NuxtLink>
+      <div class="mt-4">
+        <NuxtLink to="/workshop" class="text-slate-500 hover:text-slate-700 text-sm underline-offset-4 hover:underline">
+          先看看範例
+        </NuxtLink>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
     <!-- Stats Section -->
     <section class="py-24 bg-gradient-to-r from-orange-500 to-amber-500 text-white">
@@ -883,6 +794,33 @@ const comparisonFont2 = ref(3) // 華康手札體
 
 // 計算當前選中的字型
 const selectedFont = computed(() => fontFamilies.value[selectedFontIndex.value])
+
+// ---- 平滑補間用的動畫字重 ----
+const animatedFontWeight = ref(autoFontWeight.value)
+
+const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3)
+
+/**
+ * 將 animatedFontWeight 在 duration 內從目前值補間到 target
+ */
+const tweenToWeight = (target, duration = 700) => {
+  const start = performance.now()
+  const from = animatedFontWeight.value
+  const delta = target - from
+
+  const step = (now) => {
+    const p = Math.min((now - start) / duration, 1)
+    animatedFontWeight.value = Math.round(from + delta * easeOutCubic(p))
+    if (p < 1) requestAnimationFrame(step)
+  }
+  requestAnimationFrame(step)
+}
+
+// 當 autoFontWeight 改變（你的定時器會換值），用補間慢慢滑過去
+watch(autoFontWeight, (to) => {
+  tweenToWeight(to, 700) // 700ms 可自行調整
+})
+
 
 // 計算完整的字型樣式
 const computedFontStyle = computed(() => {
@@ -1342,4 +1280,22 @@ html {
     font-size: 5rem;
   }
 }
+
+/* 字型/文字切換過場：淡入 + 微縮放 */
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: opacity .32s cubic-bezier(0.2, 0, 0, 1),
+              transform .32s cubic-bezier(0.2, 0, 0, 1);
+}
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  opacity: 0;
+  transform: translateY(6px) scale(0.995);
+}
+.fade-scale-enter-to,
+.fade-scale-leave-from {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
 </style>
