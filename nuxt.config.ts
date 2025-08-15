@@ -2,11 +2,8 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  css: ['@/assets/css/main.css'],
+  css: ['@/assets/css/main.css', '@/assets/css/fonts.css'],
   modules: ['@nuxtjs/tailwindcss'],
-  
-  // SSR 設定優化
-  ssr: true,
   
   // PWA 和移動端優化
   app: {
@@ -24,8 +21,12 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=no' }
       ],
       link: [
-        { rel: 'apple-touch-icon', href: '/typersonal3.png', sizes: '180x180' },
-        { rel: 'icon', type: 'image/png', href: '/typersonal3.png' }
+        { rel: 'manifest', href: '/manifest.json' },
+        { rel: 'apple-touch-icon', href: '/typersonal3.png' },
+        // Google Fonts for basic Chinese fonts
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&family=Noto+Serif+TC:wght@200;300;400;500;600;700;800;900&display=swap' }
       ]
     }
   },
@@ -36,22 +37,14 @@ export default defineNuxtConfig({
     minify: true
   },
 
-  // 性能優化 - 修復實驗性功能問題
+  // 性能優化
   experimental: {
-    payloadExtraction: false,
-    asyncContext: false
+    payloadExtraction: false
   },
   
   // 組件自動導入
   components: {
     global: true,
     dirs: ['~/components']
-  },
-
-  // 運行時配置
-  runtimeConfig: {
-    public: {
-      cookieSecure: process.env.NODE_ENV === 'production'
-    }
   }
 })

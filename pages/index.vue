@@ -218,49 +218,215 @@
       </div>
     </section>
 
-    <!-- Demo Section -->
-    <section id="demo" class="py-32 bg-gradient-to-br from-orange-50 to-amber-50">
-      <div class="max-w-5xl mx-auto px-6">
-        <div class="text-center mb-16">
-          <h2 class="text-5xl font-black text-slate-800 mb-8">即時字型預覽</h2>
-          <p class="text-xl text-slate-600">輸入文字，立即看到不同字型風格的魔法效果</p>
+    <!-- Interactive Demo Section -->
+    <section id="demo" class="py-32 bg-gradient-to-br from-orange-50 via-white to-amber-50 relative overflow-hidden">
+      <!-- 背景裝飾 -->
+      <div class="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-orange-200/30 to-amber-200/30 rounded-full blur-3xl animate-float-slow"></div>
+      <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-r from-[#3A6B60]/20 to-[#5EA897]/20 rounded-full blur-3xl animate-float-slow"></div>
+      
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-20">
+          <div class="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border border-orange-200/50 mb-8">
+            <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+            <span class="text-orange-600 font-semibold text-sm uppercase tracking-wide">Live Preview</span>
+          </div>
+          <h2 class="text-5xl md:text-6xl font-black text-slate-800 mb-8 bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+            即時字型魔法預覽
+          </h2>
+          <p class="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+            自動展示豐富的繁體中文字型和手寫體效果，包含即時調整功能
+          </p>
         </div>
         
-        <div class="bg-white rounded-3xl shadow-2xl p-12 mb-12 border border-slate-100">
-          <div class="mb-12">
-            <input 
-              v-model="demoText" 
-              type="text" 
-              placeholder="輸入你想要預覽的文字..."
-              class="w-full text-3xl text-center py-6 px-8 bg-orange-50 border-2 border-orange-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-200"
-              maxlength="20"
-            >
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div 
-              v-for="(style, index) in modernDemoStyles" 
-              :key="index"
-              class="text-center p-8 rounded-2xl border-2 transition-all duration-300 cursor-pointer"
-              :class="selectedStyle === index ? 'border-orange-500 bg-orange-50 shadow-lg' : 'border-slate-200 hover:border-slate-300'"
-              @click="selectedStyle = index"
-            >
-              <div 
-                class="text-5xl mb-4 transition-all duration-300"
-                :style="style.css"
-              >
-                {{ demoText || '字型預覽' }}
+        <!-- Automated Demo Interface -->
+        <div class="bg-white rounded-4xl shadow-2xl border border-slate-100/50 backdrop-blur-xl overflow-hidden">
+          <!-- Top Control Bar -->
+          <div class="bg-gradient-to-r from-orange-500/5 to-amber-500/5 border-b border-slate-100 px-8 py-6">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <div class="flex gap-2">
+                  <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                  <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                  <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                </div>
+                <span class="text-slate-600 font-medium">AI 字型工坊演示</span>
               </div>
-              <p class="text-sm font-semibold text-slate-600">{{ style.name }}</p>
+              <div class="flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-full">
+                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-slate-600 text-sm font-medium">自動演示中</span>
+              </div>
             </div>
           </div>
-        </div>
-        
-        <div class="text-center">
-          <p class="text-slate-600 mb-8 text-lg">點擊不同字型樣式體驗效果變化</p>
-          <button class="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-xl transition-all duration-200">
-            探索更多字型
-          </button>
+
+          <div class="p-8 md:p-12">
+            <!-- Auto Preview Area -->
+            <div class="bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-3xl p-12 mb-12 border border-slate-200/50">
+              <div class="text-center mb-8">
+                <!-- 自動切換的字型預覽 -->
+                <div class="relative">
+                  <div 
+                    class="text-6xl md:text-8xl mb-6 transition-all duration-1000 select-none font-preview"
+                    :style="autoFontStyle"
+                  >
+                    {{ autoDisplayText }}
+                  </div>
+                  
+                  <!-- 漸變覆蓋層效果 -->
+                  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer pointer-events-none"></div>
+                </div>
+
+                <!-- 自動顯示字型資訊 -->
+                <div class="flex flex-wrap items-center justify-center gap-3 text-slate-500 opacity-75">
+                  <div class="w-1 h-1 bg-slate-400 rounded-full animate-pulse"></div>
+                  <span class="text-sm">{{ currentAutoFont.name }}</span>
+                  <div class="w-1 h-1 bg-slate-400 rounded-full animate-pulse"></div>
+                  <span class="text-sm">{{ currentAutoFont.description }}</span>
+                  <div v-if="currentAutoFont.isHandwriting" class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">
+                    手寫體
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Animated Feature Showcase -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+              <!-- Real-time Weight Adjustment -->
+              <div class="bg-white rounded-2xl p-8 border border-slate-200/50 shadow-sm">
+                <div class="flex items-center gap-3 mb-6">
+                  <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-slate-800">即時粗細調整</h4>
+                    <p class="text-sm text-slate-500">AI 智慧字重控制</p>
+                  </div>
+                </div>
+
+                <!-- 動態滑桿演示 -->
+                <div class="relative mb-6">
+                  <div class="w-full h-3 bg-gradient-to-r from-slate-200 via-orange-300 to-orange-500 rounded-full">
+                    <div 
+                      class="absolute top-0 w-6 h-6 bg-white border-2 border-orange-500 rounded-full shadow-lg transition-all duration-1000 transform -translate-y-1.5"
+                      :style="{ left: `${(autoFontWeight - 100) / 8}%` }"
+                    ></div>
+                  </div>
+                  <div class="text-center mt-3">
+                    <span class="text-sm font-medium text-orange-600">{{ autoFontWeight }} 字重</span>
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <div 
+                    class="text-3xl font-bold transition-all duration-1000"
+                    :style="{ fontWeight: autoFontWeight, color: '#E29930' }"
+                  >
+                    字型
+                  </div>
+                </div>
+              </div>
+
+              <!-- Font Family Showcase -->
+              <div class="bg-white rounded-2xl p-8 border border-slate-200/50 shadow-sm">
+                <div class="flex items-center gap-3 mb-6">
+                  <div class="w-10 h-10 bg-gradient-to-br from-teal-600 to-emerald-600 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-slate-800">手寫字型庫</h4>
+                    <p class="text-sm text-slate-500">6 種獨特風格</p>
+                  </div>
+                </div>
+
+                <div class="space-y-4">
+                  <div 
+                    v-for="(font, index) in previewFonts" 
+                    :key="index"
+                    class="flex items-center justify-between p-3 rounded-lg border transition-all duration-500"
+                    :class="index === currentFontIndex ? 'bg-orange-50 border-orange-200 transform scale-105' : 'bg-slate-50 border-slate-200'"
+                  >
+                    <div>
+                      <div class="font-medium text-sm text-slate-800">{{ font.name }}</div>
+                      <div class="text-xs text-slate-500">{{ font.category }}</div>
+                    </div>
+                    <div v-if="font.isHandwriting" class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">
+                      手寫
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Color & Effects -->
+              <div class="bg-white rounded-2xl p-8 border border-slate-200/50 shadow-sm">
+                <div class="flex items-center gap-3 mb-6">
+                  <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-slate-800">品牌色彩系統</h4>
+                    <p class="text-sm text-slate-500">和諧視覺體驗</p>
+                  </div>
+                </div>
+
+                <!-- 動態顏色展示 -->
+                <div class="flex justify-center gap-2 mb-6">
+                  <div 
+                    v-for="(color, index) in demoColors" 
+                    :key="index"
+                    class="w-8 h-8 rounded-full transition-all duration-500 border-2"
+                    :class="index === currentColorIndex ? 'scale-125 border-slate-400' : 'scale-100 border-slate-200'"
+                    :style="{ backgroundColor: color }"
+                  ></div>
+                </div>
+
+                <div class="text-center">
+                  <div 
+                    class="text-3xl font-bold transition-all duration-1000"
+                    :style="{ 
+                      color: demoColors[currentColorIndex],
+                      textShadow: autoShadowIntensity > 30 ? `0 4px 12px ${demoColors[currentColorIndex]}30` : 'none'
+                    }"
+                  >
+                    顏色
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center">
+              <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-3xl p-12 border border-orange-200/50 mb-8">
+                <h3 class="text-3xl font-bold text-slate-800 mb-4">體驗完整功能</h3>
+                <p class="text-slate-600 mb-8 text-lg">進入專業工坊，享受完整的字型調整和預覽體驗</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <NuxtLink 
+                    to="/font-preview" 
+                    class="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-10 py-5 rounded-full font-bold text-xl hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                    </svg>
+                    進入字型工坊
+                  </NuxtLink>
+                  <NuxtLink 
+                    to="/workshop" 
+                    class="inline-flex items-center gap-3 bg-white text-slate-600 px-10 py-5 rounded-full font-bold text-xl border-2 border-slate-200 hover:border-orange-300 hover:shadow-lg transition-all duration-300"
+                  >
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                    </svg>
+                    開始創作
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -438,7 +604,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 // 設置頁面元數據
 useHead({
@@ -487,8 +653,9 @@ const currentTextIndex = ref(0)
 const currentCharIndex = ref(0)
 const isDeleting = ref(false)
 
-// 現代化演示樣式
-const demoText = ref("Hello 世界")
+// 現代化演示樣式 - 簡化版自動演示
+const demoText = ref("繁體字型預覽")
+const previewMode = ref('single') // 'single' 或 'paragraph'
 const selectedStyle = ref(0)
 const modernDemoStyles = ref([
   { 
@@ -519,6 +686,241 @@ const modernDemoStyles = ref([
     } 
   }
 ])
+
+// 自動演示變數
+const currentAutoTextIndex = ref(0)
+const currentFontIndex = ref(0)
+const currentColorIndex = ref(0)
+const autoFontWeight = ref(400)
+const autoShadowIntensity = ref(30)
+
+// 自動演示文字
+const autoTexts = ref([
+  '繁體中文',
+  '手寫溫度', 
+  '創意靈感',
+  'AI智慧',
+  '書法藝術'
+])
+
+// 演示字型 - 簡潔的手寫風格顯示
+const previewFonts = ref([
+  { name: '手寫風1', category: '經典風格', isHandwriting: true },
+  { name: '手寫風2', category: '流暢筆觸', isHandwriting: true },
+  { name: '手寫風3', category: '藝術風格', isHandwriting: true },
+  { name: '手寫風4', category: '優雅手寫', isHandwriting: true },
+  { name: '手寫風5', category: '現代手感', isHandwriting: true },
+  { name: '手寫風6', category: '進階版本', isHandwriting: true }
+])
+
+// 演示顏色 - 符合網站整體色系的和諧配色
+const demoColors = ref([
+  '#E29930', // 主要橙色 - 網站品牌色
+  '#3A6B60', // 深藍綠色 - 網站輔助色
+  '#5EA897', // 淺藍綠色 - 網站漸變色
+  '#D48826', // 深橙色 - 橙色變化
+  '#2D5A52'  // 更深藍綠 - 穩重色調
+])
+
+// 手寫字型列表（用於自動演示）
+const autoFontFamilies = ref([
+  { name: "手寫風1", css: "'Jason Handwriting 1', '華文行楷', cursive" },
+  { name: "手寫風2", css: "'Jason Handwriting 2', '華文行楷', cursive" },
+  { name: "手寫風3", css: "'Jason Handwriting 3', '華文行楷', cursive" },
+  { name: "手寫風4", css: "'Jason Handwriting 4', '華文行楷', cursive" },
+  { name: "手寫風5", css: "'Jason Handwriting 5', '華文行楷', cursive" },
+  { name: "手寫風6", css: "'Jason Handwriting 5p', '華文行楷', cursive" },
+  { name: "思源黑體", css: "'Noto Sans TC', 'Microsoft JhengHei', '微軟正黑體', sans-serif" },
+  { name: "思源宋體", css: "'Noto Serif TC', 'Times New Roman', '新細明體', serif" }
+])
+
+// 計算自動演示的字型樣式
+const autoFontStyle = computed(() => ({
+  fontFamily: autoFontFamilies.value[currentFontIndex.value]?.css,
+  fontWeight: autoFontWeight.value,
+  color: demoColors.value[currentColorIndex.value],
+  textShadow: autoShadowIntensity.value > 30 
+    ? `0 4px 12px ${demoColors.value[currentColorIndex.value]}30` 
+    : 'none',
+  transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)'
+}))
+
+// 當前自動字型
+const currentAutoFont = computed(() => autoFontFamilies.value[currentFontIndex.value] || autoFontFamilies.value[0])
+
+// 自動顯示文字
+const autoDisplayText = computed(() => autoTexts.value[currentAutoTextIndex.value])
+
+// 即時字型控制
+const fontWeight = ref(400)
+const letterSpacing = ref(0.1)
+const lineHeight = ref(1.2)
+const selectedFontIndex = ref(0)
+const selectedTextColor = ref('#E29930')
+const textShadowIntensity = ref(30)
+const textTransform = ref('none')
+
+// 支援繁體中文的字型選項，包含豐富的手寫體
+const fontFamilies = ref([
+  {
+    name: "思源黑體",
+    css: "'Noto Sans TC', 'Microsoft JhengHei', sans-serif",
+    preview: "繁體中文預覽",
+    description: "現代無襯線字型，清晰易讀",
+    isHandwriting: false
+  },
+  {
+    name: "思源宋體",
+    css: "'Noto Serif TC', 'Ming', serif", 
+    preview: "繁體中文預覽",
+    description: "優雅的襯線字型",
+    isHandwriting: false
+  },
+  {
+    name: "微軟正黑體",
+    css: "'Microsoft JhengHei', '微軟正黑體', sans-serif",
+    preview: "繁體中文預覽", 
+    description: "Windows 系統預設字型",
+    isHandwriting: false
+  },
+  {
+    name: "華康手札體",
+    css: "'DFKai-SB', '標楷體', cursive",
+    preview: "繁體中文預覽",
+    description: "傳統手寫風格",
+    isHandwriting: true
+  },
+  {
+    name: "書法家行書",
+    css: "'LiHei Pro', '蘋果儷中黑', cursive",
+    preview: "繁體中文預覽",
+    description: "流暢的行書風格", 
+    isHandwriting: true
+  },
+  {
+    name: "手寫體",
+    css: "'Kalam', '華文行楷', cursive",
+    preview: "繁體中文預覽",
+    description: "自然手寫感",
+    isHandwriting: true
+  },
+  {
+    name: "文鼎UD晶熙黑體",
+    css: "'AR UDJingxihei', 'Microsoft JhengHei', sans-serif",
+    preview: "繁體中文預覽",
+    description: "現代圓潤設計",
+    isHandwriting: false
+  },
+  {
+    name: "儷宋體",
+    css: "'LiSong Pro', '細明體', serif",
+    preview: "繁體中文預覽", 
+    description: "經典宋體設計",
+    isHandwriting: false
+  },
+  {
+    name: "娃娃體",
+    css: "'童趣體', '華康娃娃體', fantasy",
+    preview: "繁體中文預覽",
+    description: "可愛童趣風格",
+    isHandwriting: true
+  },
+  {
+    name: "草書體", 
+    css: "'草書', '華文草書', cursive",
+    preview: "繁體中文預覽",
+    description: "飄逸草書風格",
+    isHandwriting: true
+  },
+  {
+    name: "隸書體",
+    css: "'隸書', '華文隸書', serif",
+    preview: "繁體中文預覽",
+    description: "古典隸書風格",
+    isHandwriting: false
+  },
+  {
+    name: "楷體",
+    css: "'楷體', 'DFKai-SB', serif",
+    preview: "繁體中文預覽",
+    description: "工整楷書風格",
+    isHandwriting: true
+  }
+])
+
+// 文字顏色選項
+const textColors = ref([
+  { name: '橙色', value: '#ea580c' },
+  { name: '藍色', value: '#2563eb' },
+  { name: '綠色', value: '#059669' },
+  { name: '紫色', value: '#9333ea' },
+  { name: '紅色', value: '#dc2626' },
+  { name: '黃色', value: '#d97706' },
+  { name: '灰色', value: '#4b5563' },
+  { name: '黑色', value: '#1f2937' }
+])
+
+// 快速測試範例
+const quickTestSamples = ref([
+  { text: '繁體中文', description: '基礎測試', mode: 'single' },
+  { text: '你好世界', description: '常用詞彙', mode: 'single' },
+  { text: '設計師', description: '專業術語', mode: 'single' },
+  { text: '創意靈感', description: '抽象概念', mode: 'single' },
+  { text: 'Hello 中文', description: '中英混合', mode: 'single' },
+  { text: '2025年', description: '數字測試', mode: 'single' },
+  { text: '字型設計是一門結合藝術與技術的專業領域，它要求設計師具備深厚的文字美學素養。', description: '長文本測試', mode: 'paragraph' },
+  { text: '臺灣繁體', description: '地區用字', mode: 'single' },
+  { text: '書法藝術', description: '傳統文化', mode: 'single' },
+  { text: 'AI智慧', description: '現代科技', mode: 'single' },
+  { text: '永無島', description: '創意詞彙', mode: 'single' },
+  { text: '手寫溫度', description: '情感表達', mode: 'single' }
+])
+
+// 字型對比功能
+const showComparison = ref(false)
+const comparisonFont1 = ref(0) // 思源黑體
+const comparisonFont2 = ref(3) // 華康手札體
+
+// 計算當前選中的字型
+const selectedFont = computed(() => fontFamilies.value[selectedFontIndex.value])
+
+// 計算完整的字型樣式
+const computedFontStyle = computed(() => {
+  const shadowIntensity = textShadowIntensity.value / 100
+  const shadowBlur = Math.floor(shadowIntensity * 20)
+  const shadowOffset = Math.floor(shadowIntensity * 5)
+  
+  return {
+    fontFamily: selectedFont.value.css,
+    fontWeight: fontWeight.value,
+    letterSpacing: `${letterSpacing.value}em`,
+    lineHeight: lineHeight.value,
+    color: selectedTextColor.value,
+    textTransform: textTransform.value,
+    textShadow: shadowIntensity > 0.1 
+      ? `${shadowOffset}px ${shadowOffset}px ${shadowBlur}px rgba(0,0,0,0.3)` 
+      : 'none',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+  }
+})
+
+// 互動式字型預覽控制項 (保留原有功能)
+const demoThickness = ref(50)
+const demoBlendRatio = ref(50)
+const selectedStyleTags = ref(['現代', '優雅'])
+
+// 可選擇的風格標籤
+const styleTagOptions = ['現代', '優雅', '粗體', '細線', '襯線', '無襯線', '手寫', '藝術']
+
+// 風格標籤切換
+const toggleStyleTag = (tag) => {
+  const index = selectedStyleTags.value.indexOf(tag)
+  if (index > -1) {
+    selectedStyleTags.value.splice(index, 1)
+  } else if (selectedStyleTags.value.length < 3) {
+    selectedStyleTags.value.push(tag)
+  }
+}
 
 // 統計數據
 const animatedStats = ref([0, 0, 0])
@@ -569,6 +971,34 @@ onMounted(() => {
   
   // 延遲啟動統計動畫
   setTimeout(animateStats, 1000)
+
+  // 自動演示功能
+  // 文字輪播
+  setInterval(() => {
+    currentAutoTextIndex.value = (currentAutoTextIndex.value + 1) % autoTexts.value.length
+  }, 3000)
+
+  // 字型輪播
+  setInterval(() => {
+    currentFontIndex.value = (currentFontIndex.value + 1) % previewFonts.value.length
+  }, 4000)
+
+  // 顏色輪播
+  setInterval(() => {
+    currentColorIndex.value = (currentColorIndex.value + 1) % demoColors.value.length
+  }, 2500)
+
+  // 字重動畫
+  setInterval(() => {
+    const weights = [300, 400, 500, 600, 700, 800]
+    const randomWeight = weights[Math.floor(Math.random() * weights.length)]
+    autoFontWeight.value = randomWeight
+  }, 3500)
+
+  // 陰影動畫
+  setInterval(() => {
+    autoShadowIntensity.value = Math.floor(Math.random() * 60) + 20
+  }, 4500)
 })
 </script>
 
@@ -703,6 +1133,187 @@ html {
     font-size: 1rem;
     width: 100%;
   }
+}
+
+/* 自定義滑桿樣式 */
+.slider-thumb-orange::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ea580c, #fb923c);
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+  transition: all 0.2s ease;
+}
+
+.slider-thumb-orange::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.4);
+}
+
+.slider-thumb-orange::-webkit-slider-track {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #fed7aa, #ea580c);
+}
+
+.slider-thumb-purple::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9333ea, #c084fc);
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+  transition: all 0.2s ease;
+}
+
+.slider-thumb-purple::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4);
+}
+
+.slider-thumb-purple::-webkit-slider-track {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e9d5ff, #9333ea);
+}
+
+/* 藍色滑桿樣式 */
+.slider-thumb-blue::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: all 0.2s ease;
+}
+
+.slider-thumb-blue::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
+.slider-thumb-blue::-webkit-slider-track {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #dbeafe, #2563eb);
+}
+
+/* 浮動動畫 */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+/* 新增 shimmer 動畫效果 */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* 脈衝放大動畫 */
+@keyframes pulse-scale {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse-scale {
+  animation: pulse-scale 2s ease-in-out infinite;
+}
+
+/* 漸變文字動畫 */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background: linear-gradient(270deg, #ea580c, #f59e0b, #d97706, #ea580c);
+  background-size: 400% 400%;
+  animation: gradient-shift 4s ease infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* 字型預覽區域優化 */
+.font-preview {
+  word-break: break-all;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* 滾動條優化 */
+.font-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.font-list::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.font-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.font-list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* 響應式字型卡片 */
+@media (max-width: 768px) {
+  .font-card {
+    padding: 0.75rem;
+  }
+  
+  .font-preview-text {
+    font-size: 3rem;
+  }
+}
+
+/* 顏色選擇器動畫 */
+.color-selector {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.color-selector:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* 小屏幕設備優化 */

@@ -107,6 +107,7 @@ const TestIcon = {
 
 const mainNavItems = ref([
   { name: '首頁', path: '/', icon: HomeIcon },
+  { name: '字型預覽', path: '/font-preview', icon: CreateIcon },
   { name: '字型創作', path: '/create', icon: CreateIcon },
   { name: '字型市集', path: '/market', icon: MarketIcon }
 ])
