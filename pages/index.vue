@@ -539,8 +539,9 @@ const isLoading = ref(true)
 onMounted(async () => {
   if (process.client) {
     try {
-      const { useAuth } = await import('~/composables/useAuth.js')
-      const auth = useAuth()
+      // 使用相對路徑導入
+      const authModule = await import('../composables/useAuth.js')
+      const auth = authModule.default()
       user.value = auth.user
       isLoading.value = auth.isLoading
     } catch (error) {
