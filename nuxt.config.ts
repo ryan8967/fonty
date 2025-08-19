@@ -34,7 +34,15 @@ export default defineNuxtConfig({
   // 移動端優化的渲染選項
   nitro: {
     compressPublicAssets: true,
-    minify: true
+    minify: true,
+
+    // frontend calling fastapi 
+    devProxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true
+      }
+    }    
   },
 
   // 性能優化

@@ -776,6 +776,49 @@ const getActionDescription = () => {
     generate();
   };
 
+  const processUploadedImage = async (imageFile) => {
+    try {
+      const IMAGE_PROCESSING_URL = 'http://localhost:8000' // Your FastAPI server
+      const formData = new FormData()
+      formData.append('file', imageFile)
+      
+      const response = await fetch(`${IMAGE_PROCESSING_URL}/process-image`, {
+        method: 'POST',
+        body: formData
+      })
+      
+      if (!response.ok) {
+        throw new Error('Image processing failed')
+      }
+      
+      const result = await response.json()
+      
+      if (!result.success) {
+        throw new Error(result.error || 'Processing failed')
+      }
+
+      console.log('Processed image data URL:', result.processed_image)
+      
+      // Convert base64 back to file for AI generation
+      const base64Data = result.processed_image.replace(/^data:image\/png;base64,/, '')
+      const binaryData = atob(base64Data)
+      const bytes = new Uint8Array(binaryData.length)
+      
+      for (let i = 0; i < binaryData.length; i++) {
+        bytes[i] = binaryData.charCodeAt(i)
+      }
+      
+      const processedBlob = new Blob([bytes], { type: 'image/png' })
+      const processedFile = new File([processedBlob], 'processed_image.png', { type: 'image/png' })
+      
+      return processedFile
+      
+    } catch (error) {
+      console.error('Image processing failed:', error)
+      throw error
+    }
+  }
+
   const generate = async () => {
   if (!canGenerate.value || loading.value) return
 
@@ -801,7 +844,10 @@ const getActionDescription = () => {
       
     } else if (file.value) {
       // Handle file upload
-      formData.append('reference_image', file.value)
+      console.log('Processing uploaded image...')
+      const processedFile = await processUploadedImage(file.value)
+      formData.append('reference_image', processedFile)
+      console.log('Image processed successfully')
     }
     
     // 呼叫 AI 生成 API
