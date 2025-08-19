@@ -314,20 +314,20 @@
                     <div class="flex items-center gap-2">
                       <span :class="[
                         'text-xl font-bold',
-                        product.price === 'Free' ? 'text-[#5EA897]' : 'text-slate-800'
+                        (product.price === '免費' || product.price === 'Free') ? 'text-[#5EA897]' : 'text-slate-800'
                       ]">
                         {{ product.price }}
                       </span>
-                      <span v-if="product.originalPrice && product.price !== 'Free'" class="text-sm text-slate-400 line-through">
+                      <span v-if="product.originalPrice && product.price !== '免費' && product.price !== 'Free'" class="text-sm text-slate-400 line-through">
                         {{ product.originalPrice }}
                       </span>
                     </div>
                     <button 
                       @click.stop="handleDownload(product)"
                       class="bg-gradient-to-r from-[#3A6B60] to-[#5EA897] text-white px-4 py-2 rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all duration-200 btn-primary focus:outline-none focus:ring-2 focus:ring-[#3A6B60] focus:ring-offset-2"
-                      :aria-label="`${product.price === 'Free' ? '免費下載' : '購買'} ${product.title}`"
+                      :aria-label="`${(product.price === '免費' || product.price === 'Free') ? '免費下載' : '購買'} ${product.title}`"
                     >
-                      {{ product.price === 'Free' ? '免費下載' : '立即購買' }}
+                      {{ (product.price === '免費' || product.price === 'Free') ? '免費下載' : '立即購買' }}
                     </button>
                   </div>
                 </div>
@@ -358,7 +358,7 @@
                         </div>
                         <span :class="[
                           'text-xl font-bold',
-                          product.price === 'Free' ? 'text-[#5EA897]' : 'text-slate-800'
+                          (product.price === '免費' || product.price === 'Free') ? 'text-[#5EA897]' : 'text-slate-800'
                         ]">
                           {{ product.price }}
                         </span>
@@ -371,8 +371,11 @@
                         <span>{{ product.category }}</span>
                         <span>{{ product.downloads }} 下載</span>
                       </div>
-                      <button class="bg-gradient-to-r from-[#3A6B60] to-[#5EA897] text-white px-6 py-2 rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all duration-200">
-                        {{ product.price === 'Free' ? '免費下載' : '立即購買' }}
+                      <button 
+                        @click.stop="handleDownload(product)"
+                        class="bg-gradient-to-r from-[#3A6B60] to-[#5EA897] text-white px-6 py-2 rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all duration-200"
+                      >
+                        {{ (product.price === '免費' || product.price === 'Free') ? '免費下載' : '立即購買' }}
                       </button>
                     </div>
                   </div>
@@ -416,6 +419,62 @@
         </div>
       </div>
     </section>
+
+    <!-- 通知系統 -->
+    <div class="fixed top-4 right-4 z-50 space-y-2">
+      <transition-group name="notification" tag="div">
+        <div
+          v-for="notification in notifications"
+          :key="notification.id"
+          :class="[
+            'max-w-sm bg-white rounded-lg shadow-lg border-l-4 p-4 transition-all duration-300',
+            {
+              'border-green-500': notification.type === 'success',
+              'border-red-500': notification.type === 'error',
+              'border-blue-500': notification.type === 'info',
+              'border-yellow-500': notification.type === 'warning'
+            },
+            notification.show ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'
+          ]"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div :class="[
+                'flex-shrink-0 w-5 h-5 mr-3',
+                {
+                  'text-green-500': notification.type === 'success',
+                  'text-red-500': notification.type === 'error',
+                  'text-blue-500': notification.type === 'info',
+                  'text-yellow-500': notification.type === 'warning'
+                }
+              ]">
+                <svg v-if="notification.type === 'success'" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <svg v-else-if="notification.type === 'error'" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                </svg>
+                <svg v-else-if="notification.type === 'warning'" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <svg v-else fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <p class="text-sm text-gray-700">{{ notification.message }}</p>
+            </div>
+            <button
+              @click="removeNotification(notification.id)"
+              class="ml-4 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -460,8 +519,9 @@ const styleTags = [
   '創意', '藝術', '商務', '標題', '內文', '裝飾'
 ]
 
-// Enhanced products data
+// Enhanced products data - 保留原本產品並新增可下載字體
 const products = [
+  // 原本的產品 (保留)
   {
     id: 1,
     title: "Elegant Modern",
@@ -476,7 +536,9 @@ const products = [
     tags: ["現代", "優雅", "簡約", "標題"],
     isFavorite: false,
     uploadDate: "2024-12-01",
-    popularity: 95
+    popularity: 95,
+    fontFile: null,
+    fileName: null
   },
   {
     id: 2,
@@ -492,7 +554,9 @@ const products = [
     tags: ["手寫", "經典", "溫暖", "內文"],
     isFavorite: true,
     uploadDate: "2024-11-28",
-    popularity: 88
+    popularity: 88,
+    fontFile: null,
+    fileName: null
   },
   {
     id: 3,
@@ -508,7 +572,9 @@ const products = [
     tags: ["粗體", "標題", "商務", "現代"],
     isFavorite: false,
     uploadDate: "2024-12-02",
-    popularity: 92
+    popularity: 92,
+    fontFile: null,
+    fileName: null
   },
   {
     id: 4,
@@ -524,7 +590,9 @@ const products = [
     tags: ["復古", "經典", "裝飾", "藝術"],
     isFavorite: false,
     uploadDate: "2024-11-25",
-    popularity: 75
+    popularity: 75,
+    fontFile: null,
+    fileName: null
   },
   {
     id: 5,
@@ -540,7 +608,9 @@ const products = [
     tags: ["可愛", "圓體", "兒童", "活潑"],
     isFavorite: true,
     uploadDate: "2024-11-30",
-    popularity: 81
+    popularity: 81,
+    fontFile: null,
+    fileName: null
   },
   {
     id: 6,
@@ -556,7 +626,9 @@ const products = [
     tags: ["藝術", "筆觸", "創意", "手繪"],
     isFavorite: false,
     uploadDate: "2024-12-03",
-    popularity: 67
+    popularity: 67,
+    fontFile: null,
+    fileName: null
   },
   {
     id: 7,
@@ -572,7 +644,9 @@ const products = [
     tags: ["書法", "中文", "傳統", "文化"],
     isFavorite: false,
     uploadDate: "2024-11-20",
-    popularity: 98
+    popularity: 98,
+    fontFile: null,
+    fileName: null
   },
   {
     id: 8,
@@ -588,7 +662,119 @@ const products = [
     tags: ["商務", "無襯線", "專業", "品牌"],
     isFavorite: true,
     uploadDate: "2024-11-22",
-    popularity: 94
+    popularity: 94,
+    fontFile: null,
+    fileName: null
+  },
+  
+  // 新增的可下載 Jason Handwriting 字體
+  {
+    id: 9,
+    title: "Jason Handwriting 1",
+    image: "/image1.png",
+    price: "免費",
+    originalPrice: null,
+    category: "手寫風格",
+    author: "Jason 設計師",
+    rating: 4.8,
+    downloads: "3.2k",
+    description: "優雅的手寫字型，適合各種設計場景",
+    tags: ["手寫", "優雅", "簡約", "標題"],
+    isFavorite: false,
+    uploadDate: "2024-12-05",
+    popularity: 85,
+    fontFile: "/fonts/JasonHandwriting1.woff2",
+    fileName: "JasonHandwriting1.woff2"
+  },
+  {
+    id: 10,
+    title: "Jason Handwriting 2",
+    image: "/image2.png",
+    price: "免費",
+    originalPrice: null,
+    category: "手寫風格",
+    author: "Jason 設計師",
+    rating: 4.7,
+    downloads: "2.8k",
+    description: "經典的手寫風格字型，帶有溫暖的人文氣息",
+    tags: ["手寫", "經典", "溫暖", "內文"],
+    isFavorite: false,
+    uploadDate: "2024-12-05",
+    popularity: 82,
+    fontFile: "/fonts/JasonHandwriting2.woff2",
+    fileName: "JasonHandwriting2.woff2"
+  },
+  {
+    id: 11,
+    title: "Jason Handwriting 3",
+    image: "/image3.png",
+    price: "免費",
+    originalPrice: null,
+    category: "手寫風格",
+    author: "Jason 設計師",
+    rating: 4.6,
+    downloads: "3.5k",
+    description: "粗體手寫字型，完美的標題選擇",
+    tags: ["手寫", "標題", "粗體", "現代"],
+    isFavorite: false,
+    uploadDate: "2024-12-05",
+    popularity: 78,
+    fontFile: "/fonts/JasonHandwriting3.woff2",
+    fileName: "JasonHandwriting3.woff2"
+  },
+  {
+    id: 12,
+    title: "Jason Handwriting 4",
+    image: "/image1.png",
+    price: "免費",
+    originalPrice: null,
+    category: "手寫風格",
+    author: "Jason 設計師",
+    rating: 4.5,
+    downloads: "2.1k",
+    description: "復古風格手寫字型，重現黃金時代的設計美學",
+    tags: ["手寫", "復古", "裝飾", "藝術"],
+    isFavorite: false,
+    uploadDate: "2024-12-05",
+    popularity: 74,
+    fontFile: "/fonts/JasonHandwriting4.woff2",
+    fileName: "JasonHandwriting4.woff2"
+  },
+  {
+    id: 13,
+    title: "Jason Handwriting 5",
+    image: "/image2.png",
+    price: "免費",
+    originalPrice: null,
+    category: "手寫風格",
+    author: "Jason 設計師",
+    rating: 4.7,
+    downloads: "2.9k",
+    description: "可愛的手寫字型，適合兒童相關設計",
+    tags: ["手寫", "可愛", "兒童", "活潑"],
+    isFavorite: false,
+    uploadDate: "2024-12-05",
+    popularity: 80,
+    fontFile: "/fonts/JasonHandwriting5.woff2",
+    fileName: "JasonHandwriting5.woff2"
+  },
+  {
+    id: 14,
+    title: "Jason Handwriting 5 Plus",
+    image: "/image3.png",
+    price: "免費",
+    originalPrice: null,
+    category: "手寫風格",
+    author: "Jason 設計師",
+    rating: 4.8,
+    downloads: "1.8k",
+    description: "進階手寫字型，每一筆都充滿創意靈感",
+    tags: ["手寫", "筆觸", "創意", "進階"],
+    isFavorite: false,
+    uploadDate: "2024-12-05",
+    popularity: 76,
+    fontFile: "/fonts/JasonHandwriting5p.woff2",
+    fileName: "JasonHandwriting5p.woff2"
   }
 ]
 
@@ -623,15 +809,75 @@ const viewProduct = (product) => {
   // 未來可以使用 navigateTo(`/market/${product.id}`)
 }
 
-const handleDownload = (product) => {
-  if (product.price === 'Free') {
-    // 處理免費下載
-    console.log('開始下載免費字型:', product.title)
-    // 這裡可以添加下載邏輯
-  } else {
+const handleDownload = async (product) => {
+  if ((product.price === '免費' || product.price === 'Free') && product.fontFile) {
+    try {
+      // 增加下載次數
+      const currentDownloads = parseFloat(product.downloads.replace('k', '')) * 1000
+      product.downloads = `${((currentDownloads + 1) / 1000).toFixed(1)}k`
+      
+      // 創建下載鏈接
+      const link = document.createElement('a')
+      link.href = product.fontFile
+      link.download = product.fileName
+      link.target = '_blank'
+      
+      // 觸發下載
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      
+      // 顯示成功訊息
+      showNotification(`正在下載 ${product.title}...`, 'success')
+      
+      console.log('開始下載免費字型:', product.title)
+    } catch (error) {
+      console.error('下載錯誤:', error)
+      showNotification('下載失敗，請稍後再試', 'error')
+    }
+  } else if (product.price !== '免費' && product.price !== 'Free') {
     // 處理付費購買
     console.log('開始購買流程:', product.title)
+    showNotification('即將導向購買頁面...', 'info')
     // 這裡可以導航到購買頁面或打開購買彈窗
+  } else {
+    showNotification('此字型暫時無法下載', 'warning')
+  }
+}
+
+// 通知系統
+const notifications = ref([])
+
+const showNotification = (message, type = 'info') => {
+  const id = Date.now()
+  const notification = {
+    id,
+    message,
+    type,
+    show: true
+  }
+  
+  notifications.value.push(notification)
+  
+  // 3秒後自動移除通知
+  setTimeout(() => {
+    const index = notifications.value.findIndex(n => n.id === id)
+    if (index > -1) {
+      notifications.value[index].show = false
+      setTimeout(() => {
+        notifications.value.splice(index, 1)
+      }, 300)
+    }
+  }, 3000)
+}
+
+const removeNotification = (id) => {
+  const index = notifications.value.findIndex(n => n.id === id)
+  if (index > -1) {
+    notifications.value[index].show = false
+    setTimeout(() => {
+      notifications.value.splice(index, 1)
+    }, 300)
   }
 }
 
@@ -969,16 +1215,41 @@ button, input, select, [role="button"] {
   border-color: #58a897;
 }
 
-/* Custom button hover effects */
-.btn-primary {
-  background: linear-gradient(135deg, #58a897 0%, #3a6b60 100%);
+/* Notification animations */
+.notification-enter-active,
+.notification-leave-active {
   transition: all 0.3s ease;
 }
 
-.btn-primary:hover {
-  background: linear-gradient(135deg, #4a9784 0%, #2f5951 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(58, 107, 96, 0.3);
+.notification-enter-from {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.notification-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.notification-move {
+  transition: transform 0.3s ease;
+}
+
+/* Download button pulse animation */
+@keyframes download-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(58, 107, 96, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(58, 107, 96, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(58, 107, 96, 0);
+  }
+}
+
+.btn-primary:active {
+  animation: download-pulse 0.6s ease-out;
 }
 
 .btn-secondary {
