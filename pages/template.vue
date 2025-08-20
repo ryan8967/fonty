@@ -1,266 +1,436 @@
 <template>
-  <div
-    class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50"
-  >
+  <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20">
+    <!-- 導航欄 -->
     <Navbar />
-
-    <div class="max-w-7xl mx-auto px-4 md:px-6 pt-20 md:pt-24 pb-28">
-      <!-- Header Section -->
-      <div class="text-center mb-8 md:mb-12">
-        <div class="inline-block mb-6">
-          <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
-            <svg class="w-8 h-8 md:w-10 md:h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+    
+    <!-- 頁面標題區域 -->
+    <div class="relative overflow-hidden bg-white/80 backdrop-blur-xl border-b border-white/20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+        <div class="text-center">
+          <!-- 主圖標 -->
+          <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-[#5EA897] to-[#3A6B60] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
+            <svg class="w-8 h-8 md:w-10 md:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
             </svg>
           </div>
-        </div>
-        
-        <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-4 leading-tight">
-          手寫風格
-          <span class="bg-gradient-to-r from-[#E29930] to-[#D48826] bg-clip-text text-transparent">模板創作</span>
-        </h1>
-        <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-          選擇模板 → 上傳手寫字 → 生成字型 → 即時預覽與下載
-        </p>
-        
-        <!-- 進度指示器 -->
-        <div class="flex items-center justify-center gap-2 mt-6">
-          <div class="flex items-center gap-2">
-            <div class="w-2 h-2 bg-[#E29930] rounded-full"></div>
-            <span class="text-sm text-slate-500">選擇模板</span>
-          </div>
-          <div class="w-8 h-1 bg-gradient-to-r from-[#E29930] to-gray-200 rounded-full"></div>
-          <div class="flex items-center gap-2">
-            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
-            <span class="text-sm text-slate-400">生成字型</span>
-          </div>
-          <div class="w-8 h-1 bg-gradient-to-r from-gray-200 to-gray-200 rounded-full"></div>
-          <div class="flex items-center gap-2">
-            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
-            <span class="text-sm text-slate-400">下載成品</span>
+          
+          <!-- 標題 -->
+          <h1 class="text-2xl md:text-4xl font-bold text-slate-800 mb-2">
+            個人化
+            <span class="bg-gradient-to-r from-[#5EA897] to-[#3A6B60] bg-clip-text text-transparent">模板創作</span>
+          </h1>
+          
+          <!-- 副標題 -->
+          <p class="text-slate-600 text-sm md:text-base max-w-2xl mx-auto">
+            選擇精美模板，應用您的專屬字型，創作獨一無二的個人化作品
+          </p>
+          
+          <!-- 進度指示器 -->
+          <div class="flex items-center justify-center gap-2 mt-4">
+            <div class="w-8 h-1 bg-gradient-to-r from-[#5EA897] to-gray-200 rounded-full"></div>
+            <div class="w-8 h-1 bg-gradient-to-r from-[#5EA897] to-gray-200 rounded-full"></div>
+            <div class="w-8 h-1 bg-gradient-to-r from-[#5EA897] to-gray-200 rounded-full"></div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- 主要內容區域 -->
-      <div class="grid lg:grid-cols-12 gap-8 lg:gap-10">
+    <!-- 主要內容區域 -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-4 md:gap-8">
+        
         <!-- 左側控制面板 -->
-        <div class="lg:col-span-5 space-y-6">
-          <!-- 模板選擇 -->
-          <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/20 p-6 md:p-8">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 bg-gradient-to-br from-[#3A6B60] to-[#5EA897] rounded-xl flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div class="xl:col-span-5 space-y-4 md:space-y-6">
+          
+          <!-- 模板選擇區域 -->
+          <div class="bg-white/80 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-xl border border-white/20 p-4 md:p-6">
+            <div class="flex items-center gap-3 mb-4 md:mb-6">
+              <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#5EA897] to-[#3A6B60] rounded-lg md:rounded-xl flex items-center justify-center">
+                <svg class="w-4 h-4 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
                 </svg>
               </div>
-              <h2 class="text-xl md:text-2xl font-bold text-slate-800">選擇模板</h2>
+              <h2 class="text-lg md:text-xl font-bold text-slate-800">選擇模板</h2>
             </div>
             
-            <div class="grid grid-cols-3 gap-4">
-              <button
-                v-for="tpl in templates"
-                :key="tpl.id"
-                @click="selectTemplate(tpl.id)"
-                :class="[
-                  'group relative overflow-hidden rounded-2xl border-2 transition-all duration-300 hover:scale-105',
-                  currentTemplateId === tpl.id
-                    ? 'border-[#E29930] ring-4 ring-[#E29930]/20 shadow-2xl'
-                    : 'border-gray-200 hover:border-[#E29930]/50 hover:shadow-lg',
-                ]"
+            <!-- 模板網格 -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
+              <div
+                v-for="template in templates"
+                :key="template.id"
+                @click="selectTemplate(template.id)"
+                class="relative group cursor-pointer"
               >
-                <div class="relative aspect-[4/3]">
-                  <img
-                    :src="tpl.thumbnail"
-                    :alt="tpl.name"
-                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                <div class="relative overflow-hidden rounded-xl md:rounded-2xl border-2 transition-all duration-300"
+                     :class="currentTemplateId === template.id 
+                       ? 'border-[#5EA897] shadow-lg shadow-[#5EA897]/20' 
+                       : 'border-gray-200 hover:border-[#5EA897]/50'">
+                  
+                  <!-- 模板縮圖 -->
+                  <img 
+                    :src="template.thumbnail" 
+                    :alt="template.name"
+                    class="w-full h-20 sm:h-24 md:h-28 object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                  <div class="absolute bottom-0 inset-x-0 p-3">
-                    <div class="text-white text-sm md:text-base font-semibold text-center">{{ tpl.name }}</div>
+                  
+                  <!-- 選擇指示器 -->
+                  <div v-if="currentTemplateId === template.id"
+                       class="absolute inset-0 bg-gradient-to-r from-[#5EA897]/20 to-[#3A6B60]/20 flex items-center justify-center">
+                    <div class="w-6 h-6 md:w-8 md:h-8 bg-[#5EA897] rounded-full flex items-center justify-center">
+                      <svg class="w-3 h-3 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
                   </div>
                   
-                  <!-- 選中指示器 -->
-                  <div v-if="currentTemplateId === tpl.id" 
-                       class="absolute top-3 right-3 w-6 h-6 bg-[#E29930] rounded-full flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                    </svg>
+                  <!-- 模板名稱 -->
+                  <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+                    <p class="text-white text-xs font-medium truncate">{{ template.name }}</p>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 字型選擇區域 -->
+          <div class="bg-white/80 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-xl border border-white/20 p-4 md:p-6">
+            <div class="flex items-center gap-3 mb-4 md:mb-6">
+              <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-lg md:rounded-xl flex items-center justify-center">
+                <svg class="w-4 h-4 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <h2 class="text-lg md:text-xl font-bold text-slate-800">字型風格</h2>
+            </div>
+
+            <!-- 從 workshop 過來的字型 -->
+            <div v-if="workshopFontData" class="mb-4 md:mb-6">
+              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 md:p-4 border border-blue-200">
+                <h4 class="font-semibold text-blue-800 mb-3 flex items-center gap-2 text-sm md:text-base">
+                  <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  已設計的字型風格
+                </h4>
+                
+                <!-- 字型圖片預覽 -->
+                <div class="relative mb-3 md:mb-4">
+                  <img 
+                    :src="workshopFontData.blendedImage || workshopFontData.referenceImage" 
+                    alt="Workshop字型"
+                    class="w-full h-24 md:h-32 object-cover rounded-lg border border-blue-200"
+                  />
+                  <div class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                    Workshop
+                  </div>
+                </div>
+                
+                <!-- 字型信息 -->
+                <div class="space-y-1 md:space-y-2 text-xs md:text-sm mb-3 md:mb-4">
+                  <div class="flex items-center gap-2">
+                    <span class="text-blue-600">融合圖片:</span>
+                    <span :class="workshopFontData.blendedImage ? 'text-green-600' : 'text-red-600'">
+                      {{ workshopFontData.blendedImage ? '✓' : '✗' }}
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-blue-600">參考圖片:</span>
+                    <span :class="workshopFontData.referenceImage ? 'text-green-600' : 'text-red-600'">
+                      {{ workshopFontData.referenceImage ? '✓' : '✗' }}
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-blue-600">風格選項:</span>
+                    <span class="text-slate-700">{{ workshopFontData.styleOption || 'N/A' }}</span>
+                  </div>
+                </div>
+                
+                <!-- 使用此字型按鈕 -->
+                <button
+                  @click="useWorkshopFont"
+                  class="w-full px-3 md:px-4 py-2 md:py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg md:rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-98 text-sm md:text-base"
+                >
+                  <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                  使用此字型
+                </button>
+              </div>
+            </div>
+
+            <!-- 字型選擇按鈕 -->
+            <div class="grid grid-cols-1 gap-3 md:gap-4">
+              <!-- 重新微調字型 -->
+              <button
+                @click="goToWorkshop"
+                class="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl border border-blue-200 hover:from-blue-100 hover:to-indigo-200 transition-all duration-200 group shadow-sm hover:shadow-md"
+              >
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg md:rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                  <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                </div>
+                <div class="text-left flex-1">
+                  <h4 class="font-semibold text-blue-800 mb-0.5 md:mb-1 text-sm md:text-base">重新微調字型</h4>
+                  <p class="text-xs md:text-sm text-blue-600">回到 workshop 頁面重新設計您的個人化字型</p>
+                </div>
+                <svg class="w-4 h-4 md:w-5 md:h-5 text-blue-400 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </button>
+
+              <!-- 使用現成字型 -->
+              <button
+                @click="useExistingFonts"
+                class="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl border border-green-200 hover:from-green-100 hover:to-emerald-200 transition-all duration-200 group shadow-sm hover:shadow-md"
+              >
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg md:rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                  <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                  </svg>
+                </div>
+                <div class="text-left flex-1">
+                  <h4 class="font-semibold text-green-800 mb-0.5 md:mb-1 text-sm md:text-base">使用現成字型</h4>
+                  <p class="text-xs md:text-sm text-green-600">選擇系統內建的6個美麗手寫字型</p>
+                </div>
+                <svg class="w-4 h-4 md:w-5 md:h-5 text-green-400 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
               </button>
             </div>
           </div>
 
-          <!-- 手寫風格生成 -->
-          <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/20 p-6 md:p-8">
-            <div class="flex items-center justify-between mb-6">
+          <!-- 手寫風格生成區域 -->
+          <div v-if="showFontGeneration" class="bg-white/80 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-xl border border-white/20 p-4 md:p-6">
+            <div class="flex items-center gap-3 mb-4 md:mb-6">
+              <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-lg md:rounded-xl flex items-center justify-center">
+                <svg class="w-4 h-4 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <h2 class="text-lg md:text-xl font-bold text-slate-800">生成字型到模板</h2>
+            </div>
+            
+            <!-- 生成狀態 -->
+            <div class="mb-4 md:mb-6">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs md:text-sm font-medium text-slate-700">生成進度</span>
+                <span class="text-xs md:text-sm text-slate-500">{{ doneCount }}/{{ uniqueChars.length }}</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-gradient-to-r from-[#E29930] to-[#D48826] h-2 rounded-full transition-all duration-300"
+                     :style="{ width: uniqueChars.length > 0 ? (doneCount / uniqueChars.length) * 100 + '%' : '0%' }"></div>
+              </div>
+            </div>
+            
+            <!-- 生成按鈕 -->
+            <button
+              @click="batchGenerateFonts"
+              :disabled="batching || !canGenerateFonts"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-lg md:rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
+              :class="batching || !canGenerateFonts
+                ? 'bg-gradient-to-r from-[#E29930] to-[#D48826] text-white hover:shadow-xl hover:scale-[1.02] active:scale-98'
+                : 'bg-gradient-to-r from-[#5EA897] to-[#3A6B60] text-white hover:shadow-xl hover:scale-[1.02] active:scale-98'"
+            >
+              <svg v-if="batching" class="animate-spin w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <svg v-else class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+              </svg>
+              {{ batching ? '正在生成...' : '生成手寫字體' }}
+            </button>
+            
+            <!-- 錯誤訊息 -->
+            <div v-if="errorMsg" class="mt-3 md:mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p class="text-red-700 text-xs md:text-sm">{{ errorMsg }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右側預覽區域 -->
+        <div class="xl:col-span-7 space-y-4 md:space-y-6">
+          <!-- 即時預覽 -->
+          <div class="bg-white/80 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-xl border border-white/20 p-4 md:p-6">
+            <div class="flex items-center justify-between mb-4 md:mb-6">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-xl flex items-center justify-center">
-                  <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-lg md:rounded-xl flex items-center justify-center">
+                  <svg class="w-4 h-4 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
                   </svg>
                 </div>
-                <h2 class="text-xl md:text-2xl font-bold text-slate-800">手寫風格</h2>
+                <h2 class="text-lg md:text-xl font-bold text-slate-800">即時預覽</h2>
               </div>
               
               <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full" :class="hasGeneratedFonts ? 'bg-green-500 animate-pulse' : 'bg-amber-400'"></div>
-                <span class="text-sm font-medium" :class="hasGeneratedFonts ? 'text-green-600' : 'text-amber-600'">
-                  {{ hasGeneratedFonts ? '已生成' : '待生成' }}
+                <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full" :class="hasGeneratedFonts ? 'bg-green-500 animate-pulse' : 'bg-amber-400'"></div>
+                <span class="text-xs font-medium" :class="hasGeneratedFonts ? 'text-green-600' : 'text-amber-600'">
+                  {{ hasGeneratedFonts ? '字型已生成' : '等待生成' }}
                 </span>
               </div>
             </div>
-
-            <div class="space-y-6">
-              <!-- 上傳區域 -->
-              <div class="space-y-3">
-                <label class="text-sm font-medium text-slate-700">上傳手寫參考圖片</label>
-                <div class="relative">
-                  <input
-                    type="file"
-                    accept="image/png"
-                    @change="onRefImageChange"
-                    class="hidden"
-                    id="ref-image-upload"
-                  />
-                  <label
-                    for="ref-image-upload"
-                    class="group cursor-pointer block"
-                  >
-                    <div class="border-2 border-dashed border-gray-300 rounded-2xl p-6 hover:border-[#E29930] hover:bg-[#E29930]/5 transition-all duration-300 group-hover:scale-[1.02]">
-                      <div class="text-center">
-                        <div class="w-12 h-12 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
-                          <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                          </svg>
-                        </div>
-                        <p class="text-sm font-medium text-slate-700 mb-1">點擊上傳 PNG 圖片</p>
-                        <p class="text-xs text-slate-500">建議使用清晰的手寫字圖片</p>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-                
-                <!-- 已上傳的圖片預覽 -->
-                <div v-if="referenceImage" class="mt-3 p-3 bg-green-50 rounded-xl border border-green-200">
-                  <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                      <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                      </svg>
-                    </div>
-                    <span class="text-sm font-medium text-green-700">{{ referenceImage.name }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 取樣步數控制 -->
-              <div class="space-y-3">
-                <div class="flex items-center justify-between">
-                  <label class="text-sm font-medium text-slate-700">AI 生成品質</label>
-                  <span class="text-xs bg-[#E29930]/10 text-[#E29930] px-2 py-1 rounded-full font-medium">
-                    {{ samplingStep }}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="5"
-                  max="50"
-                  step="1"
-                  v-model.number="samplingStep"
-                  class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-slider-orange"
-                />
-                <div class="flex justify-between text-xs text-slate-500">
-                  <span>快速</span>
-                  <span>高品質</span>
-                </div>
-              </div>
-
-              <!-- 生成狀態 -->
-              <div class="bg-slate-50 rounded-xl p-4">
-                <div class="text-xs text-slate-600 mb-2">
-                  將生成 <span class="font-semibold text-[#E29930]">{{ uniqueChars.length }}</span> 個字元
-                  <span class="text-slate-400">（已勾選 {{ selectedKeys.length }}/{{ currentSlots.length }} 個區塊）</span>
-                </div>
-                
-                <!-- 生成按鈕 -->
-                <button
-                  @click="batchGenerateFonts"
-                  :disabled="!referenceImage || batching || uniqueChars.length === 0"
-                  :class="[
-                    'w-full group relative overflow-hidden rounded-xl font-semibold transition-all duration-300',
-                    !referenceImage || batching || uniqueChars.length === 0
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-[#3A6B60] to-[#5EA897] text-white hover:shadow-xl hover:scale-[1.02] active:scale-98',
-                  ]"
+            
+            <!-- 預覽內容 -->
+            <div id="template-preview-container" class="relative bg-white rounded-xl md:rounded-2xl overflow-hidden shadow-lg border border-gray-200 mb-4 md:mb-6">
+              <!-- 背景圖片 -->
+              <img 
+                v-if="currentTemplate"
+                :src="currentTemplate.background" 
+                :alt="currentTemplate.name"
+                class="w-full h-auto block"
+                @load="onBgLoad"
+                @error="onBgError"
+                ref="bgEl"
+                crossorigin="anonymous"
+                style="display: block;"
+              />
+              
+              <!-- 文字內容 -->
+              <div v-if="currentTemplate && currentSlots.length" 
+                   class="absolute inset-0"
+                   ref="canvasWrap">
+                <div
+                  v-for="slot in currentSlots"
+                  :key="slot.key"
+                  v-show="slotSelected[slot.key]"
+                  class="absolute"
+                  :style="{
+                    left: getSlotPosition(slot, 'x') + 'px',
+                    top: getSlotPosition(slot, 'y') + 'px',
+                    width: getSlotPosition(slot, 'w') + 'px',
+                    height: getSlotPosition(slot, 'h') + 'px',
+                    pointerEvents: 'none'
+                  }"
                 >
-                  <div class="relative z-10 flex items-center justify-center gap-3 px-6 py-4">
-                    <div v-if="batching" class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                    <svg v-else class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
-                    </svg>
-                    <span>
-                      {{ batching ? `生成中… (${doneCount}/${uniqueChars.length})` : "🎨 生成手寫字體" }}
-                    </span>
+                  <!-- 如果有生成字體，按字元顯示 -->
+                  <div v-if="hasGeneratedFonts && slotInputs[slot.key]" 
+                       class="w-full h-full flex flex-wrap items-start justify-start"
+                       :class="slot.align === 'center' ? 'justify-center' : slot.align === 'right' ? 'justify-end' : 'justify-start'">
+                    
+                    <!-- 按行分割並顯示文字 -->
+                    <div v-for="(line, lineIndex) in (slotInputs[slot.key] || '').split('\n')" 
+                         :key="'line-' + lineIndex"
+                         class="w-full flex items-center"
+                         :class="slot.align === 'center' ? 'justify-center' : slot.align === 'right' ? 'justify-end' : 'justify-start'"
+                         :style="{ 
+                           minHeight: (slot.fontSize || 20) + 'px',
+                           lineHeight: (slot.lineHeight || 1.4),
+                           marginBottom: lineIndex < (slotInputs[slot.key] || '').split('\n').length - 1 ? '8px' : '0'
+                         }">
+                      
+                      <!-- 按字元分割並顯示 -->
+                      <template v-for="(char, charIndex) in line.split('')" :key="'char-' + charIndex">
+                        <!-- 如果是空格 -->
+                        <span v-if="char === ' '" 
+                              :style="{ width: (slot.fontSize || 20) * 0.3 + 'px', height: (slot.fontSize || 20) + 'px' }">
+                        </span>
+                        
+                        <!-- 如果有生成的字體圖片 -->
+                        <img v-else-if="generatedFontImages.has(char)"
+                             :src="generatedFontImages.get(char)" 
+                             :alt="char"
+                             class="object-contain"
+                             :style="{ 
+                               height: (slot.fontSize || 20) + 'px',
+                               width: 'auto',
+                               maxWidth: (slot.fontSize || 20) * 1.2 + 'px'
+                             }"
+                        />
+                        
+                        <!-- 如果沒有生成的字體，使用預設字體 -->
+                        <span v-else
+                              class="inline-block"
+                              :style="{ 
+                                fontSize: (slot.fontSize || 20) + 'px',
+                                color: slot.color || '#333',
+                                fontWeight: slot.fontWeight || 'normal',
+                                lineHeight: (slot.lineHeight || 1.4)
+                              }">
+                          {{ char }}
+                        </span>
+                      </template>
+                    </div>
                   </div>
                   
-                  <!-- 進度條背景 -->
-                  <div v-if="batching" 
-                       class="absolute inset-0 bg-gradient-to-r from-[#5EA897] to-[#3A6B60] transition-all duration-300"
-                       :style="{ width: `${(doneCount / uniqueChars.length) * 100}%` }">
+                  <!-- 預設文字顯示 -->
+                  <div v-else
+                       class="w-full h-full flex items-center"
+                       :class="slot.align === 'center' ? 'justify-center' : slot.align === 'right' ? 'justify-end' : 'justify-start'">
+                    <span class="text-slate-400 text-xs md:text-sm whitespace-pre-wrap"
+                          :style="{ 
+                            fontSize: (slot.fontSize || 20) * 0.8 + 'px',
+                            textAlign: slot.align || 'left',
+                            lineHeight: (slot.lineHeight || 1.4)
+                          }">
+                      {{ slotInputs[slot.key] || slot.placeholder || '輸入文字...' }}
+                    </span>
                   </div>
-                </button>
-              </div>
-
-              <!-- 錯誤提示 -->
-              <div v-if="failures.length" class="bg-red-50 border border-red-200 rounded-xl p-4">
-                <div class="flex items-center gap-2 mb-2">
-                  <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                  </svg>
-                  <span class="text-sm font-medium text-red-700">生成失敗的字元</span>
                 </div>
-                <p class="text-sm text-red-600">{{ failures.join("") }}</p>
               </div>
+            </div>
+            
+            <!-- 下載按鈕 -->
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button
+                @click="exportAsPNG"
+                :disabled="!hasGeneratedFonts"
+                class="flex-1 px-4 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-[#5EA897] to-[#3A6B60] text-white rounded-lg md:rounded-xl hover:from-[#4a9178] hover:to-[#2d5248] transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
+              >
+                <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+                下載圖片
+              </button>
+              
+              <button
+                @click="goToWorkshop"
+                class="px-4 md:px-6 py-2.5 md:py-3 border-2 border-[#5EA897] text-[#5EA897] rounded-lg md:rounded-xl hover:bg-[#5EA897] hover:text-white transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-sm hover:shadow-md text-sm md:text-base"
+              >
+                <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                </svg>
+                <span class="hidden sm:inline">重新上傳字型</span>
+                <span class="sm:hidden">重新調整</span>
+              </button>
             </div>
           </div>
 
           <!-- 內容編輯 -->
-          <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/20 p-6 md:p-8">
-            <div class="flex items-center justify-between mb-6">
+          <div class="bg-white/80 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-xl border border-white/20 p-4 md:p-6">
+            <div class="flex items-center justify-between mb-4 md:mb-6">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-[#5EA897] to-[#3A6B60] rounded-xl flex items-center justify-center">
-                  <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-.38-1.01-.38-1.39 0L2.89 10.7a.98.98 0 000 1.39l7.21 7.53c.38.38 1.01.38 1.39 0l7.21-7.53c.38-.38.38-1.01 0-1.39L11.49 3.17zM12 5.5l5.5 5.75L12 17 6.5 11.25 12 5.5z" clip-rule="evenodd"/>
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#5EA897] to-[#3A6B60] rounded-lg md:rounded-xl flex items-center justify-center">
+                  <svg class="w-4 h-4 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
                   </svg>
                 </div>
-                <h2 class="text-xl md:text-2xl font-bold text-slate-800">編輯內容</h2>
+                <h2 class="text-lg md:text-xl font-bold text-slate-800">編輯內容</h2>
               </div>
               
-              <label class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 select-none cursor-pointer">
+              <label class="inline-flex items-center gap-2 text-xs md:text-sm font-medium text-slate-600 select-none cursor-pointer">
                 <input
                   type="checkbox"
                   v-model="allSelected"
-                  class="w-4 h-4 accent-[#3A6B60] rounded"
+                  class="w-3 h-3 md:w-4 md:h-4 accent-[#5EA897] rounded"
                 />
                 全選
               </label>
             </div>
 
-            <div v-if="currentSlots.length" class="space-y-4">
+            <div v-if="currentSlots.length" class="space-y-3 md:space-y-4">
               <div
                 v-for="slot in currentSlots"
                 :key="slot.key"
-                class="space-y-3 p-4 bg-slate-50 rounded-xl border border-slate-200"
+                class="space-y-2 md:space-y-3 p-3 md:p-4 bg-slate-50 rounded-lg md:rounded-xl border border-slate-200 hover:border-[#5EA897]/30 transition-colors duration-200"
               >
                 <div class="flex items-center justify-between">
-                  <label class="text-sm font-semibold text-slate-700">{{ slot.label }}</label>
-                  <label class="inline-flex items-center gap-2 text-xs text-slate-600 select-none cursor-pointer">
+                  <label class="text-xs md:text-sm font-semibold text-slate-700">{{ slot.label }}</label>
+                  <label class="inline-flex items-center gap-1.5 md:gap-2 text-xs text-slate-600 select-none cursor-pointer">
                     <input
                       type="checkbox"
                       v-model="slotSelected[slot.key]"
-                      class="w-3 h-3 accent-[#3A6B60] rounded"
+                      class="w-2.5 h-2.5 md:w-3 md:h-3 accent-[#5EA897] rounded"
                     />
                     生成
                   </label>
@@ -269,185 +439,27 @@
                 <textarea
                   v-model="slotInputs[slot.key]"
                   :rows="slot.multiline ? 3 : 2"
-                  class="w-full rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#5EA897] focus:border-transparent text-slate-800 p-3 text-sm resize-none transition-all duration-200"
+                  class="w-full rounded-lg md:rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#5EA897] focus:border-transparent text-slate-800 p-2.5 md:p-3 text-xs md:text-sm resize-none transition-all duration-200"
                   :placeholder="slot.placeholder || `輸入${slot.label}...`"
                 ></textarea>
                 
                 <div class="flex items-center justify-between text-xs text-slate-500">
                   <div class="flex items-center gap-2">
-                    <span class="px-2 py-1 bg-slate-200 rounded-full">{{ slot.align.toUpperCase() }}</span>
-                    <span class="px-2 py-1 bg-slate-200 rounded-full">{{ slot.fontSize }}px</span>
+                    <span class="px-1.5 md:px-2 py-0.5 md:py-1 bg-slate-200 rounded-full text-xs">{{ slot.align.toUpperCase() }}</span>
+                    <span class="px-1.5 md:px-2 py-0.5 md:py-1 bg-slate-200 rounded-full text-xs">{{ slot.fontSize }}px</span>
                   </div>
-                  <span class="text-slate-400">使用生成字體</span>
+                  <span class="text-slate-400 text-xs">使用生成字體</span>
                 </div>
               </div>
             </div>
             
-            <div v-else class="text-center py-8 text-slate-500">
-              <svg class="w-12 h-12 mx-auto mb-3 text-slate-300" fill="currentColor" viewBox="0 0 20 20">
+            <div v-else class="text-center py-6 md:py-8 text-slate-500">
+              <svg class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-3 text-slate-300" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
               </svg>
-              <p class="text-sm">請先選擇模板</p>
+              <p class="text-xs md:text-sm">請先選擇模板</p>
             </div>
           </div>
-        </div>
-
-        <!-- 右側預覽區域 -->
-        <div class="lg:col-span-7 space-y-6">
-          <!-- 即時預覽 -->
-          <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/20 p-6 md:p-8">
-            <div class="flex items-center justify-between mb-6">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-xl flex items-center justify-center">
-                  <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
-                  </svg>
-                </div>
-                <h2 class="text-xl md:text-2xl font-bold text-slate-800">即時預覽</h2>
-              </div>
-              
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full" :class="hasGeneratedFonts ? 'bg-green-500 animate-pulse' : 'bg-amber-400'"></div>
-                <span class="text-xs font-medium" :class="hasGeneratedFonts ? 'text-green-600' : 'text-amber-600'">
-                  {{ hasGeneratedFonts ? "使用生成字體" : "使用預設字體" }}
-                </span>
-              </div>
-            </div>
-
-            <div
-              ref="canvasWrap"
-              class="relative w-full bg-white overflow-hidden rounded-2xl border-2 border-slate-200 shadow-lg"
-              :style="{ aspectRatio: computedAspect }"
-            >
-              <img
-                v-if="currentTemplate.bg"
-                ref="bgEl"
-                :src="currentTemplate.bg"
-                class="absolute inset-0 w-full h-full object-contain select-none"
-                alt="背景"
-                @load="onBgLoad"
-              />
-
-              <template v-for="slot in currentSlots" :key="slot.key">
-                <div
-                  class="absolute text-slate-800 whitespace-pre-wrap"
-                  :style="slotStyle(slot, true)"
-                >
-                  <!-- 如果有生成的字體，使用圖片字體 -->
-                  <template v-if="hasGeneratedFonts && slotInputs[slot.key]">
-                    <template v-for="(char, index) in (slotInputs[slot.key] || '').split('')" :key="index">
-                      <img 
-                        v-if="generatedFontImages.get(char)" 
-                        :src="generatedFontImages.get(char)" 
-                        :alt="char"
-                        class="inline-block align-text-bottom"
-                        :style="{
-                          height: `${slot.fontSize}px`,
-                          width: 'auto',
-                          verticalAlign: 'baseline',
-                          lineHeight: '1'
-                        }"
-                      />
-                      <span v-else class="inline-block" :style="{ fontSize: `${slot.fontSize}px` }">{{ char }}</span>
-                    </template>
-                  </template>
-                  
-                  <!-- 沒有生成字體時，使用預設文字 -->
-                  <span v-else :style="{ fontSize: `${slot.fontSize}px` }">
-                    {{ slotInputs[slot.key] }}
-                  </span>
-                </div>
-              </template>
-              
-              <!-- 預覽遮罩 -->
-              <div v-if="!currentTemplate.bg" class="absolute inset-0 flex items-center justify-center bg-slate-100">
-                <div class="text-center text-slate-400">
-                  <svg class="w-16 h-16 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
-                  </svg>
-                  <p class="text-sm">選擇模板以開始預覽</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 下載區域 -->
-          <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/20 p-6 md:p-8">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-xl flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                </svg>
-              </div>
-              <h2 class="text-xl md:text-2xl font-bold text-slate-800">下載成品</h2>
-            </div>
-
-            <div class="space-y-4">
-              <button
-                @click="exportAsPNG"
-                :disabled="!hasGeneratedFonts"
-                :class="[
-                  'w-full group relative overflow-hidden rounded-xl font-semibold transition-all duration-300',
-                  hasGeneratedFonts
-                    ? 'bg-gradient-to-r from-[#E29930] to-[#D48826] text-white hover:shadow-xl hover:scale-[1.02] active:scale-98'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                ]"
-              >
-                <div class="relative z-10 flex items-center justify-center gap-3 px-6 py-4">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                  </svg>
-                  <span>
-                    {{ hasGeneratedFonts ? "下載高解析度 PNG" : "請先生成字體" }}
-                  </span>
-                </div>
-              </button>
-              
-              <div class="text-center">
-                <p class="text-xs text-slate-500 mb-2">支援高解析度輸出，完美呈現手寫風格</p>
-                <div class="flex items-center justify-center gap-2 text-xs text-slate-400">
-                  <span class="px-2 py-1 bg-slate-100 rounded-full">PNG 格式</span>
-                  <span class="px-2 py-1 bg-slate-100 rounded-full">高解析度</span>
-                  <span class="px-2 py-1 bg-slate-100 rounded-full">即時預覽</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- 錯誤提示 -->
-            <div v-if="errorMsg" class="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl">
-              <div class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                </svg>
-                <span class="text-sm text-red-700">{{ errorMsg }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 生成進度遮罩 -->
-    <div
-      v-if="batching"
-      class="fixed inset-0 bg-black/20 backdrop-blur-sm pointer-events-none z-[60]"
-    >
-      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4">
-        <div class="text-center">
-          <div class="w-16 h-16 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-full flex items-center justify-center mx-auto mb-4">
-            <div class="animate-spin rounded-full h-8 w-8 border-4 border-white border-t-transparent"></div>
-          </div>
-          <h3 class="text-lg font-semibold text-slate-800 mb-2">正在生成字體</h3>
-          <p class="text-sm text-slate-600 mb-4">AI 正在為您創建獨特的手寫風格</p>
-          
-          <!-- 進度條 -->
-          <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
-            <div class="bg-gradient-to-r from-[#E29930] to-[#D48826] h-2 rounded-full transition-all duration-300"
-                 :style="{ width: `${(doneCount / uniqueChars.length) * 100}%` }">
-            </div>
-          </div>
-          
-          <p class="text-sm text-slate-500">{{ doneCount }} / {{ uniqueChars.length }} 字元完成</p>
         </div>
       </div>
     </div>
@@ -478,7 +490,8 @@ const templates = [
     id: "wedding",
     name: "結婚賀卡",
     aspect: "4 / 3",
-    bg: "/cards/wedding_bg.png",
+    thumbnail: "/cards/wedding_thumb.png",
+    background: "/cards/wedding_bg.png",
     slots: [
       {
         key: "title",
@@ -490,7 +503,9 @@ const templates = [
         fontWeight: "bold",
         align: "center",
         color: "#8B4513",
-        defaultText: "新婚快樂"
+        defaultText: "新婚快樂",
+        placeholder: "輸入標題...",
+        multiline: false
       },
       {
         key: "message",
@@ -502,7 +517,9 @@ const templates = [
         lineHeight: 1.5,
         align: "center",
         color: "#2F4F4F",
-        defaultText: "願你們白頭偕老\n永結同心"
+        defaultText: "願你們白頭偕老\n永結同心",
+        placeholder: "輸入祝福語...",
+        multiline: true
       },
       {
         key: "signature",
@@ -513,7 +530,9 @@ const templates = [
         fontSize: 20,
         align: "right",
         color: "#8B4513",
-        defaultText: "祝福者"
+        defaultText: "祝福者",
+        placeholder: "輸入簽名...",
+        multiline: false
       }
     ]
   },
@@ -521,7 +540,8 @@ const templates = [
     id: "love",
     name: "情書",
     aspect: "3 / 4",
-    bg: "/cards/love_bg.png",
+    thumbnail: "/cards/love_thumb.png",
+    background: "/cards/love_bg.png",
     slots: [
       {
         key: "greeting",
@@ -533,7 +553,9 @@ const templates = [
         fontWeight: "bold",
         align: "center",
         color: "#DC143C",
-        defaultText: "親愛的"
+        defaultText: "親愛的",
+        placeholder: "輸入問候語...",
+        multiline: false
       },
       {
         key: "content",
@@ -545,7 +567,9 @@ const templates = [
         lineHeight: 1.6,
         align: "left",
         color: "#2F4F4F",
-        defaultText: "每一天都因為有你\n而變得更加美好"
+        defaultText: "每一天都因為有你\n而變得更加美好",
+        placeholder: "輸入內容...",
+        multiline: true
       },
       {
         key: "ending",
@@ -556,7 +580,9 @@ const templates = [
         fontSize: 20,
         align: "center",
         color: "#DC143C",
-        defaultText: "愛你的我"
+        defaultText: "愛你的我",
+        placeholder: "輸入結尾...",
+        multiline: false
       }
     ]
   },
@@ -564,7 +590,8 @@ const templates = [
     id: "journal",
     name: "手寫帳",
     aspect: "16 / 9",
-    bg: "/cards/journal_bg.png",
+    thumbnail: "/cards/journal_thumb.png",
+    background: "/cards/journal_bg.png",
     slots: [
       {
         key: "date",
@@ -575,19 +602,37 @@ const templates = [
         fontSize: 18,
         align: "left",
         color: "#2F4F4F",
-        defaultText: "2024年12月"
+        defaultText: "2024年1月1日",
+        placeholder: "輸入日期...",
+        multiline: false
       },
       {
-        key: "entry",
-        label: "日記內容",
+        key: "title",
+        label: "標題",
+        x: 35,
+        y: 15,
+        w: 30,
+        fontSize: 24,
+        fontWeight: "bold",
+        align: "center",
+        color: "#8B4513",
+        defaultText: "今日記錄",
+        placeholder: "輸入標題...",
+        multiline: false
+      },
+      {
+        key: "content",
+        label: "內容",
         x: 15,
-        y: 30,
+        y: 35,
         w: 70,
         fontSize: 20,
-        lineHeight: 1.4,
+        lineHeight: 1.8,
         align: "left",
         color: "#2F4F4F",
-        defaultText: "今天的心情很好\n記錄下這美好的一天"
+        defaultText: "今天過得很充實...",
+        placeholder: "輸入內容...",
+        multiline: true
       }
     ]
   }
@@ -636,24 +681,47 @@ const selectedKeys = computed(() =>
   currentSlots.value.filter((s) => !!slotSelected[s.key]).map((s) => s.key)
 );
 
-// 簡化模板選擇函數
-function selectTemplate(id) {
-  currentTemplateId.value = id;
-  const tpl = templates.find((t) => t.id === id);
-  if (!tpl) return;
+// 新增：控制字型生成區域顯示
+const showFontGeneration = ref(false)
 
-  // 重設輸入與勾選
-  const newInputs = {};
-  Object.keys(slotInputs).forEach((k) => delete slotInputs[k]);
-  Object.keys(slotSelected).forEach((k) => delete slotSelected[k]);
-  for (const s of tpl.slots) {
-    newInputs[s.key] = s.defaultText || "";
-    slotSelected[s.key] = true; // 預設全選
-  }
-  Object.assign(slotInputs, newInputs);
+// 新增：檢查是否可以生成字型
+const canGenerateFonts = computed(() => {
+  return referenceImage.value && uniqueChars.value.length > 0
+})
+
+// 新增：workshop 字型數據
+const workshopFontData = ref(null)
+
+// 簡化模板選擇函數
+function selectTemplate(templateId) {
+  console.log('選擇模板:', templateId);
+  currentTemplateId.value = templateId;
   
+  // 重置相關狀態
+  hasGeneratedFonts.value = false;
+  generatedFontImages.value.clear();
+  errorMsg.value = "";
+  
+  // 延遲更新以確保DOM更新完成
   nextTick(() => {
-    updateContainRect();
+    console.log('模板選擇完成，準備更新背景圖片');
+    
+    // 檢查背景圖片是否已載入
+    if (bgEl.value && bgEl.value.complete && bgEl.value.naturalWidth > 0) {
+      console.log('背景圖片已載入，直接更新');
+      onBgLoad({ target: bgEl.value });
+    } else {
+      console.log('背景圖片未載入，等待載入事件');
+      // 強制觸發圖片載入檢查
+      setTimeout(() => {
+        if (bgEl.value) {
+          console.log('強制檢查背景圖片狀態');
+          if (bgEl.value.complete && bgEl.value.naturalWidth > 0) {
+            onBgLoad({ target: bgEl.value });
+          }
+        }
+      }, 500);
+    }
   });
 }
 
@@ -700,13 +768,34 @@ async function batchGenerateFonts() {
   generatedFontImages.value.clear();
   
   console.log(`開始生成 ${uniqueChars.value.length} 個字元:`, uniqueChars.value);
+  console.log('使用的參考圖片:', referenceImage.value);
 
   for (const ch of uniqueChars.value) {
     try {
       const form = new FormData();
       form.append("character", ch);
       form.append("sampling_step", String(samplingStep.value));
-      form.append("reference_image", referenceImage.value);
+      
+      // 檢查 referenceImage 的類型並正確處理
+      if (referenceImage.value instanceof File) {
+        // 如果是 File 對象，直接使用
+        form.append("reference_image", referenceImage.value);
+        console.log(`字元 ${ch}: 使用 File 對象`);
+      } else if (typeof referenceImage.value === 'string') {
+        // 如果是 URL 字符串，需要先轉換為 File 對象
+        try {
+          const response = await fetch(referenceImage.value);
+          const blob = await response.blob();
+          const file = new File([blob], 'reference.png', { type: 'image/png' });
+          form.append("reference_image", file);
+          console.log(`字元 ${ch}: 將 URL 轉換為 File 對象`);
+        } catch (fetchError) {
+          console.error(`無法獲取圖片 ${referenceImage.value}:`, fetchError);
+          throw new Error("無法處理參考圖片");
+        }
+      } else {
+        throw new Error("參考圖片格式不正確");
+      }
 
       console.log(`正在生成字元: ${ch}`);
       
@@ -715,7 +804,12 @@ async function batchGenerateFonts() {
         body: form,
       });
       
-      if (!res.ok) throw new Error("模型服務回應失敗");
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error(`API 錯誤 ${res.status}:`, errorText);
+        throw new Error(`模型服務回應失敗 (${res.status}): ${errorText}`);
+      }
+      
       const data = await res.json();
       if (!data?.image) throw new Error("缺少 image URL");
 
@@ -736,10 +830,17 @@ async function batchGenerateFonts() {
   } else {
     errorMsg.value = "";
     console.log(`成功生成 ${generatedFontImages.value.size} 個字元:`, Array.from(generatedFontImages.value.keys()));
+    console.log('生成的字體圖片:', Object.fromEntries(generatedFontImages.value));
+    
+    // 設置生成完成標記
+    hasGeneratedFonts.value = true;
     
     // 強制更新預覽
     await nextTick();
     updateContainRect();
+    
+    // 顯示成功訊息
+    alert(`✅ 成功生成 ${generatedFontImages.value.size} 個字元的手寫字體！`);
   }
 
   batching.value = false;
@@ -758,20 +859,118 @@ const computedAspect = computed(() => {
 
 function onBgLoad(e) {
   const img = e.target;
+  console.log('背景圖片載入完成:', img);
+  console.log('圖片原始尺寸:', img.naturalWidth, 'x', img.naturalHeight);
+  console.log('圖片顯示尺寸:', img.offsetWidth, 'x', img.offsetHeight);
+  
+  // 檢查圖片是否有效
+  if (img.naturalWidth === 0 || img.naturalHeight === 0) {
+    console.error('圖片尺寸無效，嘗試重新載入');
+    // 強制重新載入
+    img.src = img.src + '?t=' + Date.now();
+    return;
+  }
+  
   bgMeta.w = img.naturalWidth;
   bgMeta.h = img.naturalHeight;
-  updateContainRect();
+  
+  console.log('背景元數據已設置:', bgMeta);
+  
+  // 延遲更新以確保DOM完全渲染
+  setTimeout(() => {
+    updateContainRect();
+    // 強制觸發重新渲染
+    nextTick(() => {
+      console.log('強制觸發重新渲染');
+    });
+  }, 200);
+}
+
+function onBgError(e) {
+  console.error('背景圖片載入失敗:', e);
+  console.error('圖片src:', e.target.src);
+  alert('背景圖片載入失敗，請檢查圖片路徑');
 }
 
 function onResize() {
   updateContainRect();
 }
 
+// 自動載入 workshop 的字型數據
+function loadWorkshopFontData() {
+  try {
+    const fontDataStr = localStorage.getItem('workshop_font_data')
+    console.log('localStorage 中的 workshop_font_data:', fontDataStr)
+    
+    if (fontDataStr) {
+      const fontData = JSON.parse(fontDataStr)
+      console.log('解析後的字型數據:', fontData)
+
+      // 檢查數據是否過期（24小時）
+      const now = Date.now()
+      const dataAge = now - fontData.timestamp
+      const maxAge = 24 * 60 * 60 * 1000 // 24小時
+
+      if (dataAge > maxAge) {
+        console.log('字型數據已過期，清除舊數據')
+        localStorage.removeItem('workshop_font_data')
+        workshopFontData.value = null
+        return
+      }
+
+      // 設定 workshop 字型數據
+      workshopFontData.value = fontData
+      console.log('workshop 字型數據已設定:', workshopFontData.value)
+
+      // 自動設定上傳的字型圖片
+      if (fontData.blendedImage || fontData.referenceImage) {
+        console.log('找到字型圖片:', fontData.blendedImage || fontData.referenceImage)
+        // 設定 referenceImage 為 workshop 的字型圖片
+        referenceImage.value = fontData.blendedImage || fontData.referenceImage
+      }
+    } else {
+      console.log('未找到 workshop 字型數據')
+      workshopFontData.value = null
+    }
+  } catch (error) {
+    console.error('載入 workshop 字型數據失敗:', error)
+    workshopFontData.value = null
+  }
+}
+
+// 組件掛載時
 onMounted(() => {
+  console.log('🔍 Template 頁面載入完成');
+  console.log('🔍 檢查 localStorage 中的 workshop_font_data');
+  
+  // 初始化必要的函數
   selectTemplate(currentTemplateId.value);
   window.addEventListener("resize", onResize);
-  updateContainRect();
-});
+  
+  // 自動載入 workshop 的字型數據
+  loadWorkshopFontData();
+  
+  // 延遲檢查背景圖片狀態
+  setTimeout(() => {
+    console.log('🔍 延遲檢查背景圖片狀態');
+    console.log('背景圖片元素:', bgEl.value);
+    console.log('背景元數據:', bgMeta);
+    
+    // 如果背景圖片已經載入，強制更新
+    if (bgEl.value && bgEl.value.complete && bgEl.value.naturalWidth > 0) {
+      console.log('🔍 背景圖片已載入，強制更新');
+      onBgLoad({ target: bgEl.value });
+    } else {
+      console.log('🔍 背景圖片未載入，等待載入事件');
+    }
+  }, 1000);
+  
+  // 檢查當前狀態
+  console.log('🔍 當前 template 頁面狀態:');
+  console.log('- workshopFontData:', workshopFontData.value);
+  console.log('- referenceImage:', referenceImage.value);
+  console.log('- showFontGeneration:', showFontGeneration.value);
+})
 
 onBeforeUnmount(() => {
   window.removeEventListener("resize", onResize);
@@ -908,6 +1107,98 @@ function slotPixelsForRect(slot, rect) {
   return { x, y, w };
 }
 
+// 新的位置計算函數，直接基於背景圖片尺寸
+function getSlotPosition(slot, dimension) {
+  console.log('getSlotPosition 被調用:', { slot, dimension, bgMeta });
+  
+  if (!bgMeta.w || !bgMeta.h) {
+    console.warn('背景圖片尺寸未載入，使用預設值');
+    // 使用預設值
+    const container = document.getElementById('template-preview-container');
+    if (!container) return 0;
+    
+    const containerRect = container.getBoundingClientRect();
+    const defaultWidth = containerRect.width;
+    const defaultHeight = containerRect.height;
+    
+    // 根據維度返回對應的值
+    switch (dimension) {
+      case 'x':
+        return (slot.x / 100) * defaultWidth;
+      case 'y':
+        return (slot.y / 100) * defaultHeight;
+      case 'w':
+        return (slot.w / 100) * defaultWidth;
+      case 'h':
+        return (slot.h / 100) * defaultHeight;
+      default:
+        return 0;
+    }
+  }
+  
+  const container = document.getElementById('template-preview-container');
+  if (!container) {
+    console.error('找不到預覽容器');
+    return 0;
+  }
+  
+  const containerRect = container.getBoundingClientRect();
+  const imgElement = bgEl.value;
+  
+  if (!imgElement) {
+    console.error('找不到背景圖片元素');
+    return 0;
+  }
+  
+  const imgRect = imgElement.getBoundingClientRect();
+  console.log('容器尺寸:', containerRect);
+  console.log('圖片元素尺寸:', imgRect);
+  
+  // 計算背景圖片在容器中的實際尺寸和位置
+  const imgAspect = bgMeta.w / bgMeta.h;
+  const containerAspect = containerRect.width / containerRect.height;
+  
+  let imgWidth, imgHeight, imgX, imgY;
+  
+  if (imgAspect > containerAspect) {
+    // 圖片較寬，以容器寬度為準
+    imgWidth = containerRect.width;
+    imgHeight = containerRect.width / imgAspect;
+    imgX = 0;
+    imgY = (containerRect.height - imgHeight) / 2;
+  } else {
+    // 圖片較高，以容器高度為準
+    imgHeight = containerRect.height;
+    imgWidth = containerRect.height * imgAspect;
+    imgX = (containerRect.width - imgWidth) / 2;
+    imgY = 0;
+  }
+  
+  console.log('計算的圖片尺寸和位置:', { imgWidth, imgHeight, imgX, imgY });
+  
+  // 根據維度返回對應的值
+  let result;
+  switch (dimension) {
+    case 'x':
+      result = imgX + (slot.x / 100) * imgWidth;
+      break;
+    case 'y':
+      result = imgY + (slot.y / 100) * imgHeight;
+      break;
+    case 'w':
+      result = (slot.w / 100) * imgWidth;
+      break;
+    case 'h':
+      result = (slot.h / 100) * imgHeight;
+      break;
+    default:
+      result = 0;
+  }
+  
+  console.log(`維度 ${dimension} 的結果:`, result);
+  return result;
+}
+
 // 簡化背景圖片計算函數
 function calcContainRect(boxW, boxH, imgW, imgH) {
   if (!imgW || !imgH) return { x: 0, y: 0, w: boxW, h: boxH };
@@ -930,12 +1221,20 @@ function calcContainRect(boxW, boxH, imgW, imgH) {
 function updateContainRect() {
   nextTick(() => {
     const wrap = canvasWrap.value;
-    if (!wrap || !bgMeta.w || !bgMeta.h) return;
+    const container = document.getElementById('template-preview-container');
     
-    const cw = wrap.clientWidth;
-    const ch = wrap.clientHeight;
+    if (!wrap || !container || !bgMeta.w || !bgMeta.h) {
+      console.log('更新容器尺寸失敗:', { wrap: !!wrap, container: !!container, bgMeta });
+      return;
+    }
+    
+    const cw = container.clientWidth;
+    const ch = container.clientHeight;
     const imgR = bgMeta.w / bgMeta.h;
     const boxR = cw / ch;
+    
+    console.log('容器尺寸:', cw, 'x', ch);
+    console.log('圖片比例:', imgR, '容器比例:', boxR);
     
     if (imgR > boxR) {
       const w = cw;
@@ -952,6 +1251,8 @@ function updateContainRect() {
       containRect.w = w;
       containRect.h = h;
     }
+    
+    console.log('容器矩形已更新:', containRect);
   });
 }
 
@@ -965,8 +1266,9 @@ async function exportAsPNG() {
   }
 
   try {
-    // 獲取預覽容器
-    const previewContainer = canvasWrap.value;
+    // 獲取包含背景圖片的整個預覽容器
+    const previewContainer = document.getElementById('template-preview-container');
+    
     if (!previewContainer) {
       throw new Error("無法找到預覽容器");
     }
@@ -974,34 +1276,97 @@ async function exportAsPNG() {
     // 顯示載入狀態
     errorMsg.value = "正在生成圖片...";
     
-    // 使用 HTML2Canvas 截圖，確保與預覽完全一致
+    console.log('開始截圖，容器:', previewContainer);
+    console.log('容器尺寸:', previewContainer.offsetWidth, 'x', previewContainer.offsetHeight);
+    
+    // 等待一下確保DOM完全渲染
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // 確保所有圖片都已載入
+    const images = previewContainer.querySelectorAll('img');
+    console.log('找到的圖片數量:', images.length);
+    
+    await Promise.all(Array.from(images).map((img, index) => {
+      console.log(`圖片 ${index}:`, img.src, '載入狀態:', img.complete);
+      if (img.complete) return Promise.resolve();
+      return new Promise((resolve, reject) => {
+        img.onload = () => {
+          console.log(`圖片 ${index} 載入完成`);
+          resolve();
+        };
+        img.onerror = () => {
+          console.log(`圖片 ${index} 載入失敗`);
+          resolve(); // 不阻擋其他圖片
+        };
+        // 設置超時以防圖片載入失敗
+        setTimeout(() => {
+          console.log(`圖片 ${index} 載入超時`);
+          resolve();
+        }, 3000);
+      });
+    }));
+    
+    // 檢查容器內容
+    console.log('容器HTML內容:', previewContainer.innerHTML);
+    console.log('背景圖片元素:', bgEl.value);
+    console.log('背景圖片尺寸:', bgMeta.w, 'x', bgMeta.h);
+    
+    // 使用 HTML2Canvas 截圖
     const canvas = await html2canvas(previewContainer, {
-      scale: 2, // 2x 縮放，提高圖片品質
+      scale: 2, // 降低到2x以避免記憶體問題
       useCORS: true, // 允許跨域圖片
       allowTaint: true, // 允許外部圖片
-      backgroundColor: null, // 保持透明背景
-      width: previewContainer.scrollWidth,
-      height: previewContainer.scrollHeight,
+      backgroundColor: '#ffffff', // 設置白色背景
+      width: previewContainer.offsetWidth,
+      height: previewContainer.offsetHeight,
       scrollX: 0,
       scrollY: 0,
-      windowWidth: previewContainer.scrollWidth,
-      windowHeight: previewContainer.scrollHeight
+      foreignObjectRendering: false, // 關閉外部對象渲染
+      removeContainer: false, // 不移除容器
+      imageTimeout: 15000, // 增加圖片載入超時時間
+      logging: true, // 啟用日誌以便調試
+      onclone: (clonedDoc) => {
+        console.log('克隆文檔:', clonedDoc);
+        // 在克隆文檔中確保圖片正確載入
+        const clonedImages = clonedDoc.querySelectorAll('img');
+        clonedImages.forEach((img, index) => {
+          console.log(`克隆圖片 ${index}:`, img.src);
+          if (img.src && !img.src.startsWith('data:')) {
+            img.crossOrigin = 'anonymous';
+          }
+        });
+      }
     });
 
+    // 獲取最終尺寸
+    const finalWidth = canvas.width;
+    const finalHeight = canvas.height;
+    
+    console.log('截圖完成，畫布尺寸:', finalWidth, 'x', finalHeight);
+    
+    // 檢查畫布內容
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, finalWidth, finalHeight);
+    const hasContent = imageData.data.some(pixel => pixel !== 0);
+    console.log('畫布是否有內容:', hasContent);
+
     // 下載圖片
-    const url = canvas.toDataURL('image/png');
+    const url = canvas.toDataURL('image/png', 1.0);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `card_${currentTemplateId.value}_${new Date().getTime()}.png`;
+    a.download = `${currentTemplate.value.name}_${new Date().getTime()}.png`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     
     errorMsg.value = "";
-    console.log("圖片匯出成功！使用 HTML2Canvas 確保與預覽完全一致");
+    console.log("圖片匯出成功！檔案名稱:", a.download);
+    alert("✅ 圖片下載成功！");
+    
   } catch (error) {
     console.error("匯出失敗:", error);
     errorMsg.value = "匯出失敗：" + error.message;
+    alert("❌ 匯出失敗：" + error.message);
   }
 }
 
@@ -1028,6 +1393,98 @@ function loadImage(src) {
 //     img.src = src;
 //   });
 // }
+
+// 跳轉到 workshop 頁面
+function goToWorkshop() {
+  navigateTo('/workshop')
+}
+
+// 新增：使用 workshop 字型
+const useWorkshopFont = async () => {
+  if (workshopFontData.value) {
+    try {
+      // 獲取字型圖片URL
+      const imageUrl = workshopFontData.value.blendedImage || workshopFontData.value.referenceImage
+      console.log('🎨 準備載入 workshop 字型圖片:', imageUrl)
+      
+      if (!imageUrl) {
+        alert('❌ 未找到 workshop 字型圖片')
+        return
+      }
+      
+      // 將URL轉換為File對象
+      const response = await fetch(imageUrl)
+      if (!response.ok) {
+        throw new Error(`無法獲取圖片: ${response.status}`)
+      }
+      
+      const blob = await response.blob()
+      const file = new File([blob], 'workshop_font.png', { type: 'image/png' })
+      
+      // 設定 referenceImage 為 File 對象
+      referenceImage.value = file
+      
+      // 顯示字型生成區域
+      showFontGeneration.value = true
+      
+      // 重置生成狀態
+      hasGeneratedFonts.value = false
+      
+      // 顯示成功訊息
+      alert('✅ 已載入 workshop 字型風格，可以開始生成字型到模板！')
+      
+      console.log('✅ 已使用 workshop 字型:', referenceImage.value)
+      console.log('📁 字型文件類型:', referenceImage.value instanceof File ? 'File' : typeof referenceImage.value)
+      console.log('📁 字型文件大小:', referenceImage.value instanceof File ? `${referenceImage.value.size} bytes` : 'N/A')
+      
+    } catch (error) {
+      console.error('❌ 載入 workshop 字型失敗:', error)
+      alert(`❌ 載入字型失敗: ${error.message}`)
+    }
+  }
+}
+
+// 新增：使用現成字型
+const useExistingFonts = () => {
+  // 顯示現成字型選擇對話框
+  const fontOptions = [
+    { name: 'JasonHandwriting1', displayName: '傑森手寫體 1', path: '/fonts/JasonHandwriting1.woff2' },
+    { name: 'JasonHandwriting2', displayName: '傑森手寫體 2', path: '/fonts/JasonHandwriting2.woff2' },
+    { name: 'JasonHandwriting3', displayName: '傑森手寫體 3', path: '/fonts/JasonHandwriting3.woff2' },
+    { name: 'JasonHandwriting4', displayName: '傑森手寫體 4', path: '/fonts/JasonHandwriting4.woff2' },
+    { name: 'JasonHandwriting5', displayName: '傑森手寫體 5', path: '/fonts/JasonHandwriting5.woff2' },
+    { name: 'JasonHandwriting5p', displayName: '傑森手寫體 5+', path: '/fonts/JasonHandwriting5p.woff2' }
+  ]
+  
+  // 創建字型選擇對話框
+  const selectedFont = prompt(
+    `請選擇要使用的手寫字型：\n\n${fontOptions.map((font, index) => `${index + 1}. ${font.displayName}`).join('\n')}\n\n請輸入數字 1-6：`
+  )
+  
+  if (selectedFont && /^[1-6]$/.test(selectedFont)) {
+    const fontIndex = parseInt(selectedFont) - 1
+    const selectedFontData = fontOptions[fontIndex]
+    
+    console.log('🎨 選擇了現成字型:', selectedFontData.displayName)
+    
+    // 設定為使用現成字型模式
+    showFontGeneration.value = true
+    hasGeneratedFonts.value = false
+    
+    // 顯示成功訊息
+    alert(`✅ 已選擇字型：${selectedFontData.displayName}\n\n現在可以開始生成字型到模板！`)
+    
+    // 這裡可以添加邏輯來使用選定的字型
+    // 例如：設定一個標記來表示使用現成字型
+    // useExistingFontMode.value = true
+    // selectedExistingFont.value = selectedFontData
+    
+  } else if (selectedFont !== null) {
+    alert('❌ 請輸入有效的數字 1-6')
+  }
+}
+
+
 </script>
 
 <style scoped>
