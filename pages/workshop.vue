@@ -309,6 +309,19 @@
                       :class="{ 'scale-105': blendLoading }"
                     />
                   </div>
+                  
+                  <!-- 開始預覽按鈕 -->
+                  <div v-if="!blendLoading && (blendedImage || generatedImage)" class="mt-4">
+                    <button
+                      @click="startPreview"
+                      class="w-full px-4 py-3 bg-gradient-to-r from-[#5EA897] to-[#3A6B60] text-white rounded-xl hover:from-[#4a9178] hover:to-[#2d5248] transition-all duration-200 flex items-center justify-center gap-2 font-medium"
+                    >
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                      </svg>
+                      🎨 開始預覽字型風格
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -410,7 +423,7 @@
                   :class="{ 'opacity-50 cursor-not-allowed transform-none': !isStyleSelected || blendLoading }"
                 >
                   <svg v-if="!blendLoading" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"/>
+                    <path fill-rule="evenodd" d="M4 2a1 1 0 011-1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"/>
                   </svg>
                   {{ blendLoading ? '融合中...' : '🎨 重新融合' }}
                 </button>
@@ -543,13 +556,13 @@
                     <svg class="w-4 h-4 md:w-5 md:h-5 mr-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
-                    <span class="text-green-600">生成完成！下載功能即將開放</span>
+                    <span class="text-green-600">生成完成！正在跳轉到模板頁面...</span>
                   </div>
                   <div v-else class="flex items-center">
-                    <svg class="w-4 h-4 md:w-5 md:h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-4 h-4 md:w-5 md:w-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
                     </svg>
-                    ✨ 立即生成完整字型
+                    🎨 立即應用字型
                   </div>
                 </button>
               </div>
@@ -698,6 +711,7 @@ const finalGenerating = ref(false)
 const finalGenerated = ref(false)
 const showSurveyModal = ref(false)
 const surveyCompleted = ref(false)
+const jumpCountdown = ref(0) // 新增：跳轉倒計時
 
 // 風格選項
 const styleOptions = ['書法風', '簡約現代', '潑墨風', '潮流街頭', '可愛手繪']
@@ -850,6 +864,7 @@ const resetToUpload = () => {
   finalGenerated.value = false
   showSurveyModal.value = false
   surveyCompleted.value = false
+  jumpCountdown.value = 0 // 重置跳轉倒計時
   
   // 清空文件輸入
   const fileInput = document.getElementById('file-upload')
@@ -925,24 +940,30 @@ const generateFinalFont = async () => {
     
     // 等待一段時間後檢查用戶投票狀態並顯示問卷
     setTimeout(async () => {
-      if (!surveyCompleted.value && userState.isAuthenticated) {
+      if (userState.isAuthenticated) {
         // 檢查用戶是否已經投過票
         const userHasVoted = await checkUserHasVoted()
         
         if (!userHasVoted) {
+          // 用戶未投票，顯示問卷
           showSurveyModal.value = true
         } else {
-          // 用戶已投票，顯示感謝訊息
-          setTimeout(() => {
-            alert('🎉 感謝您之前參與我們的調查問卷！您的意見對我們很重要！')
-          }, 500)
+          // 用戶已投票，直接跳轉
+          startJumpCountdown()
         }
+      } else {
+        // 未登入用戶直接跳轉
+        startJumpCountdown()
       }
     }, 2000)
     
   } catch (error) {
     console.error('Final font generation failed:', error)
     alert('字型生成失敗，請稍後再試：' + error.message)
+    // 即使失敗也要跳轉到 template 頁面
+    setTimeout(() => {
+      startJumpCountdown()
+    }, 1000)
   } finally {
     finalGenerating.value = false
   }
@@ -980,7 +1001,9 @@ const handleSurveyResponse = async (response) => {
     
     setTimeout(() => {
       alert(message)
-    }, 300)
+      // 問卷完成後，跳轉到 template 頁面
+      navigateToTemplate()
+    }, 500)
 
   } catch (error) {
     console.error('提交問卷失敗:', error)
@@ -995,13 +1018,78 @@ const handleSurveyResponse = async (response) => {
     
     // 即使失敗也關閉模態框避免重複嘗試
     showSurveyModal.value = false
+    
+    // 即使問卷失敗，也跳轉到 template 頁面
+    setTimeout(() => {
+      navigateToTemplate()
+    }, 1000)
   }
+}
+
+// 新增：跳轉到 template 頁面的函數
+const navigateToTemplate = () => {
+  // 將字型圖片數據存儲到 localStorage，供 template 頁面使用
+  const fontData = {
+    referenceImage: generatedImage.value,
+    blendedImage: blendedImage.value || generatedImage.value,
+    styleOption: styleOption.value,
+    alpha: alpha.value,
+    thickness: thickness.value,
+    timestamp: Date.now()
+  }
+  
+  localStorage.setItem('workshop_font_data', JSON.stringify(fontData))
+  
+  // 跳轉到 template 頁面
+  navigateTo('/template')
 }
 
 const closeSurveyModal = () => {
   // 如果用戶關閉彈窗而沒有選擇，也標記為完成以避免重複顯示
   surveyCompleted.value = true
   showSurveyModal.value = false
+  
+  // 關閉問卷後，也跳轉到 template 頁面
+  setTimeout(() => {
+    navigateToTemplate()
+  }, 500)
+}
+
+// 新增：開始跳轉倒計時的函數
+const startJumpCountdown = () => {
+  // 直接跳轉，不需要倒計時
+  navigateToTemplate()
+}
+
+// 新增：開始預覽字型風格的函數
+const startPreview = () => {
+  console.log('🚀 startPreview 函數被調用')
+  console.log('📸 當前圖片狀態:')
+  console.log('- generatedImage:', generatedImage.value)
+  console.log('- blendedImage:', blendedImage.value)
+  console.log('- styleOption:', styleOption.value)
+  console.log('- alpha:', alpha.value)
+  console.log('- thickness:', thickness.value)
+  
+  // 將字型圖片數據存儲到 localStorage，供 template 頁面使用
+  const fontData = {
+    referenceImage: generatedImage.value,
+    blendedImage: blendedImage.value || generatedImage.value,
+    styleOption: styleOption.value,
+    alpha: alpha.value,
+    thickness: thickness.value,
+    timestamp: Date.now()
+  }
+  
+  console.log('💾 準備存儲到 localStorage 的數據:', fontData)
+  
+  localStorage.setItem('workshop_font_data', JSON.stringify(fontData))
+  
+  console.log('✅ 數據已存儲到 localStorage')
+  console.log('🔄 準備跳轉到 template 頁面')
+  
+  // 跳轉到 template 頁面
+  navigateTo('/template')
 }
 
 // 組件掛載時檢查用戶投票狀態

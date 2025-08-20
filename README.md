@@ -1,140 +1,97 @@
-# Typersonal - AI 驅動的字型生成平台
+# Typersonal - AI 字型生成平台
 
-> 讓 AI 技術賦能您的創意，輕鬆創造獨特、美觀的字型設計
+一個使用 AI 技術創造獨特字型設計的 Nuxt.js 應用程式。
 
-## 🚀 專案概述
+## 最近修復的問題
 
-Typersonal 是一個基於 Vue 3 + Nuxt 3 的現代字型設計平台，使用 Firebase 作為後端服務，並整合 AI 技術來協助用戶創建個性化字型。
+### 1. 後端服務連接問題
+- **問題**: 應用程式嘗試連接到 `http://localhost:3001/convert` 但服務未運行
+- **解決方案**: 重新設計了 template 頁面，移除對外部字型轉換服務的依賴，改用前端處理
 
-### ✨ 主要功能
+### 2. useAuth 導入錯誤
+- **問題**: `useAuth is not a function` 錯誤
+- **解決方案**: 修正了動態導入路徑，使用相對路徑導入
 
-- 🎨 **AI 智慧生成** - 運用人工智慧技術自動生成獨特字型
-- 👀 **即時預覽** - 所見即所得的設計體驗
-- 📱 **響應式設計** - 完美適配手機、平板和桌面設備
-- 🔐 **Google 認證** - 安全便捷的登入系統
-- ☁️ **雲端儲存** - Firebase Firestore 資料儲存
-- 🎯 **現代化 UI** - 使用 Tailwind CSS 構建精美介面
+### 3. Vue 組件反應性警告
+- **問題**: 組件被意外地變為反應性對象
+- **解決方案**: 將 SideMenu 中的圖標組件改為使用 `defineComponent` 包裝
 
-## 🛠️ 技術堆疊
+### 4. Manifest 圖標錯誤
+- **問題**: 圖標資源大小不正確
+- **解決方案**: 簡化了 manifest.json 中的圖標配置
 
-- **前端框架**: Vue 3 + Nuxt 3
-- **樣式**: Tailwind CSS
-- **認證**: Firebase Auth (Google 登入)
-- **資料庫**: Firebase Firestore
-- **部署**: 支援靜態生成和伺服器端渲染
+## Template 頁面功能說明
 
-## 📦 安裝與使用
+### 新的實現方式
+Template 頁面現在使用純前端方式處理字型生成和應用：
 
-### 1. 安裝依賴
+1. **字型生成**: 使用現有的 AI API (`https://typersonal.dy6.click/8000`) 生成單字圖片
+2. **字型應用**: 直接在前端將生成的圖片作為字體使用，無需轉換為 TTF 文件
+3. **即時預覽**: 使用 Canvas API 將生成的圖片字體渲染到模板上
+4. **匯出功能**: 將最終結果匯出為高解析度 PNG 圖片
 
+### 工作流程
+1. 選擇模板（結婚賀卡、情書、手寫帳）
+2. 上傳手寫參考圖片
+3. 勾選要生成的文字區塊
+4. 批量生成字型圖片
+5. 即時預覽效果
+6. 匯出最終圖片
+
+### 技術特點
+- 無需外部字型轉換服務
+- 使用 Canvas API 進行圖片合成
+- 支援高解析度輸出
+- 即時預覽和編輯
+
+## 安裝與運行
+
+### 前置需求
+- Node.js 18+ 
+- npm 或 yarn
+
+### 安裝依賴
 ```bash
 npm install
-# 或
-yarn install
-# 或
-pnpm install
 ```
 
-### 2. 開發環境
-
-啟動開發伺服器（預設在 `http://localhost:3000`）：
-
+### 開發模式運行
 ```bash
 npm run dev
-# 或
-yarn dev
-# 或
-pnpm dev
 ```
 
-### 3. 建置專案
+應用程式將在 `http://localhost:3000` 運行
 
-為生產環境建置應用程式：
-
+### 建置生產版本
 ```bash
 npm run build
-# 或 
-yarn build
-# 或
-pnpm build
-```
-
-### 4. 預覽建置結果
-
-```bash
 npm run preview
-# 或
-yarn preview  
-# 或
-pnpm preview
 ```
 
-## 📁 專案結構
+## 功能特色
 
-```
-├── assets/          # 靜態資源（CSS、圖片等）
-├── components/      # Vue 組件
-│   ├── AuthComponent.vue
-│   ├── MobileOptimized.vue
-│   ├── navbar.vue
-│   └── SideMenu.vue
-├── composables/     # 可組合函數
-│   ├── useAuth.js
-│   └── useSurvey.js
-├── layouts/         # 佈局模板
-├── middleware/      # 路由中間件
-├── pages/           # 頁面組件（基於檔案的路由）
-├── plugins/         # Nuxt 插件
-├── public/          # 靜態檔案
-└── server/          # 伺服器端程式碼
-```
+- 🎨 AI 字型生成
+- 📱 響應式設計
+- 🔐 Firebase 身份驗證
+- 🖼️ 字型預覽與模板
+- 📱 PWA 支援
+- 🎯 純前端字型處理
 
-## 🔧 主要頁面
+## 技術架構
 
-- **首頁** (`/`) - 展示平台特色和功能介紹
-- **字型工坊** (`/workshop`) - 字型創作和上傳功能  
-- **字型市場** (`/market`) - 字型作品展示和瀏覽
-- **創作頁面** (`/create`) - 字型設計工具
-- **登入頁面** (`/login`) - 用戶認證
+- **前端**: Nuxt.js 3 + Vue 3
+- **樣式**: Tailwind CSS
+- **認證**: Firebase Auth
+- **字型處理**: 前端 Canvas API + AI 生成服務
+- **AI 服務**: 外部 API (`https://typersonal.dy6.click/8000`)
 
-## 🔥 Firebase 配置
+## 注意事項
 
-專案已整合 Firebase 服務，包括：
+- 字型生成依賴外部 AI 服務
+- 使用 Canvas API 進行圖片合成，支援高解析度輸出
+- 確保 Firebase 配置正確設置
+- 需要穩定的網路連接來使用 AI 字型生成服務
 
-- **Authentication**: Google 第三方登入
-- **Firestore**: 雲端資料庫
-- **Storage**: 檔案儲存（如需要）
+## 開發者
 
-Firebase 配置位於 `plugins/firebase.js`，為了協作便利性已直接包含配置資訊。
-
-## 🎨 主題配色
-
-專案使用的主要配色：
-
-- **主色調**: `#E29930` (brand-orange)  
-- **次要色調**: `#ea580c` (brand-amber)
-- **重點色**: `#3A6B60` (brand-teal)
-- **淺色重點**: `#5EA897` (brand-teal-light)
-
-## 📱 響應式設計
-
-專案針對不同裝置進行了優化：
-
-- **手機**: < 640px
-- **平板**: 768px - 1024px  
-- **桌面**: > 1024px
-- **超寬螢幕**: > 1600px
-
-## 🤝 開發團隊
-
-- **開發**: Ryan
-- **UI/UX**: 現代化響應式設計
-- **技術棧**: Vue 3 + Nuxt 3 + Tailwind CSS + Firebase
-
-## 📄 授權
-
-本專案僅供學習和協作使用。
-
----
-
-> 💡 如有任何問題或建議，歡迎在專案中提出討論！
+Typersonal 開發團隊
