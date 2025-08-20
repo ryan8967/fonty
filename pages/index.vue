@@ -6,9 +6,9 @@
     <!-- Hero Section -->
     <section class="relative pt-16 md:pt-32 pb-8 md:pb-24 overflow-hidden">
       <div class="absolute inset-0">
-        <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-orange-100 to-amber-100 rounded-full blur-3xl opacity-40"></div>
-        <div class="absolute bottom-20 right-1/4 w-80 h-80 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-full blur-3xl opacity-30"></div>
-        <div class="absolute top-40 right-1/3 w-72 h-72 bg-gradient-to-br from-[#3A6B60]/10 to-[#5EA897]/10 rounded-full blur-3xl opacity-25"></div>
+        <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-[#5EA897]/20 to-[#3A6B60]/20 rounded-full blur-3xl opacity-40"></div>
+        <div class="absolute bottom-20 right-1/4 w-80 h-80 bg-gradient-to-br from-[#E29930]/20 to-[#D48826]/20 rounded-full blur-3xl opacity-30"></div>
+        <div class="absolute top-40 right-1/3 w-72 h-72 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-full blur-3xl opacity-25"></div>
       </div>
       
       <div class="relative max-w-6xl mx-auto px-4 md:px-6 text-center">
@@ -18,8 +18,8 @@
             <img src="/typersonal3.png" alt="Typersonal Logo" class="w-16 h-16 md:w-32 md:h-32 mx-auto object-contain">
           </div>
           
-          <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-slate-700 max-w-4xl mx-auto leading-relaxed mb-6 md:mb-8 font-medium px-4">
-            {{ displayText }}<span class="animate-pulse text-orange-500">|</span>
+          <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-slate-700 max-w-4xl mx-auto leading-relaxed mb-6 md:mb-8 font-medium px-4 handwriting-font-1">
+            {{ displayText }}<span class="animate-pulse text-orange-500">l</span>
           </p>
         </div>
 
@@ -34,7 +34,7 @@
             <!-- 字 -->
             <div class="char-container relative group select-none">
               <div class="absolute -inset-2 bg-gradient-to-br from-orange-400/20 to-amber-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-black text-slate-800 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-3 hover:text-orange-600 select-none" 
+              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-black text-slate-800 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-3 hover:text-orange-600 select-none handwriting-font-2" 
                    style="animation: float1 4s ease-in-out infinite;">
                 字
               </div>
@@ -45,7 +45,7 @@
             <!-- 訂 -->
             <div class="char-container relative group select-none">
               <div class="absolute -inset-2 bg-gradient-to-br from-[#3A6B60]/20 to-[#5EA897]/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-medium text-slate-600 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:-rotate-2 hover:text-[#3A6B60] select-none" 
+              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-medium text-slate-600 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:-rotate-2 hover:text-[#3A6B60] select-none handwriting-font-3" 
                    style="animation: float2 4s ease-in-out infinite 0.5s;">
                 訂
               </div>
@@ -56,7 +56,7 @@
             <!-- 藝 -->
             <div class="char-container relative group select-none">
               <div class="absolute -inset-2 bg-gradient-to-br from-amber-400/20 to-yellow-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-light text-slate-400 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-1 hover:text-yellow-600 select-none" 
+              <div class="relative text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-light text-slate-400 cursor-pointer transform transition-all duration-700 hover:scale-110 hover:rotate-1 hover:text-yellow-600 select-none handwriting-font-4" 
                    style="animation: float3 4s ease-in-out infinite 1s;">
                 藝
               </div>
@@ -66,99 +66,87 @@
             
           </div>
           
-          <!-- 底部描述文字 -->
-          <div class="text-center">
-            <p class="text-lg text-slate-600 mb-2">創意 × 技術 × 藝術</p>
-            <div class="flex justify-center items-center space-x-2 text-sm text-slate-500">
-              <span class="px-3 py-1 bg-gradient-to-r from-orange-100 to-amber-100 rounded-full">字型設計</span>
-              <span class="w-1 h-1 bg-[#3A6B60] rounded-full"></span>
-              <span class="px-3 py-1 bg-gradient-to-r from-[#3A6B60]/10 to-[#5EA897]/10 rounded-full">AI 生成</span>
-              <span class="w-1 h-1 bg-orange-400 rounded-full"></span>
-              <span class="px-3 py-1 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-full">個性化</span>
+          <!-- 主要CTA按鈕 - 立即創建你的字型 -->
+          <div class="text-center mb-12 md:mb-16">
+            <!-- 手機用戶觸控提示 -->
+            <div class="md:hidden flex items-center justify-center space-x-2 mb-6">
+              <div class="w-6 h-6 bg-[#F97316]/20 rounded-full flex items-center justify-center">
+                <svg class="w-3 h-3 text-[#F97316]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span class="text-xs text-slate-500">點擊下方按鈕開始創作</span>
             </div>
-          </div>
-        </div>
-
-        <!-- CTA Section -->
-        <div class="mb-12 md:mb-20">
-          <div v-if="!user && !isLoading" class="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-6 mb-6 md:mb-8 px-4">
+            
             <NuxtLink 
               to="/workshop" 
-              class="group w-full sm:w-auto bg-gradient-to-r from-orange-500 to-amber-500 text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg md:text-xl shadow-2xl hover:shadow-orange-500/25 hover:scale-105 transition-all duration-300"
+              class="group relative inline-flex items-center justify-center bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white px-8 md:px-12 py-3 md:py-4 rounded-2xl font-semibold text-lg md:text-xl shadow-lg hover:shadow-2xl hover:shadow-[#F97316]/30 hover:scale-105 transition-all duration-500 transform hover:-translate-y-2 overflow-hidden"
             >
-              <span class="flex items-center justify-center space-x-3">
-                <svg class="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+              <!-- 動態背景光暈效果 -->
+              <div class="absolute inset-0 bg-gradient-to-r from-[#F97316] via-[#FB923C] to-[#F97316] opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse"></div>
+              
+              <!-- 按鈕內容 -->
+              <div class="relative z-10 flex items-center justify-center">
+                <svg class="w-5 h-5 md:w-6 md:h-6 mr-2 group-hover:rotate-12 group-hover:scale-110 transition-all duration-500" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
                 </svg>
-                <span>開始創作</span>
-              </span>
-            </NuxtLink>
-            
-            <button class="group w-full sm:w-auto bg-gradient-to-r from-[#3A6B60] to-[#5EA897] text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg md:text-xl shadow-2xl hover:shadow-[#3A6B60]/25 hover:scale-105 transition-all duration-300">
-              <span class="flex items-center justify-center space-x-3">
-                <svg class="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                <span class="group-hover:scale-105 transition-transform duration-300">立即創建你的字型</span>
+                <svg class="w-4 h-4 md:w-5 md:h-5 ml-2 group-hover:translate-x-2 group-hover:scale-110 transition-all duration-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                 </svg>
-                <span>觀看演示</span>
-              </span>
-            </button>
-          </div>
-          
-          <div v-else-if="user" class="max-w-md mx-auto">
-            <div class="bg-white rounded-3xl p-8 shadow-xl border border-orange-100">
-              <div class="mb-6">
-                <img 
-                  :src="user.photoURL || '/default-avatar.svg'" 
-                  :alt="user.displayName || '使用者'"
-                  class="w-20 h-20 rounded-full mx-auto border-4 border-orange-500 shadow-lg"
-                >
               </div>
-              <h2 class="text-2xl font-bold text-slate-800 mb-2">
-                歡迎回來，{{ user.displayName || '創作者' }}！
-              </h2>
-              <p class="text-slate-600 mb-6">準備創造新的字型奇蹟嗎？</p>
-              <div class="flex flex-col gap-3">
-                <NuxtLink 
-                  to="/create" 
-                  class="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition-all duration-200"
-                >
-                  字型工坊
-                </NuxtLink>
-                <NuxtLink 
-                  to="/market" 
-                  class="bg-white text-slate-700 px-6 py-3 rounded-full font-semibold border-2 border-orange-200 hover:border-orange-300 hover:shadow-lg transition-all duration-200 text-center"
-                >
-                  字型市場
-                </NuxtLink>
-              </div>
-            </div>
+              
+              <!-- 邊框光暈效果 -->
+              <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#F97316] via-[#FB923C] to-[#F97316] opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm scale-110 group-hover:scale-100"></div>
+            </NuxtLink>
           </div>
 
-          <!-- Trust Indicators -->
-          <div class="text-center text-slate-500 text-sm mt-12">
-            <p class="mb-6">免費開始，無需信用卡</p>
-            <div class="flex flex-wrap items-center justify-center gap-8">
-              <div class="flex items-center space-x-2">
-                <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
-                <span>10,000+ 活躍用戶</span>
-              </div>
-              <div class="flex items-center space-x-2">
-                <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
-                <span>99.9% 正常運行時間</span>
-              </div>
-              <div class="flex items-center space-x-2">
-                <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
-                <span>專業級品質輸出</span>
-              </div>
+          <!-- 底部描述文字 -->
+          <div class="text-center mb-20 md:mb-24">
+            <p class="text-lg text-slate-600 mb-2 handwriting-font-5">創意 × 技術 × 藝術</p>
+            <div class="flex justify-center items-center space-x-2 text-sm text-slate-500">
+              <span class="px-3 py-1 bg-gradient-to-r from-orange-100 to-amber-100 rounded-full handwriting-font-5p">字型設計</span>
+              <span class="w-1 h-1 bg-[#3A6B60] rounded-full"></span>
+              <span class="px-3 py-1 bg-gradient-to-r from-[#3A6B60]/10 to-[#5EA897]/10 rounded-full handwriting-font-1">AI 生成</span>
+              <span class="w-1 h-1 bg-orange-400 rounded-full"></span>
+              <span class="px-3 py-1 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-full handwriting-font-2">個性化</span>
             </div>
           </div>
         </div>
+        
+                 <!-- 向下滾動提示 - 重新設計版本 -->
+         <div class="relative mt-8 md:mt-12">
+           <div class="flex flex-col items-center space-y-3">
+             <!-- 手機用戶提示 -->
+             <div class="md:hidden flex flex-col items-center space-y-2">
+               <div class="flex items-center space-x-2 text-slate-500">
+                 <div class="w-1.5 h-1.5 bg-[#5EA897] rounded-full animate-pulse"></div>
+                 <span class="text-xs font-medium handwriting-font-5">向上滑動探索更多</span>
+                 <div class="w-1.5 h-1.5 bg-[#E29930] rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
+               </div>
+               <div class="w-6 h-6 bg-gradient-to-b from-[#5EA897]/20 to-[#3A6B60]/20 rounded-full flex items-center justify-center">
+                 <svg class="w-3 h-3 text-[#5EA897]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                   <path d="M7 13l5 5 5-5"/>
+                 </svg>
+               </div>
+             </div>
+             
+             <!-- 桌面用戶提示 -->
+             <div class="hidden md:flex flex-col items-center space-y-3">
+               <div class="flex items-center space-x-3 text-slate-500">
+                 <div class="w-2 h-2 bg-[#5EA897] rounded-full animate-pulse"></div>
+                 <span class="text-sm font-medium handwriting-font-5">向下滾動探索更多</span>
+                 <div class="w-2 h-2 bg-[#E29930] rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
+               </div>
+               <div class="relative">
+                 <div class="w-12 h-16 border-2 border-slate-200 rounded-full flex justify-center relative overflow-hidden">
+                   <div class="absolute top-2 w-1 h-3 bg-gradient-to-b from-[#5EA897] to-[#3A6B60] rounded-full animate-bounce"></div>
+                 </div>
+                 <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-[#5EA897] rounded-full animate-pulse"></div>
+               </div>
+             </div>
+           </div>
+         </div>
       </div>
     </section>
 
@@ -175,8 +163,8 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          <div class="group bg-gradient-to-br from-white to-orange-50 rounded-3xl p-10 border border-slate-100 hover:border-orange-200 hover:shadow-2xl transition-all duration-500">
-            <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-amber-500 rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+          <div class="group bg-gradient-to-br from-white to-[#5EA897]/5 rounded-3xl p-10 border border-slate-100 hover:border-[#5EA897]/30 hover:shadow-2xl hover:shadow-[#5EA897]/10 transition-all duration-500">
+            <div class="w-20 h-20 bg-gradient-to-br from-[#5EA897] to-[#3A6B60] rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
               <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
               </svg>
@@ -184,12 +172,12 @@
             <h3 class="text-2xl font-bold text-slate-800 mb-6">AI 智慧生成</h3>
             <p class="text-slate-600 leading-relaxed mb-6">運用先進的人工智慧技術，根據你的需求自動生成獨特字型，讓創作變得輕鬆有趣。</p>
             <div class="w-full bg-slate-100 rounded-full h-2">
-              <div class="h-2 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full w-[95%] transition-all duration-1000"></div>
+              <div class="h-2 bg-gradient-to-r from-[#5EA897] to-[#3A6B60] rounded-full w-[95%] transition-all duration-1000"></div>
             </div>
           </div>
 
-          <div class="group bg-gradient-to-br from-white to-[#3A6B60]/5 rounded-3xl p-10 border border-slate-100 hover:border-[#3A6B60]/30 hover:shadow-2xl hover:shadow-[#3A6B60]/10 transition-all duration-500">
-            <div class="w-20 h-20 bg-gradient-to-br from-[#3A6B60] to-[#5EA897] rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+          <div class="group bg-gradient-to-br from-white to-[#E29930]/5 rounded-3xl p-10 border border-slate-100 hover:border-[#E29930]/30 hover:shadow-2xl hover:shadow-[#E29930]/10 transition-all duration-500">
+            <div class="w-20 h-20 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
               <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
                 <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
@@ -198,12 +186,12 @@
             <h3 class="text-2xl font-bold text-slate-800 mb-6">即時預覽</h3>
             <p class="text-slate-600 leading-relaxed mb-6">所見即所得的設計體驗，每一個調整都能即時看到效果，大幅提升創作效率。</p>
             <div class="w-full bg-slate-100 rounded-full h-2">
-              <div class="h-2 bg-gradient-to-r from-[#3A6B60] to-[#5EA897] rounded-full w-[92%] transition-all duration-1000"></div>
+              <div class="h-2 bg-gradient-to-r from-[#E29930] to-[#D48826] rounded-full w-[92%] transition-all duration-1000"></div>
             </div>
           </div>
 
-          <div class="group bg-gradient-to-br from-white to-amber-50 rounded-3xl p-10 border border-slate-100 hover:border-amber-200 hover:shadow-2xl transition-all duration-500">
-            <div class="w-20 h-20 bg-gradient-to-br from-amber-500 to-orange-500 rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+          <div class="group bg-gradient-to-br from-white to-orange-500/5 rounded-3xl p-10 border border-slate-100 hover:border-orange-500/30 hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-500">
+            <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-amber-500 rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
               <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"/>
               </svg>
@@ -211,7 +199,7 @@
             <h3 class="text-2xl font-bold text-slate-800 mb-6">一鍵分享</h3>
             <p class="text-slate-600 leading-relaxed mb-6">完成創作後可一鍵分享到社群平台，或直接下載高品質字型檔案供商業使用。</p>
             <div class="w-full bg-slate-100 rounded-full h-2">
-              <div class="h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full w-[88%] transition-all duration-1000"></div>
+              <div class="h-2 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full w-[88%] transition-all duration-1000"></div>
             </div>
           </div>
         </div>
@@ -219,11 +207,11 @@
     </section>
 
 <!-- Interactive Demo Section -->
-<section id="demo" class="py-32 bg-gradient-to-br from-orange-50 via-white to-amber-50 relative overflow-hidden">
+<section id="demo" class="py-32 bg-gradient-to-br from-[#5EA897]/5 via-white to-[#E29930]/5 relative overflow-hidden">
   <!-- 柔和背景光暈（更少、更淡） -->
   <div class="pointer-events-none absolute inset-0">
-    <div class="absolute -top-10 left-1/3 w-[28rem] h-[28rem] rounded-full bg-gradient-to-br from-orange-100/50 to-amber-100/30 blur-3xl"></div>
-    <div class="absolute -bottom-10 right-1/3 w-[22rem] h-[22rem] rounded-full bg-gradient-to-br from-[#3A6B60]/10 to-[#5EA897]/10 blur-3xl"></div>
+    <div class="absolute -top-10 left-1/3 w-[28rem] h-[28rem] rounded-full bg-gradient-to-br from-[#5EA897]/20 to-[#3A6B60]/20 blur-3xl"></div>
+    <div class="absolute -bottom-10 right-1/3 w-[22rem] h-[22rem] rounded-full bg-gradient-to-br from-[#E29930]/20 to-[#D48826]/20 blur-3xl"></div>
   </div>
 
   <div class="relative max-w-6xl mx-auto px-6">
@@ -233,7 +221,7 @@
         即時字型預覽
       </h2>
       <p class="mt-4 text-slate-500 text-base md:text-lg">
-        自動輪播字型與品牌色，靜靜展示質感
+        字型調整時可即時預覽，快速調整
       </p>
     </div>
 
@@ -441,6 +429,52 @@
       </div>
     </section>
 
+    <!-- Trust Indicators Section -->
+    <section class="py-16 bg-gradient-to-br from-[#5EA897]/5 via-white to-[#E29930]/5">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <div class="mb-8">
+          <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
+            免費開始，無需信用卡
+          </h3>
+          <p class="text-slate-600 text-lg">
+            加入數千名創作者的行列，開始您的字型創作之旅
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div class="flex flex-col items-center p-6 bg-white rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl hover:border-[#5EA897]/30 transition-all duration-300">
+            <div class="w-16 h-16 bg-gradient-to-br from-[#5EA897] to-[#3A6B60] rounded-2xl flex items-center justify-center mb-4">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-slate-800 mb-2">10,000+ 活躍用戶</h4>
+            <p class="text-slate-600">來自全球的創作者社群</p>
+          </div>
+          
+          <div class="flex flex-col items-center p-6 bg-white rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl hover:border-[#E29930]/30 transition-all duration-300">
+            <div class="w-16 h-16 bg-gradient-to-br from-[#E29930] to-[#D48826] rounded-2xl flex items-center justify-center mb-4">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-slate-800 mb-2">99.9% 正常運行時間</h4>
+            <p class="text-slate-600">穩定可靠的服務品質</p>
+          </div>
+          
+          <div class="flex flex-col items-center p-6 bg-white rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl hover:border-orange-500/30 transition-all duration-300">
+            <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center mb-4">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <h4 class="text-xl font-bold text-slate-800 mb-2">專業級品質輸出</h4>
+            <p class="text-slate-600">商業級字型設計標準</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Modern Footer -->
     <footer class="bg-slate-900 text-white">
       <div class="max-w-6xl mx-auto px-6 py-20">
@@ -448,7 +482,7 @@
           <!-- Brand Section -->
           <div class="md:col-span-2">
             <div class="flex items-center space-x-4 mb-8">
-              <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center">
+              <div class="w-12 h-12 bg-gradient-to-br from-[#5EA897] to-[#3A6B60] rounded-xl flex items-center justify-center">
                 <img src="/typersonal2.png" alt="Typersonal" class="w-6 h-6 object-contain">
               </div>
               <div>
@@ -460,15 +494,8 @@
               讓 AI 技術賦能您的創意，輕鬆創造獨特、美觀的字型設計。從概念到完成品，我們提供完整的字型創作解決方案。
             </p>
             <div class="flex space-x-4">
-              <a href="#" class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                </svg>
-              </a>
-              <a href="#" class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                </svg>
+              <a href="https://line.me/R/ti/p/@320uprvf" target="_blank" rel="noopener noreferrer" class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-[#00C300] transition-colors group">
+                <span class="text-white font-bold text-sm group-hover:scale-110 transition-transform duration-300">LINE</span>
               </a>
             </div>
           </div>
@@ -478,7 +505,7 @@
             <h4 class="text-white font-bold mb-6 text-lg">產品</h4>
             <ul class="space-y-4">
               <li><a href="/" class="text-slate-300 hover:text-white transition-colors">首頁</a></li>
-              <li><a href="/create" class="text-slate-300 hover:text-white transition-colors">字型創作</a></li>
+              <li><a href="/workshop" class="text-slate-300 hover:text-white transition-colors">字型創作</a></li>
               <li><a href="/market" class="text-slate-300 hover:text-white transition-colors">字型市集</a></li>
               <li><a href="/workshop" class="text-slate-300 hover:text-white transition-colors">上傳字型</a></li>
             </ul>
@@ -1187,6 +1214,74 @@ html {
 
 .animate-pulse-scale {
   animation: pulse-scale 2s ease-in-out infinite;
+}
+
+/* 手寫字型定義 */
+@font-face {
+  font-family: 'JasonHandwriting1';
+  src: url('/fonts/JasonHandwriting1.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JasonHandwriting2';
+  src: url('/fonts/JasonHandwriting2.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JasonHandwriting3';
+  src: url('/fonts/JasonHandwriting3.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JasonHandwriting4';
+  src: url('/fonts/JasonHandwriting4.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JasonHandwriting5';
+  src: url('/fonts/JasonHandwriting5.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JasonHandwriting5p';
+  src: url('/fonts/JasonHandwriting5p.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 手寫字型樣式類 */
+.handwriting-font-1 {
+  font-family: 'JasonHandwriting1', cursive;
+}
+
+.handwriting-font-2 {
+  font-family: 'JasonHandwriting2', cursive;
+}
+
+.handwriting-font-3 {
+  font-family: 'JasonHandwriting3', cursive;
+}
+
+.handwriting-font-4 {
+  font-family: 'JasonHandwriting4', cursive;
+}
+
+.handwriting-font-5 {
+  font-family: 'JasonHandwriting5', cursive;
+}
+
+.handwriting-font-5p {
+  font-family: 'JasonHandwriting5p', cursive;
 }
 
 /* 漸變文字動畫 */

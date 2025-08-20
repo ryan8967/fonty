@@ -63,7 +63,7 @@
           <div>
             <h4 class="font-semibold mb-4">產品</h4>
             <nav class="space-y-2 text-sm">
-              <a href="/create" class="block text-gray-300 hover:text-white">字型創作</a>
+              <a href="/workshop" class="block text-gray-300 hover:text-white">字型創作</a>
               <a href="/market" class="block text-gray-300 hover:text-white">字型市集</a>
               <a href="/workshop" class="block text-gray-300 hover:text-white">上傳字型</a>
             </nav>
@@ -94,7 +94,7 @@ const showMobileMenu = ref(false)
 
 const mobileNavLinks = [
   { name: '首頁', path: '/' },
-  { name: '字型創作', path: '/create' },
+  { name: '字型創作', path: '/workshop' },
   { name: '字型市集', path: '/market' },
   { name: '上傳字型', path: '/workshop' },
   { name: '登入', path: '/login' }

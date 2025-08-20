@@ -152,10 +152,8 @@ const uniqueChars = computed(() => {
 
 function onFileChange(e) {
   const file = e.target.files?.[0] || null;
-  if (file && file.type !== "image/png") {
-    alert("請上傳 PNG 檔");
-    e.target.value = "";
-    referenceImage.value = null;
+  if (!file) {
+    console.warn("請上傳 PNG 檔");
     return;
   }
   referenceImage.value = file;
@@ -163,11 +161,11 @@ function onFileChange(e) {
 
 async function batchGenerateAndUpload() {
   if (!referenceImage.value) {
-    alert("請先上傳你的手寫字（PNG）");
+    console.warn("請先上傳你的手寫字（PNG）");
     return;
   }
   if (uniqueChars.value.length === 0) {
-    alert("請輸入要生成的字");
+    console.warn("請輸入要生成的字");
     return;
   }
 
@@ -214,7 +212,7 @@ async function batchGenerateAndUpload() {
 
   if (!generatedFiles.length) {
     batching.value = false;
-    alert("全部字元皆產生失敗，請稍後重試");
+    console.error("全部字元皆產生失敗，請稍後重試");
     return;
   }
 
@@ -242,7 +240,7 @@ async function batchGenerateAndUpload() {
     document.body.removeChild(a);
   } catch (err) {
     console.error("上傳轉檔失敗", err);
-    alert("上傳轉檔失敗，請確認 localhost:3001 是否啟動並允許 CORS");
+    console.error("上傳轉檔失敗，請確認 localhost:3001 是否啟動並允許 CORS");
   } finally {
     batching.value = false;
   }

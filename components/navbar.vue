@@ -86,10 +86,10 @@ const isScrolled = ref(false);
 // Navigation Links
 const navLinks = ref([
   { name: '首頁', path: '/' },
-  { name: '字型預覽', path: '/font-preview' },
-  // { name: '創作', path: '/create' },
-  { name: '市集', path: '/market' },
-  { name: '字型工坊', path: '/workshop' }
+  { name: '字訂藝', path: '/workshop' },
+  { name: '模板', path: '/template' },
+  { name: '市集', path: '/market' }
+  
 ]);
 
 const toggleMenu = () => {

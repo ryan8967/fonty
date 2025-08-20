@@ -80,8 +80,8 @@ const handleGoogleLogin = async () => {
     const { signIn } = await import('~/composables/useAuth.js')
     await signIn()
   } catch (error) {
-    console.error('Google login failed:', error)
-    alert('登入失敗，請稍後再試')
+    console.error('登入失敗:', error);
+    console.error('登入失敗，請稍後再試');
   } finally {
     isLoggingIn.value = false
   }
@@ -96,7 +96,7 @@ const handleLogout = async () => {
     console.log('登出完成')
   } catch (error) {
     console.error('登出錯誤:', error)
-    alert('登出失敗，請稍後再試')
+    console.error('登出失敗，請稍後再試')
   } finally {
     isLoggingOut.value = false
   }

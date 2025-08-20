@@ -144,19 +144,10 @@
                     <span class="text-slate-700">{{ workshopFontData.styleOption || 'N/A' }}</span>
                   </div>
                 </div>
-                
-                <!-- 使用此字型按鈕 -->
-                <button
-                  @click="useWorkshopFont"
-                  class="w-full px-3 md:px-4 py-2 md:py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg md:rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-98 text-sm md:text-base"
-                >
-                  <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                  </svg>
-                  使用此字型
-                </button>
               </div>
             </div>
+
+
 
             <!-- 字型選擇按鈕 -->
             <div class="grid grid-cols-1 gap-3 md:gap-4">
@@ -191,7 +182,7 @@
                 </div>
                 <div class="text-left flex-1">
                   <h4 class="font-semibold text-green-800 mb-0.5 md:mb-1 text-sm md:text-base">使用現成字型</h4>
-                  <p class="text-xs md:text-sm text-green-600">選擇系統內建的6個美麗手寫字型</p>
+                  <p class="text-xs md:text-sm text-green-600">從預設的手寫字型中選擇，快速開始設計</p>
                 </div>
                 <svg class="w-4 h-4 md:w-5 md:h-5 text-green-400 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -215,11 +206,11 @@
             <div class="mb-4 md:mb-6">
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs md:text-sm font-medium text-slate-700">生成進度</span>
-                <span class="text-xs md:text-sm text-slate-500">{{ doneCount }}/{{ uniqueChars.length }}</span>
+                <span class="text-xs md:text-sm text-slate-500">{{ doneCount }}/{{ charsToGenerateCount }}</span>
               </div>
               <div class="w-full bg-gray-200 rounded-full h-2">
                 <div class="bg-gradient-to-r from-[#E29930] to-[#D48826] h-2 rounded-full transition-all duration-300"
-                     :style="{ width: uniqueChars.length > 0 ? (doneCount / uniqueChars.length) * 100 + '%' : '0%' }"></div>
+                     :style="{ width: charsToGenerateCount > 0 ? (doneCount / charsToGenerateCount) * 100 + '%' : '0%' }"></div>
               </div>
             </div>
             
@@ -686,7 +677,22 @@ const showFontGeneration = ref(false)
 
 // 新增：檢查是否可以生成字型
 const canGenerateFonts = computed(() => {
-  return referenceImage.value && uniqueChars.value.length > 0
+  // 如果有workshop字型數據，允許生成
+  if (workshopFontData.value) {
+    return referenceImage.value && true; // 只要有referenceImage就可以
+  }
+  // 否則需要等待用戶輸入文字
+  return referenceImage.value && uniqueChars.value.length > 0;
+})
+
+// 新增：計算要生成的字元數量（用於進度條顯示）
+const charsToGenerateCount = computed(() => {
+  if (uniqueChars.value.length > 0) {
+    return uniqueChars.value.length;
+  } else if (workshopFontData.value) {
+    return 6; // 預設字元數量
+  }
+  return 0;
 })
 
 // 新增：workshop 字型數據
@@ -736,7 +742,7 @@ const uniqueChars = computed(() => {
 function onRefImageChange(e) {
   const f = e.target.files?.[0] || null;
   if (f && f.type !== "image/png") {
-    alert("請上傳 PNG 檔");
+    console.warn("請上傳 PNG 檔");
     e.target.value = "";
     referenceImage.value = null;
     return;
@@ -747,15 +753,25 @@ function onRefImageChange(e) {
 // 批量生成字型圖片
 async function batchGenerateFonts() {
   if (!referenceImage.value) {
-    alert("請先上傳你的手寫字（PNG）");
+    console.warn("請先上傳你的手寫字（PNG）");
     return;
   }
+  
+  // 檢查是否有選中的區塊
   if (selectedKeys.value.length === 0) {
-    alert("請先勾選欲生成的區塊");
+    console.warn("請先勾選欲生成的區塊");
     return;
   }
-  if (uniqueChars.value.length === 0) {
-    alert("勾選的區塊沒有可生成的字");
+  
+  // 獲取要生成的字元
+  let charsToGenerate = uniqueChars.value;
+  
+  // 如果沒有字元但有workshop字型，使用預設字元
+  if (charsToGenerate.length === 0 && workshopFontData.value) {
+    console.log("沒有輸入文字，使用預設字元進行生成");
+    charsToGenerate = ['早', '安', '你', '好', '謝', '謝']; // 預設字元
+  } else if (charsToGenerate.length === 0) {
+    console.warn("勾選的區塊沒有可生成的字");
     return;
   }
 
@@ -767,10 +783,10 @@ async function batchGenerateFonts() {
   // 清空之前的生成結果
   generatedFontImages.value.clear();
   
-  console.log(`開始生成 ${uniqueChars.value.length} 個字元:`, uniqueChars.value);
+  console.log(`開始生成 ${charsToGenerate.length} 個字元:`, charsToGenerate);
   console.log('使用的參考圖片:', referenceImage.value);
 
-  for (const ch of uniqueChars.value) {
+  for (const ch of charsToGenerate) {
     try {
       const form = new FormData();
       form.append("character", ch);
@@ -840,7 +856,7 @@ async function batchGenerateFonts() {
     updateContainRect();
     
     // 顯示成功訊息
-    alert(`✅ 成功生成 ${generatedFontImages.value.size} 個字元的手寫字體！`);
+    console.log(`✅ 成功生成 ${generatedFontImages.value.size} 個字元的手寫字體！`);
   }
 
   batching.value = false;
@@ -889,7 +905,7 @@ function onBgLoad(e) {
 function onBgError(e) {
   console.error('背景圖片載入失敗:', e);
   console.error('圖片src:', e.target.src);
-  alert('背景圖片載入失敗，請檢查圖片路徑');
+  console.warn('背景圖片載入失敗，請檢查圖片路徑');
 }
 
 function onResize() {
@@ -927,6 +943,10 @@ function loadWorkshopFontData() {
         console.log('找到字型圖片:', fontData.blendedImage || fontData.referenceImage)
         // 設定 referenceImage 為 workshop 的字型圖片
         referenceImage.value = fontData.blendedImage || fontData.referenceImage
+        
+        // 自動啟用字型生成功能
+        showFontGeneration.value = true
+        console.log('✅ 自動啟用字型生成功能')
       }
     } else {
       console.log('未找到 workshop 字型數據')
@@ -1261,7 +1281,7 @@ function updateContainRect() {
 // 使用 HTML2Canvas 下載，確保與預覽完全一致
 async function exportAsPNG() {
   if (!hasGeneratedFonts.value) {
-    alert("請先生成字體");
+    console.warn("請先生成字體");
     return;
   }
 
@@ -1361,12 +1381,12 @@ async function exportAsPNG() {
     
     errorMsg.value = "";
     console.log("圖片匯出成功！檔案名稱:", a.download);
-    alert("✅ 圖片下載成功！");
+    console.log("✅ 圖片下載成功！");
     
   } catch (error) {
     console.error("匯出失敗:", error);
     errorMsg.value = "匯出失敗：" + error.message;
-    alert("❌ 匯出失敗：" + error.message);
+    console.error("❌ 匯出失敗：" + error.message);
   }
 }
 
@@ -1408,7 +1428,7 @@ const useWorkshopFont = async () => {
       console.log('🎨 準備載入 workshop 字型圖片:', imageUrl)
       
       if (!imageUrl) {
-        alert('❌ 未找到 workshop 字型圖片')
+        console.error('❌ 未找到 workshop 字型圖片')
         return
       }
       
@@ -1431,7 +1451,7 @@ const useWorkshopFont = async () => {
       hasGeneratedFonts.value = false
       
       // 顯示成功訊息
-      alert('✅ 已載入 workshop 字型風格，可以開始生成字型到模板！')
+      console.log('✅ 已載入 workshop 字型風格，可以開始生成字型到模板！')
       
       console.log('✅ 已使用 workshop 字型:', referenceImage.value)
       console.log('📁 字型文件類型:', referenceImage.value instanceof File ? 'File' : typeof referenceImage.value)
@@ -1439,7 +1459,7 @@ const useWorkshopFont = async () => {
       
     } catch (error) {
       console.error('❌ 載入 workshop 字型失敗:', error)
-      alert(`❌ 載入字型失敗: ${error.message}`)
+      console.error(`❌ 載入字型失敗: ${error.message}`)
     }
   }
 }
@@ -1472,7 +1492,7 @@ const useExistingFonts = () => {
     hasGeneratedFonts.value = false
     
     // 顯示成功訊息
-    alert(`✅ 已選擇字型：${selectedFontData.displayName}\n\n現在可以開始生成字型到模板！`)
+    console.log(`✅ 已選擇字型：${selectedFontData.displayName}\n\n現在可以開始生成字型到模板！`)
     
     // 這裡可以添加邏輯來使用選定的字型
     // 例如：設定一個標記來表示使用現成字型
@@ -1480,7 +1500,7 @@ const useExistingFonts = () => {
     // selectedExistingFont.value = selectedFontData
     
   } else if (selectedFont !== null) {
-    alert('❌ 請輸入有效的數字 1-6')
+    console.warn('❌ 請輸入有效的數字 1-6')
   }
 }
 

@@ -781,8 +781,7 @@ const getActionDescription = () => {
 
   const handleGenerateClick = () => {
     if (!userState.isAuthenticated) {
-      // 顯示登入提示或直接跳轉到登入
-      alert('請先登入再使用生成字型功能');
+      console.warn('請先登入再使用生成字型功能');
       return;
     }
     
@@ -843,7 +842,7 @@ const getActionDescription = () => {
     
   } catch (error) {
     console.error('Generation failed:', error)
-    alert('生成失敗，請稍後再試：' + error.message)
+    console.error('生成失敗，請稍後再試：' + error.message)
   } finally {
     loading.value = false
   }
@@ -913,7 +912,7 @@ const blend = async () => {
     
   } catch (error) {
     console.error('Blend failed:', error)
-    alert('融合失敗，請稍後重試：' + error.message)
+    console.error('融合失敗，請稍後重試：' + error.message)
   } finally {
     blendLoading.value = false
   }
@@ -959,7 +958,7 @@ const generateFinalFont = async () => {
     
   } catch (error) {
     console.error('Final font generation failed:', error)
-    alert('字型生成失敗，請稍後再試：' + error.message)
+    console.error('字型生成失敗，請稍後再試：' + error.message)
     // 即使失敗也要跳轉到 template 頁面
     setTimeout(() => {
       startJumpCountdown()
@@ -1000,7 +999,7 @@ const handleSurveyResponse = async (response) => {
     }
     
     setTimeout(() => {
-      alert(message)
+      console.log(message)
       // 問卷完成後，跳轉到 template 頁面
       navigateToTemplate()
     }, 500)
@@ -1009,11 +1008,11 @@ const handleSurveyResponse = async (response) => {
     console.error('提交問卷失敗:', error)
     
     if (error.message.includes('已經投過票')) {
-      alert('⚠️ 您已經參與過這個調查了，感謝您的支持！')
+      console.log('⚠️ 您已經參與過這個調查了，感謝您的支持！')
     } else if (error.message.includes('未登入')) {
-      alert('⚠️ 請先登入後再參與調查')
+      console.log('⚠️ 請先登入後再參與調查')
     } else {
-      alert('❌ 提交失敗，請稍後再試')
+      console.error('❌ 提交失敗，請稍後再試')
     }
     
     // 即使失敗也關閉模態框避免重複嘗試
