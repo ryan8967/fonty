@@ -115,7 +115,7 @@ const mainNavItems = ref([
 const toolNavItems = ref([
   { name: '字型工坊', path: '/workshop', icon: UploadIcon },
   { name: '測試頁面', path: '/test', icon: TestIcon },
-  { name: '模板', path: '/template', icon: CreateIcon }
+  { name: '模板選擇', path: '/template-select', icon: CreateIcon }
 ])
 </script>
 

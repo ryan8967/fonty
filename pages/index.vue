@@ -81,7 +81,7 @@
 
         <!-- CTA Section -->
         <div class="mb-12 md:mb-20">
-          <div v-if="!user && !isLoading" class="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-6 mb-6 md:mb-8 px-4">
+          <div v-if="!user && !isLoading" class="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-center justify-center gap-3 md:gap-6 mb-6 md:mb-8 px-4">
             <NuxtLink 
               to="/workshop" 
               class="group w-full sm:w-auto bg-gradient-to-r from-orange-500 to-amber-500 text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg md:text-xl shadow-2xl hover:shadow-orange-500/25 hover:scale-105 transition-all duration-300"
@@ -94,7 +94,19 @@
               </span>
             </NuxtLink>
             
-            <button class="group w-full sm:w-auto bg-gradient-to-r from-[#3A6B60] to-[#5EA897] text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg md:text-xl shadow-2xl hover:shadow-[#3A6B60]/25 hover:scale-105 transition-all duration-300">
+            <NuxtLink 
+              to="/template-select" 
+              class="group w-full sm:w-auto bg-gradient-to-r from-[#3A6B60] to-[#5EA897] text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg md:text-xl shadow-2xl hover:shadow-[#3A6B60]/25 hover:scale-105 transition-all duration-300"
+            >
+              <span class="flex items-center justify-center space-x-3">
+                <svg class="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" clip-rule="evenodd"/>
+                </svg>
+                <span>選擇模板</span>
+              </span>
+            </NuxtLink>
+            
+            <button class="group w-full sm:w-auto bg-gradient-to-r from-slate-500 to-slate-600 text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-bold text-lg md:text-xl shadow-2xl hover:shadow-slate-500/25 hover:scale-105 transition-all duration-300">
               <span class="flex items-center justify-center space-x-3">
                 <svg class="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>

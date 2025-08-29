@@ -87,6 +87,7 @@ const isScrolled = ref(false);
 const navLinks = ref([
   { name: '首頁', path: '/' },
   { name: '字型預覽', path: '/font-preview' },
+  { name: '模板選擇', path: '/template-select' },
   // { name: '創作', path: '/create' },
   { name: '市集', path: '/market' },
   { name: '字型工坊', path: '/workshop' }

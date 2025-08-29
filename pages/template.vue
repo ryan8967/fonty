@@ -306,47 +306,35 @@
                   <!-- 如果有生成字體，按字元顯示 -->
                   <div v-if="hasGeneratedFonts && slotInputs[slot.key]" 
                        class="w-full h-full flex flex-wrap items-start justify-start"
-                       :class="slot.align === 'center' ? 'justify-center' : slot.align === 'right' ? 'justify-end' : 'justify-start'">
+                       :class="getAlignmentClass(slot.align)">
                     
-                    <!-- 按行分割並顯示文字 -->
-                    <div v-for="(line, lineIndex) in (slotInputs[slot.key] || '').split('\n')" 
+                    <!-- 使用計算屬性優化文字渲染 -->
+                    <div v-for="(line, lineIndex) in getTextLines(slotInputs[slot.key])" 
                          :key="'line-' + lineIndex"
                          class="w-full flex items-center"
-                         :class="slot.align === 'center' ? 'justify-center' : slot.align === 'right' ? 'justify-end' : 'justify-start'"
-                         :style="{ 
-                           minHeight: (slot.fontSize || 20) + 'px',
-                           lineHeight: (slot.lineHeight || 1.4),
-                           marginBottom: lineIndex < (slotInputs[slot.key] || '').split('\n').length - 1 ? '8px' : '0'
-                         }">
+                         :class="getAlignmentClass(slot.align)"
+                         :style="getLineStyle(slot, lineIndex)">
                       
-                      <!-- 按字元分割並顯示 -->
-                      <template v-for="(char, charIndex) in line.split('')" :key="'char-' + charIndex">
-                        <!-- 如果是空格 -->
+                      <!-- 優化字元渲染，使用 v-memo 減少不必要的重渲染 -->
+                      <template v-for="(char, charIndex) in line" :key="'char-' + charIndex">
+                        <!-- 空格處理 -->
                         <span v-if="char === ' '" 
-                              :style="{ width: (slot.fontSize || 20) * 0.3 + 'px', height: (slot.fontSize || 20) + 'px' }">
+                              :style="getSpaceStyle(slot.fontSize)">
                         </span>
                         
-                        <!-- 如果有生成的字體圖片 -->
+                        <!-- 生成的字體圖片 -->
                         <img v-else-if="generatedFontImages.has(char)"
                              :src="generatedFontImages.get(char)" 
                              :alt="char"
                              class="object-contain"
-                             :style="{ 
-                               height: (slot.fontSize || 20) + 'px',
-                               width: 'auto',
-                               maxWidth: (slot.fontSize || 20) * 1.2 + 'px'
-                             }"
+                             :style="getCharImageStyle(slot.fontSize)"
+                             loading="lazy"
                         />
                         
-                        <!-- 如果沒有生成的字體，使用預設字體 -->
+                        <!-- 預設字體 -->
                         <span v-else
                               class="inline-block"
-                              :style="{ 
-                                fontSize: (slot.fontSize || 20) + 'px',
-                                color: slot.color || '#333',
-                                fontWeight: slot.fontWeight || 'normal',
-                                lineHeight: (slot.lineHeight || 1.4)
-                              }">
+                              :style="getDefaultCharStyle(slot)">
                           {{ char }}
                         </span>
                       </template>
@@ -639,7 +627,26 @@ const templates = [
 ];
 
 // ===== 狀態 =====
-const currentTemplateId = ref("wedding");
+const currentTemplateId = ref("wedding"); // 預設為第一個模板
+
+// 從 localStorage 讀取選擇的模板ID
+function loadSelectedTemplate() {
+  const selectedTemplateId = localStorage.getItem('selected_template_id');
+  if (selectedTemplateId) {
+    // 檢查選擇的模板ID是否有效
+    const isValidTemplate = templates.some(t => t.id === selectedTemplateId);
+    if (isValidTemplate) {
+      currentTemplateId.value = selectedTemplateId;
+      console.log('從 localStorage 載入選擇的模板:', selectedTemplateId);
+    } else {
+      console.warn('無效的模板ID:', selectedTemplateId, '使用預設模板');
+      currentTemplateId.value = "wedding";
+    }
+  } else {
+    console.log('未找到選擇的模板，使用預設模板');
+    currentTemplateId.value = "wedding";
+  }
+}
 const errorMsg = ref("");
 
 // 產字參數與結果
@@ -692,9 +699,8 @@ const canGenerateFonts = computed(() => {
 // 新增：workshop 字型數據
 const workshopFontData = ref(null)
 
-// 簡化模板選擇函數
+// 優化的模板選擇函數
 function selectTemplate(templateId) {
-  console.log('選擇模板:', templateId);
   currentTemplateId.value = templateId;
   
   // 重置相關狀態
@@ -702,25 +708,15 @@ function selectTemplate(templateId) {
   generatedFontImages.value.clear();
   errorMsg.value = "";
   
-  // 延遲更新以確保DOM更新完成
+  // 清除緩存
+  positionCache.clear();
+  clearStyleCache();
+  
+  // 立即更新
   nextTick(() => {
-    console.log('模板選擇完成，準備更新背景圖片');
-    
     // 檢查背景圖片是否已載入
     if (bgEl.value && bgEl.value.complete && bgEl.value.naturalWidth > 0) {
-      console.log('背景圖片已載入，直接更新');
       onBgLoad({ target: bgEl.value });
-    } else {
-      console.log('背景圖片未載入，等待載入事件');
-      // 強制觸發圖片載入檢查
-      setTimeout(() => {
-        if (bgEl.value) {
-          console.log('強制檢查背景圖片狀態');
-          if (bgEl.value.complete && bgEl.value.naturalWidth > 0) {
-            onBgLoad({ target: bgEl.value });
-          }
-        }
-      }, 500);
     }
   });
 }
@@ -767,9 +763,6 @@ async function batchGenerateFonts() {
   // 清空之前的生成結果
   generatedFontImages.value.clear();
   
-  console.log(`開始生成 ${uniqueChars.value.length} 個字元:`, uniqueChars.value);
-  console.log('使用的參考圖片:', referenceImage.value);
-
   for (const ch of uniqueChars.value) {
     try {
       const form = new FormData();
@@ -780,7 +773,6 @@ async function batchGenerateFonts() {
       if (referenceImage.value instanceof File) {
         // 如果是 File 對象，直接使用
         form.append("reference_image", referenceImage.value);
-        console.log(`字元 ${ch}: 使用 File 對象`);
       } else if (typeof referenceImage.value === 'string') {
         // 如果是 URL 字符串，需要先轉換為 File 對象
         try {
@@ -788,7 +780,6 @@ async function batchGenerateFonts() {
           const blob = await response.blob();
           const file = new File([blob], 'reference.png', { type: 'image/png' });
           form.append("reference_image", file);
-          console.log(`字元 ${ch}: 將 URL 轉換為 File 對象`);
         } catch (fetchError) {
           console.error(`無法獲取圖片 ${referenceImage.value}:`, fetchError);
           throw new Error("無法處理參考圖片");
@@ -796,8 +787,6 @@ async function batchGenerateFonts() {
       } else {
         throw new Error("參考圖片格式不正確");
       }
-
-      console.log(`正在生成字元: ${ch}`);
       
       const res = await fetch(`${API_BASE_URL}/ai/generate`, {
         method: "POST",
@@ -815,7 +804,6 @@ async function batchGenerateFonts() {
 
       // 將生成的圖片URL存儲到Map中
       generatedFontImages.value.set(ch, data.image);
-      console.log(`字元 ${ch} 生成成功:`, data.image);
       
     } catch (e) {
       console.error("生成失敗：", ch, e);
@@ -829,8 +817,6 @@ async function batchGenerateFonts() {
     errorMsg.value = "全部字元皆產生失敗，請稍後重試";
   } else {
     errorMsg.value = "";
-    console.log(`成功生成 ${generatedFontImages.value.size} 個字元:`, Array.from(generatedFontImages.value.keys()));
-    console.log('生成的字體圖片:', Object.fromEntries(generatedFontImages.value));
     
     // 設置生成完成標記
     hasGeneratedFonts.value = true;
@@ -859,13 +845,9 @@ const computedAspect = computed(() => {
 
 function onBgLoad(e) {
   const img = e.target;
-  console.log('背景圖片載入完成:', img);
-  console.log('圖片原始尺寸:', img.naturalWidth, 'x', img.naturalHeight);
-  console.log('圖片顯示尺寸:', img.offsetWidth, 'x', img.offsetHeight);
   
   // 檢查圖片是否有效
   if (img.naturalWidth === 0 || img.naturalHeight === 0) {
-    console.error('圖片尺寸無效，嘗試重新載入');
     // 強制重新載入
     img.src = img.src + '?t=' + Date.now();
     return;
@@ -874,16 +856,14 @@ function onBgLoad(e) {
   bgMeta.w = img.naturalWidth;
   bgMeta.h = img.naturalHeight;
   
-  console.log('背景元數據已設置:', bgMeta);
+  // 清除緩存，因為圖片尺寸已改變
+  positionCache.clear();
+  clearStyleCache();
   
-  // 延遲更新以確保DOM完全渲染
-  setTimeout(() => {
+  // 立即更新容器尺寸
+  nextTick(() => {
     updateContainRect();
-    // 強制觸發重新渲染
-    nextTick(() => {
-      console.log('強制觸發重新渲染');
-    });
-  }, 200);
+  });
 }
 
 function onBgError(e) {
@@ -892,19 +872,35 @@ function onBgError(e) {
   alert('背景圖片載入失敗，請檢查圖片路徑');
 }
 
-function onResize() {
+// 防抖函數
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// 防抖的 resize 處理函數
+const debouncedResize = debounce(() => {
   updateContainRect();
+}, 100);
+
+function onResize() {
+  debouncedResize();
 }
 
 // 自動載入 workshop 的字型數據
 function loadWorkshopFontData() {
   try {
     const fontDataStr = localStorage.getItem('workshop_font_data')
-    console.log('localStorage 中的 workshop_font_data:', fontDataStr)
     
     if (fontDataStr) {
       const fontData = JSON.parse(fontDataStr)
-      console.log('解析後的字型數據:', fontData)
 
       // 檢查數據是否過期（24小時）
       const now = Date.now()
@@ -912,7 +908,6 @@ function loadWorkshopFontData() {
       const maxAge = 24 * 60 * 60 * 1000 // 24小時
 
       if (dataAge > maxAge) {
-        console.log('字型數據已過期，清除舊數據')
         localStorage.removeItem('workshop_font_data')
         workshopFontData.value = null
         return
@@ -920,16 +915,13 @@ function loadWorkshopFontData() {
 
       // 設定 workshop 字型數據
       workshopFontData.value = fontData
-      console.log('workshop 字型數據已設定:', workshopFontData.value)
 
       // 自動設定上傳的字型圖片
       if (fontData.blendedImage || fontData.referenceImage) {
-        console.log('找到字型圖片:', fontData.blendedImage || fontData.referenceImage)
         // 設定 referenceImage 為 workshop 的字型圖片
         referenceImage.value = fontData.blendedImage || fontData.referenceImage
       }
     } else {
-      console.log('未找到 workshop 字型數據')
       workshopFontData.value = null
     }
   } catch (error) {
@@ -940,8 +932,8 @@ function loadWorkshopFontData() {
 
 // 組件掛載時
 onMounted(() => {
-  console.log('🔍 Template 頁面載入完成');
-  console.log('🔍 檢查 localStorage 中的 workshop_font_data');
+  // 先載入選擇的模板
+  loadSelectedTemplate();
   
   // 初始化必要的函數
   selectTemplate(currentTemplateId.value);
@@ -950,30 +942,20 @@ onMounted(() => {
   // 自動載入 workshop 的字型數據
   loadWorkshopFontData();
   
-  // 延遲檢查背景圖片狀態
-  setTimeout(() => {
-    console.log('🔍 延遲檢查背景圖片狀態');
-    console.log('背景圖片元素:', bgEl.value);
-    console.log('背景元數據:', bgMeta);
-    
-    // 如果背景圖片已經載入，強制更新
+  // 簡化背景圖片檢查
+  nextTick(() => {
     if (bgEl.value && bgEl.value.complete && bgEl.value.naturalWidth > 0) {
-      console.log('🔍 背景圖片已載入，強制更新');
       onBgLoad({ target: bgEl.value });
-    } else {
-      console.log('🔍 背景圖片未載入，等待載入事件');
     }
-  }, 1000);
-  
-  // 檢查當前狀態
-  console.log('🔍 當前 template 頁面狀態:');
-  console.log('- workshopFontData:', workshopFontData.value);
-  console.log('- referenceImage:', referenceImage.value);
-  console.log('- showFontGeneration:', showFontGeneration.value);
+  });
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener("resize", onResize);
+  
+  // 清理緩存
+  clearStyleCache();
+  positionCache.clear();
 });
 
 // 移除舊的 Canvas 相關函數，因為現在使用 HTML2Canvas
@@ -1107,12 +1089,18 @@ function slotPixelsForRect(slot, rect) {
   return { x, y, w };
 }
 
-// 新的位置計算函數，直接基於背景圖片尺寸
+// 優化的位置計算函數，使用緩存減少重複計算
+const positionCache = new Map()
 function getSlotPosition(slot, dimension) {
-  console.log('getSlotPosition 被調用:', { slot, dimension, bgMeta });
+  // 創建緩存鍵
+  const cacheKey = `${slot.key}-${dimension}-${bgMeta.w}-${bgMeta.h}`
+  
+  // 檢查緩存
+  if (positionCache.has(cacheKey)) {
+    return positionCache.get(cacheKey)
+  }
   
   if (!bgMeta.w || !bgMeta.h) {
-    console.warn('背景圖片尺寸未載入，使用預設值');
     // 使用預設值
     const container = document.getElementById('template-preview-container');
     if (!container) return 0;
@@ -1122,37 +1110,36 @@ function getSlotPosition(slot, dimension) {
     const defaultHeight = containerRect.height;
     
     // 根據維度返回對應的值
+    let result
     switch (dimension) {
       case 'x':
-        return (slot.x / 100) * defaultWidth;
+        result = (slot.x / 100) * defaultWidth;
+        break;
       case 'y':
-        return (slot.y / 100) * defaultHeight;
+        result = (slot.y / 100) * defaultHeight;
+        break;
       case 'w':
-        return (slot.w / 100) * defaultWidth;
+        result = (slot.w / 100) * defaultWidth;
+        break;
       case 'h':
-        return (slot.h / 100) * defaultHeight;
+        result = (slot.h / 100) * defaultHeight;
+        break;
       default:
-        return 0;
+        result = 0;
     }
+    
+    // 緩存結果
+    positionCache.set(cacheKey, result)
+    return result
   }
   
   const container = document.getElementById('template-preview-container');
-  if (!container) {
-    console.error('找不到預覽容器');
-    return 0;
-  }
+  if (!container) return 0;
   
   const containerRect = container.getBoundingClientRect();
   const imgElement = bgEl.value;
   
-  if (!imgElement) {
-    console.error('找不到背景圖片元素');
-    return 0;
-  }
-  
-  const imgRect = imgElement.getBoundingClientRect();
-  console.log('容器尺寸:', containerRect);
-  console.log('圖片元素尺寸:', imgRect);
+  if (!imgElement) return 0;
   
   // 計算背景圖片在容器中的實際尺寸和位置
   const imgAspect = bgMeta.w / bgMeta.h;
@@ -1174,8 +1161,6 @@ function getSlotPosition(slot, dimension) {
     imgY = 0;
   }
   
-  console.log('計算的圖片尺寸和位置:', { imgWidth, imgHeight, imgX, imgY });
-  
   // 根據維度返回對應的值
   let result;
   switch (dimension) {
@@ -1195,7 +1180,8 @@ function getSlotPosition(slot, dimension) {
       result = 0;
   }
   
-  console.log(`維度 ${dimension} 的結果:`, result);
+  // 緩存結果
+  positionCache.set(cacheKey, result)
   return result;
 }
 
@@ -1217,14 +1203,13 @@ function calcContainRect(boxW, boxH, imgW, imgH) {
   }
 }
 
-// 簡化更新容器尺寸函數
+// 優化的更新容器尺寸函數，減少不必要的日誌
 function updateContainRect() {
   nextTick(() => {
     const wrap = canvasWrap.value;
     const container = document.getElementById('template-preview-container');
     
     if (!wrap || !container || !bgMeta.w || !bgMeta.h) {
-      console.log('更新容器尺寸失敗:', { wrap: !!wrap, container: !!container, bgMeta });
       return;
     }
     
@@ -1232,9 +1217,6 @@ function updateContainRect() {
     const ch = container.clientHeight;
     const imgR = bgMeta.w / bgMeta.h;
     const boxR = cw / ch;
-    
-    console.log('容器尺寸:', cw, 'x', ch);
-    console.log('圖片比例:', imgR, '容器比例:', boxR);
     
     if (imgR > boxR) {
       const w = cw;
@@ -1252,7 +1234,8 @@ function updateContainRect() {
       containRect.h = h;
     }
     
-    console.log('容器矩形已更新:', containRect);
+    // 清除位置緩存，因為容器尺寸已改變
+    positionCache.clear();
   });
 }
 
@@ -1276,40 +1259,21 @@ async function exportAsPNG() {
     // 顯示載入狀態
     errorMsg.value = "正在生成圖片...";
     
-    console.log('開始截圖，容器:', previewContainer);
-    console.log('容器尺寸:', previewContainer.offsetWidth, 'x', previewContainer.offsetHeight);
-    
     // 等待一下確保DOM完全渲染
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 200));
     
     // 確保所有圖片都已載入
     const images = previewContainer.querySelectorAll('img');
-    console.log('找到的圖片數量:', images.length);
     
-    await Promise.all(Array.from(images).map((img, index) => {
-      console.log(`圖片 ${index}:`, img.src, '載入狀態:', img.complete);
+    await Promise.all(Array.from(images).map((img) => {
       if (img.complete) return Promise.resolve();
-      return new Promise((resolve, reject) => {
-        img.onload = () => {
-          console.log(`圖片 ${index} 載入完成`);
-          resolve();
-        };
-        img.onerror = () => {
-          console.log(`圖片 ${index} 載入失敗`);
-          resolve(); // 不阻擋其他圖片
-        };
+      return new Promise((resolve) => {
+        img.onload = () => resolve();
+        img.onerror = () => resolve(); // 不阻擋其他圖片
         // 設置超時以防圖片載入失敗
-        setTimeout(() => {
-          console.log(`圖片 ${index} 載入超時`);
-          resolve();
-        }, 3000);
+        setTimeout(() => resolve(), 3000);
       });
     }));
-    
-    // 檢查容器內容
-    console.log('容器HTML內容:', previewContainer.innerHTML);
-    console.log('背景圖片元素:', bgEl.value);
-    console.log('背景圖片尺寸:', bgMeta.w, 'x', bgMeta.h);
     
     // 使用 HTML2Canvas 截圖
     const canvas = await html2canvas(previewContainer, {
@@ -1324,13 +1288,11 @@ async function exportAsPNG() {
       foreignObjectRendering: false, // 關閉外部對象渲染
       removeContainer: false, // 不移除容器
       imageTimeout: 15000, // 增加圖片載入超時時間
-      logging: true, // 啟用日誌以便調試
+      logging: false, // 關閉日誌以提高性能
       onclone: (clonedDoc) => {
-        console.log('克隆文檔:', clonedDoc);
         // 在克隆文檔中確保圖片正確載入
         const clonedImages = clonedDoc.querySelectorAll('img');
-        clonedImages.forEach((img, index) => {
-          console.log(`克隆圖片 ${index}:`, img.src);
+        clonedImages.forEach((img) => {
           if (img.src && !img.src.startsWith('data:')) {
             img.crossOrigin = 'anonymous';
           }
@@ -1341,14 +1303,6 @@ async function exportAsPNG() {
     // 獲取最終尺寸
     const finalWidth = canvas.width;
     const finalHeight = canvas.height;
-    
-    console.log('截圖完成，畫布尺寸:', finalWidth, 'x', finalHeight);
-    
-    // 檢查畫布內容
-    const ctx = canvas.getContext('2d');
-    const imageData = ctx.getImageData(0, 0, finalWidth, finalHeight);
-    const hasContent = imageData.data.some(pixel => pixel !== 0);
-    console.log('畫布是否有內容:', hasContent);
 
     // 下載圖片
     const url = canvas.toDataURL('image/png', 1.0);
@@ -1360,7 +1314,6 @@ async function exportAsPNG() {
     document.body.removeChild(a);
     
     errorMsg.value = "";
-    console.log("圖片匯出成功！檔案名稱:", a.download);
     alert("✅ 圖片下載成功！");
     
   } catch (error) {
@@ -1405,7 +1358,6 @@ const useWorkshopFont = async () => {
     try {
       // 獲取字型圖片URL
       const imageUrl = workshopFontData.value.blendedImage || workshopFontData.value.referenceImage
-      console.log('🎨 準備載入 workshop 字型圖片:', imageUrl)
       
       if (!imageUrl) {
         alert('❌ 未找到 workshop 字型圖片')
@@ -1432,10 +1384,6 @@ const useWorkshopFont = async () => {
       
       // 顯示成功訊息
       alert('✅ 已載入 workshop 字型風格，可以開始生成字型到模板！')
-      
-      console.log('✅ 已使用 workshop 字型:', referenceImage.value)
-      console.log('📁 字型文件類型:', referenceImage.value instanceof File ? 'File' : typeof referenceImage.value)
-      console.log('📁 字型文件大小:', referenceImage.value instanceof File ? `${referenceImage.value.size} bytes` : 'N/A')
       
     } catch (error) {
       console.error('❌ 載入 workshop 字型失敗:', error)
@@ -1465,8 +1413,6 @@ const useExistingFonts = () => {
     const fontIndex = parseInt(selectedFont) - 1
     const selectedFontData = fontOptions[fontIndex]
     
-    console.log('🎨 選擇了現成字型:', selectedFontData.displayName)
-    
     // 設定為使用現成字型模式
     showFontGeneration.value = true
     hasGeneratedFonts.value = false
@@ -1482,6 +1428,132 @@ const useExistingFonts = () => {
   } else if (selectedFont !== null) {
     alert('❌ 請輸入有效的數字 1-6')
   }
+}
+
+// ===== 性能優化函數 =====
+// 緩存對齊樣式類別
+const alignmentClassCache = new Map()
+function getAlignmentClass(align) {
+  if (alignmentClassCache.has(align)) {
+    return alignmentClassCache.get(align)
+  }
+  
+  let className
+  switch (align) {
+    case 'center':
+      className = 'justify-center'
+      break
+    case 'right':
+      className = 'justify-end'
+      break
+    default:
+      className = 'justify-start'
+  }
+  
+  alignmentClassCache.set(align, className)
+  return className
+}
+
+// 優化文字行分割，使用緩存
+const textLinesCache = new Map()
+function getTextLines(text) {
+  if (!text) return []
+  
+  const cacheKey = text
+  if (textLinesCache.has(cacheKey)) {
+    return textLinesCache.get(cacheKey)
+  }
+  
+  const lines = text.split('\n')
+  textLinesCache.set(cacheKey, lines)
+  return lines
+}
+
+// 緩存樣式對象，避免重複創建
+const styleCache = new Map()
+function getLineStyle(slot, lineIndex) {
+  const fontSize = slot.fontSize || 20
+  const lineHeight = slot.lineHeight || 1.4
+  const text = slotInputs[slot.key] || ''
+  const lines = getTextLines(text)
+  
+  const cacheKey = `${fontSize}-${lineHeight}-${lineIndex}-${lines.length}`
+  if (styleCache.has(cacheKey)) {
+    return styleCache.get(cacheKey)
+  }
+  
+  const style = {
+    minHeight: `${fontSize}px`,
+    lineHeight: lineHeight,
+    marginBottom: lineIndex < lines.length - 1 ? '8px' : '0'
+  }
+  
+  styleCache.set(cacheKey, style)
+  return style
+}
+
+function getSpaceStyle(fontSize) {
+  const size = fontSize || 20
+  const cacheKey = `space-${size}`
+  
+  if (styleCache.has(cacheKey)) {
+    return styleCache.get(cacheKey)
+  }
+  
+  const style = {
+    width: `${size * 0.3}px`,
+    height: `${size}px`
+  }
+  
+  styleCache.set(cacheKey, style)
+  return style
+}
+
+function getCharImageStyle(fontSize) {
+  const size = fontSize || 20
+  const cacheKey = `char-image-${size}`
+  
+  if (styleCache.has(cacheKey)) {
+    return styleCache.get(cacheKey)
+  }
+  
+  const style = {
+    height: `${size}px`,
+    width: 'auto',
+    maxWidth: `${size * 1.2}px`
+  }
+  
+  styleCache.set(cacheKey, style)
+  return style
+}
+
+function getDefaultCharStyle(slot) {
+  const fontSize = slot.fontSize || 20
+  const color = slot.color || '#333'
+  const fontWeight = slot.fontWeight || 'normal'
+  const lineHeight = slot.lineHeight || 1.4
+  
+  const cacheKey = `default-char-${fontSize}-${color}-${fontWeight}-${lineHeight}`
+  if (styleCache.has(cacheKey)) {
+    return styleCache.get(cacheKey)
+  }
+  
+  const style = {
+    fontSize: `${fontSize}px`,
+    color: color,
+    fontWeight: fontWeight,
+    lineHeight: lineHeight
+  }
+  
+  styleCache.set(cacheKey, style)
+  return style
+}
+
+// 清理緩存函數
+function clearStyleCache() {
+  styleCache.clear()
+  textLinesCache.clear()
+  alignmentClassCache.clear()
 }
 
 
