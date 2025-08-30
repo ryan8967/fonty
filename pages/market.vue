@@ -525,7 +525,7 @@ const products = [
   {
     id: 1,
     title: "Elegant Modern",
-    image: "/image1.png",
+    image: "/image.png",
     price: "Free",
     originalPrice: null,
     category: "現代風格",
@@ -543,7 +543,7 @@ const products = [
   {
     id: 2,
     title: "Classic Script",
-    image: "/image2.png",
+    image: "/image4.png",
     price: "$15",
     originalPrice: "$25",
     category: "手寫風格",
@@ -561,7 +561,7 @@ const products = [
   {
     id: 3,
     title: "Bold Display",
-    image: "/image3.png",
+    image: "/image5.png",
     price: "$12",
     originalPrice: "$20",
     category: "商業實用",
@@ -579,7 +579,7 @@ const products = [
   {
     id: 4,
     title: "Retro Vintage",
-    image: "/image1.png",
+    image: "/image.png",
     price: "Free",
     originalPrice: null,
     category: "經典復古",
@@ -597,7 +597,7 @@ const products = [
   {
     id: 5,
     title: "Cute Rounded",
-    image: "/image2.png",
+    image: "/image4.png",
     price: "$8",
     originalPrice: "$15",
     category: "裝飾字型",
@@ -615,7 +615,7 @@ const products = [
   {
     id: 6,
     title: "Artistic Brush",
-    image: "/image3.png",
+    image: "/image5.png",
     price: "$18",
     originalPrice: null,
     category: "藝術創意",
@@ -633,7 +633,7 @@ const products = [
   {
     id: 7,
     title: "Chinese Calligraphy",
-    image: "/image1.png",
+    image: "/image.png",
     price: "Free",
     originalPrice: null,
     category: "中文字型",
@@ -651,7 +651,7 @@ const products = [
   {
     id: 8,
     title: "Business Sans",
-    image: "/image2.png",
+    image: "/image4.png",
     price: "$10",
     originalPrice: "$16",
     category: "商業實用",
@@ -671,7 +671,7 @@ const products = [
   {
     id: 9,
     title: "Jason Handwriting 1",
-    image: "/image1.png",
+    image: "/image.png",
     price: "免費",
     originalPrice: null,
     category: "手寫風格",
@@ -689,7 +689,7 @@ const products = [
   {
     id: 10,
     title: "Jason Handwriting 2",
-    image: "/image2.png",
+    image: "/image4.png",
     price: "免費",
     originalPrice: null,
     category: "手寫風格",
@@ -707,7 +707,7 @@ const products = [
   {
     id: 11,
     title: "Jason Handwriting 3",
-    image: "/image3.png",
+    image: "/image5.png",
     price: "免費",
     originalPrice: null,
     category: "手寫風格",
@@ -725,7 +725,7 @@ const products = [
   {
     id: 12,
     title: "Jason Handwriting 4",
-    image: "/image1.png",
+    image: "/image.png",
     price: "免費",
     originalPrice: null,
     category: "手寫風格",
@@ -743,7 +743,7 @@ const products = [
   {
     id: 13,
     title: "Jason Handwriting 5",
-    image: "/image2.png",
+    image: "/image4.png",
     price: "免費",
     originalPrice: null,
     category: "手寫風格",
@@ -761,7 +761,7 @@ const products = [
   {
     id: 14,
     title: "Jason Handwriting 5 Plus",
-    image: "/image3.png",
+    image: "/image5.png",
     price: "免費",
     originalPrice: null,
     category: "手寫風格",

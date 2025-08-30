@@ -5,6 +5,12 @@ export default defineNuxtConfig({
   css: ['@/assets/css/main.css', '@/assets/css/fonts.css'],
   modules: ['@nuxtjs/tailwindcss'],
   
+  // 開發和生產環境的伺服器配置
+  devServer: {
+    host: '0.0.0.0', // 監聽所有網路介面
+    port: 3000
+  },
+  
   // PWA 和移動端優化
   app: {
     head: {
