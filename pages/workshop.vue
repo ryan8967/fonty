@@ -263,144 +263,319 @@
 
         <!-- Mobile Optimized Layout -->
         <div class="md:hidden px-4 h-[calc(100vh-8rem)] flex flex-col">
-          <!-- Preview Card -->
-          <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-3 flex-shrink-0">
-            <div class="p-4">
-              <div
-                class="relative bg-white rounded-lg aspect-[4/3] flex items-center justify-center overflow-hidden border border-gray-200"
-                :class="{ 'ring-2 ring-[#E29930] bg-orange-50 border-[#E29930]': blendLoading }">
-                <div v-if="blendLoading"
-                  class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-10">
-                  <div class="w-8 h-8 border-3 border-[#3A6B60] border-t-transparent rounded-full animate-spin"></div>
+          <!-- Preview Area -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-4">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-lg font-semibold text-[#3A6B60]">即時預覽</h2>
+              <div class="flex items-center gap-2">
+                <div class="w-1.5 h-1.5 bg-[#5EA897] rounded-full animate-pulse"></div>
+                <span class="text-xs text-[#3A6B60]">即時更新</span>
+              </div>
+            </div>
+
+            <div class="relative bg-white rounded-lg aspect-[4/3] flex items-center justify-center overflow-hidden border border-gray-200"
+              :class="{ 'ring-2 ring-[#E29930] bg-orange-50 border-[#E29930]': blendLoading }">
+              <div v-if="blendLoading" class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-10">
+                <div class="text-center">
+                  <div class="w-6 h-6 border-3 border-[#3A6B60] border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                  <span class="text-[#3A6B60] text-sm font-medium">AI 融合中</span>
                 </div>
-                <img :src="blendedImage || generatedImage" alt="Generated Font"
-                  class="max-h-full max-w-full object-contain transition-all duration-500"
-                  :class="{ 'scale-105': blendLoading }" />
+              </div>
+              <img :src="blendedImage || generatedImage" alt="Generated Font" class="max-h-full max-w-full object-contain" />
+            </div>
+          </div>
+
+          <!-- Controls Area -->
+          <div class="flex-1 overflow-y-auto">
+            <!-- Style Selection -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-4">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 bg-[#E29930] bg-opacity-25 rounded-lg flex items-center justify-center">
+                    <svg class="w-4 h-4 text-[#E29930]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-[#3A6B60] text-base">選擇風格</h3>
+                    <p class="text-xs text-gray-600">選擇想要的風格並調整參數</p>
+                  </div>
+                </div>
+                <div v-if="styleOption" class="text-xs px-2 py-1 bg-[#E29930] bg-opacity-10 text-[#E29930] rounded-full">
+                  {{ styleOption }}
+                </div>
+              </div>
+
+              <!-- Style Grid -->
+              <div class="grid grid-cols-5 gap-2 mb-4">
+                <button v-for="(option, index) in styleOptions" :key="option"
+                  @click="selectStyleAndBlend(option)"
+                  class="aspect-square rounded-lg flex flex-col items-center justify-center transition-all duration-200 border-2"
+                  :class="[
+                    styleOption === option
+                      ? 'border-[#E29930] bg-[#E29930] bg-opacity-10'
+                      : 'border-gray-200'
+                  ]">
+                  <div class="text-[#3A6B60] mb-1">
+                    <!-- Icons for different styles -->
+                    <svg v-if="index === 0" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                    <svg v-else-if="index === 1" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg v-else-if="index === 2" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                    <svg v-else-if="index === 3" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <svg v-else class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </div>
+                  <div class="text-xs font-medium text-[#3A6B60]">{{ option }}</div>
+                </button>
+              </div>
+
+              <!-- Adjustment Controls -->
+              <div class="space-y-4">
+                <!-- 筆觸粗細 -->
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2">
+                      <svg class="w-4 h-4 text-[#5EA897]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M15.535 2.808l5.657 5.657-8.485 8.485-5.657-5.657 8.485-8.485zm-1.414 1.414L6.707 11.636l2.828 2.829 7.414-7.414-2.828-2.829zM6 16h9v2H6v-2z" />
+                      </svg>
+                      <span class="text-sm font-medium text-[#3A6B60]">筆觸粗細</span>
+                    </div>
+                    <span class="text-xs bg-[#5EA897] bg-opacity-20 text-[#3A6B60] px-2 py-0.5 rounded-full">
+                      {{ thickness.toFixed(1) }}
+                    </span>
+                  </div>
+                  <input type="range" min="-1.5" max="1.5" step="0.1" v-model.number="thickness"
+                    class="w-full range-slider-teal" />
+                </div>
+
+                <!-- 風格強度 -->
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2">
+                      <svg class="w-4 h-4 text-[#E29930]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 100-16 8 8 0 000 16zm-5-8h10v2H7v-2z" />
+                      </svg>
+                      <span class="text-sm font-medium text-[#3A6B60]">風格強度</span>
+                    </div>
+                    <span class="text-xs bg-[#E29930] bg-opacity-20 text-[#E29930] px-2 py-0.5 rounded-full">
+                      {{ Math.round(alpha * 100) }}%
+                    </span>
+                  </div>
+                  <input type="range" min="0" max="1" step="0.05" v-model.number="alpha"
+                    class="w-full range-slider-orange" />
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Controls Section -->
-          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex-1 flex flex-col">
-            <!-- Style Selection -->
-            <div class="mb-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-medium text-[#3A6B60]">選擇風格</span>
-                <div v-if="styleOption"
-                  class="text-xs px-2 py-1 bg-[#E29930] bg-opacity-10 text-[#E29930] rounded-full">
-                  {{ styleOption }}
-                </div>
-              </div>
-              <!-- Style Icons Grid -->
-              <div class="grid grid-cols-5 gap-2">
-                <button v-for="(option, index) in styleOptions" :key="option" @click="selectStyleAndBlend(option)"
-                  class="aspect-square rounded-lg flex items-center justify-center transition-all duration-200 border-2"
-                  :class="[
-                    styleOption === option
-                      ? 'border-[#E29930] bg-[#E29930] bg-opacity-10'
-                      : 'border-gray-200 hover:border-gray-300'
-                  ]">
-                  <!-- Style Icons -->
-                  <div class="text-center">
-                    <div class="text-[#3A6B60]">
-                      <!-- Different icons for different styles -->
-                      <svg v-if="index === 0" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                      </svg>
-                      <svg v-else-if="index === 1" class="w-6 h-6" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M4 6h16M4 12h16M4 18h16" />
-                      </svg>
-                      <svg v-else-if="index === 2" class="w-6 h-6" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                      </svg>
-                      <svg v-else-if="index === 3" class="w-6 h-6" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                      <svg v-else class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                      </svg>
-                    </div>
-                    <div class="text-[10px] mt-1 font-medium text-[#3A6B60]">
-                      {{ option.slice(0, 2) }}
-                    </div>
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            <!-- Adjustments -->
-            <div class="space-y-4 flex-1">
-              <!-- 筆觸粗細 -->
-              <div>
-                <div class="flex items-center justify-between mb-2">
-                  <div class="flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-[#5EA897]" viewBox="0 0 24 24" fill="currentColor">
-                      <path
-                        d="M15.535 2.808l5.657 5.657-8.485 8.485-5.657-5.657 8.485-8.485zm-1.414 1.414L6.707 11.636l2.828 2.829 7.414-7.414-2.828-2.829zM6 16h9v2H6v-2z" />
-                    </svg>
-                    <span class="text-sm font-medium text-[#3A6B60]">筆觸</span>
-                  </div>
-                  <span class="text-xs bg-[#5EA897] bg-opacity-20 text-[#3A6B60] px-2 py-1 rounded-full">
-                    {{ thickness.toFixed(1) }}
-                  </span>
-                </div>
-                <input type="range" min="-1.5" max="1.5" step="0.1" v-model.number="thickness"
-                  class="w-full range-slider-teal" />
-              </div>
-
-              <!-- 風格強度 -->
-              <div>
-                <div class="flex items-center justify-between mb-2">
-                  <div class="flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-[#E29930]" viewBox="0 0 24 24" fill="currentColor">
-                      <path
-                        d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 100-16 8 8 0 000 16zm-5-8h10v2H7v-2z" />
-                    </svg>
-                    <span class="text-sm font-medium text-[#3A6B60]">強度</span>
-                  </div>
-                  <span class="text-xs bg-[#E29930] bg-opacity-20 text-[#E29930] px-2 py-1 rounded-full">
-                    {{ Math.round(alpha * 100) }}%
-                  </span>
-                </div>
-                <input type="range" min="0" max="1" step="0.05" v-model.number="alpha"
-                  class="w-full range-slider-orange" />
-              </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="mt-4 flex gap-2">
+          <!-- Fixed Bottom Buttons -->
+          <div class="sticky bottom-0 left-0 right-0 p-4 bg-[#F8F3EA] border-t border-gray-200">
+            <div class="flex gap-3">
               <button @click="blend" :disabled="!isStyleSelected || blendLoading"
-                class="flex-1 bg-[#E29930] hover:bg-[#d18825] text-white py-2.5 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 text-sm"
+                class="flex-1 bg-[#E29930] hover:bg-[#d18825] text-white py-3 rounded-xl font-medium shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 text-sm"
                 :class="{ 'opacity-50 cursor-not-allowed': !isStyleSelected || blendLoading }">
                 <svg v-if="!blendLoading" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    d="M4 2a1 1 0 011-1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" />
+                  <path d="M4 2a1 1 0 011-1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" />
                 </svg>
                 {{ blendLoading ? '融合中...' : '重新融合' }}
               </button>
               <button @click="startPreview"
-                class="flex-1 bg-[#3A6B60] hover:bg-[#2d5248] text-white py-2.5 rounded-lg font-medium shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 text-sm">
+                class="flex-1 bg-[#3A6B60] hover:bg-[#2d5248] text-white py-3 rounded-xl font-medium shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 text-sm">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" />
+                  <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" />
                 </svg>
-                開始預覽
+                立即應用
               </button>
             </div>
           </div>
         </div>
 
         <!-- Desktop Layout -->
-        <div class="hidden md:block max-w-7xl mx-auto px-8 pb-32">
-          // ...existing desktop layout code...
+        <div class="hidden md:block max-w-7xl mx-auto px-8 pb-16">
+          <div class="grid grid-cols-2 gap-8">
+            <!-- Left Column: Preview -->
+            <div class="space-y-6">
+              <!-- Preview Card -->
+              <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="p-6">
+                  <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold text-[#3A6B60]">即時預覽</h2>
+                    <div class="flex items-center gap-2">
+                      <div class="w-2 h-2 bg-[#5EA897] rounded-full animate-pulse"></div>
+                      <span class="text-sm text-[#3A6B60]">即時更新</span>
+                    </div>
+                  </div>
+
+                  <div
+                    class="relative bg-white rounded-xl aspect-[4/3] flex items-center justify-center overflow-hidden transition-all duration-300 border border-gray-200"
+                    :class="{ 'ring-2 ring-[#E29930] bg-orange-50 border-[#E29930]': blendLoading }">
+                    <div v-if="blendLoading"
+                      class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-10">
+                      <div class="text-center">
+                        <div
+                          class="w-8 h-8 border-3 border-[#3A6B60] border-t-transparent rounded-full animate-spin mx-auto mb-3">
+                        </div>
+                        <span class="text-[#3A6B60] font-medium">AI 正在融合中</span>
+                      </div>
+                    </div>
+
+                    <img :src="blendedImage || generatedImage" alt="Generated Font"
+                      class="max-h-full max-w-full object-contain transition-all duration-500"
+                      :class="{ 'scale-105': blendLoading }" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex gap-3">
+                <button @click="blend" :disabled="!isStyleSelected || blendLoading"
+                  class="flex-1 bg-[#E29930] hover:bg-[#d18825] text-white py-3 rounded-xl font-medium shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2"
+                  :class="{ 'opacity-50 cursor-not-allowed': !isStyleSelected || blendLoading }">
+                  <svg v-if="!blendLoading" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M4 2a1 1 0 011-1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" />
+                  </svg>
+                  {{ blendLoading ? '融合中...' : '重新融合' }}
+                </button>
+                <button @click="startPreview"
+                  class="flex-1 bg-[#3A6B60] hover:bg-[#2d5248] text-white py-3 rounded-xl font-medium shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" />
+                  </svg>
+                  立即應用
+                </button>
+              </div>
+            </div>
+
+            <!-- Right Column: Controls -->
+            <div class="space-y-6">
+              <!-- Style Selection -->
+              <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-[#E29930] bg-opacity-25 rounded-lg flex items-center justify-center">
+                      <svg class="w-5 h-5 text-[#E29930]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-[#3A6B60] text-lg">風格選擇</h3>
+                      <p class="text-sm text-gray-600">選擇合適的風格並調整參數</p>
+                    </div>
+                  </div>
+                  <div v-if="styleOption"
+                    class="text-sm px-3 py-1.5 bg-[#E29930] bg-opacity-10 text-[#E29930] rounded-full font-medium">
+                    {{ styleOption }}
+                  </div>
+                </div>
+
+                <!-- Style Grid -->
+                <div class="grid grid-cols-5 gap-3 mb-6">
+                  <button v-for="(option, index) in styleOptions" :key="option" @click="selectStyleAndBlend(option)"
+                    class="aspect-square rounded-xl flex flex-col items-center justify-center transition-all duration-200 border-2 hover:scale-105"
+                    :class="[
+                      styleOption === option
+                        ? 'border-[#E29930] bg-[#E29930] bg-opacity-10'
+                        : 'border-gray-200 hover:border-gray-300'
+                    ]">
+                    <!-- Style Icons -->
+                    <div class="text-[#3A6B60] mb-2">
+                      <!-- Different icons for different styles -->
+                      <svg v-if="index === 0" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                      </svg>
+                      <svg v-else-if="index === 1" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 6h16M4 12h16M4 18h16" />
+                      </svg>
+                      <svg v-else-if="index === 2" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                      </svg>
+                      <svg v-else-if="index === 3" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      <svg v-else class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                    </div>
+                    <div class="text-sm font-medium text-[#3A6B60]">{{ option }}</div>
+                  </button>
+                </div>
+
+                <!-- Adjustment Controls -->
+                <div class="space-y-6">
+                  <!-- 筆觸粗細 -->
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-[#5EA897]" viewBox="0 0 24 24" fill="currentColor">
+                          <path
+                            d="M15.535 2.808l5.657 5.657-8.485 8.485-5.657-5.657 8.485-8.485zm-1.414 1.414L6.707 11.636l2.828 2.829 7.414-7.414-2.828-2.829zM6 16h9v2H6v-2z" />
+                        </svg>
+                        <span class="font-medium text-[#3A6B60]">筆觸粗細</span>
+                      </div>
+                      <span class="text-sm bg-[#5EA897] bg-opacity-20 text-[#3A6B60] px-3 py-1 rounded-full">
+                        {{ thickness.toFixed(1) }}
+                      </span>
+                    </div>
+                    <input type="range" min="-1.5" max="1.5" step="0.1" v-model.number="thickness"
+                      class="w-full range-slider-teal" />
+                  </div>
+
+                  <!-- 風格強度 -->
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-[#E29930]" viewBox="0 0 24 24" fill="currentColor">
+                          <path
+                            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 100-16 8 8 0 000 16zm-5-8h10v2H7v-2z" />
+                        </svg>
+                        <span class="font-medium text-[#3A6B60]">風格強度</span>
+                      </div>
+                      <span class="text-sm bg-[#E29930] bg-opacity-20 text-[#E29930] px-3 py-1 rounded-full">
+                        {{ Math.round(alpha * 100) }}%
+                      </span>
+                    </div>
+                    <input type="range" min="0" max="1" step="0.05" v-model.number="alpha"
+                      class="w-full range-slider-orange" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Additional Info Card -->
+              <div
+                class="bg-gradient-to-br from-[#5EA897] from-10% via-[#5EA897] via-30% to-[#3A6B60] to-90% rounded-2xl shadow-lg p-6 text-white">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                        clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold">調整提示</h3>
+                    <p class="text-sm text-white text-opacity-90">調整完成後點擊預覽按鈕查看效果</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -896,16 +1071,18 @@ const startJumpCountdown = () => {
 
 // 新增：開始預覽字型風格的函數
 const startPreview = () => {
-  console.log('🚀 startPreview 函數被調用')
-  console.log('📸 當前圖片狀態:')
+  console.log('🚀 立即應用函數被調用')
+  console.log('📸 當前字型狀態:')
+  console.log('- character:', inputCharacter.value)
   console.log('- generatedImage:', generatedImage.value)
   console.log('- blendedImage:', blendedImage.value)
   console.log('- styleOption:', styleOption.value)
   console.log('- alpha:', alpha.value)
   console.log('- thickness:', thickness.value)
-
+  
   // 將字型圖片數據存儲到 localStorage，供 template 頁面使用
   const fontData = {
+    character: inputCharacter.value,
     referenceImage: generatedImage.value,
     blendedImage: blendedImage.value || generatedImage.value,
     styleOption: styleOption.value,
